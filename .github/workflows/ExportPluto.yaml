@@ -13,6 +13,11 @@ jobs:
             - name: Checkout
               uses: actions/checkout@v2
 
+            # NOTE: Python is necessary for the pre-rendering (minification) step
+            - name: Install python
+              uses: actions/setup-python@v2
+              with:
+                  python-version: '3.8'
 
             - name: Install Julia
               uses: julia-actions/setup-julia@v1
