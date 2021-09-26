@@ -29,6 +29,7 @@ jobs:
 
       - name: Run & export Pluto notebooks
         run: julia -e 'using Pkg;
+          cd("notebooks")
           Pkg.activate(mktempdir());
           Pkg.add([
           Pkg.PackageSpec(name="PlutoSliderServer", version="0.2.1-0.2"),
@@ -36,14 +37,14 @@ jobs:
 
           import PlutoSliderServer;
 
-          PlutoSliderServer.github_action(;
+          PlutoSliderServer.github_action("notebooks";
           Export_cache_dir="pluto_state_cache",
           );'
 
       - name: Copy Pluto HTML and Franklin
         run: julia -e '
           cd("blog");
-          cp("../notebooks/*.html", "_assets/"; force=true);
+          cp("../notebooks/*", "_assets/"; force=true);
           using Pkg; Pkg.activate("."); Pkg.instantiate();
           using NodeJS; run(`$(npm_cmd()) install highlight.js`);
           using Franklin;
