@@ -39,13 +39,14 @@ jobs:
 
                   import PlutoSliderServer;
 
-                  PlutoSliderServer.github_action("blog/_assets/";
+                  PlutoSliderServer.github_action(;
                     Export_cache_dir="pluto_state_cache",
                   );'
 
             - name: Copy Pluto HTML and Franklin
               run: julia -e '
                   cd("blog");
+                  cp("../notebooks","_assets/notebooks";force=true);
                   using Pkg; Pkg.activate("."); Pkg.instantiate();
                   using NodeJS; run(`$(npm_cmd()) install highlight.js`);
                   using Franklin;

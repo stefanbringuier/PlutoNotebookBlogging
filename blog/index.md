@@ -5,4 +5,4 @@
 
 <!-- \tableofcontents <!-- you can use \toc as well --> 
 
-* [DMRG](_assets/dmrg.html)
+* [DMRG](_assets/notebooks/dmrg.html)
