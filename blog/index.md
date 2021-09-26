@@ -2,6 +2,7 @@
 
 # Blogs
 
-* [Guassian Processes: Part 1](assets/notebooks/gaussianprocess_part1.html) - Initial workflow showing how Gaussian processes works.
+* [Guassian Processes: Part 1](assets/notebooks/gaussianprocess_part1.html) - Initial workflow showing how Gaussian processes work.
 * [Density Matrix Renormalization Group](assets/notebooks/dmrg.html) - A walk through basic 1D infinite anti-ferromagnetic spin chain.
+* [Chemical Kinetics ODE](assets/notebooks/chemkinetics_ode.html) - Solving mass action ODE using very nice Julia modeling packages.
 * [Welcome](blogpages/welcome) - My hello world.
