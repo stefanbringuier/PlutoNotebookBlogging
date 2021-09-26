@@ -1,4 +1,4 @@
-Sitemap: sitemap.xml
+Sitemap: https://stefanbringuier.github.io/PlutoNotebookBlogging/sitemap.xml
 
 User-agent: *
 Disallow:
