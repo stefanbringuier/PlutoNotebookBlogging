@@ -15,7 +15,7 @@ ignore = ["node_modules/"]
 generate_rss =  false
 website_title = "Pluto.jl Notebook Blogs - Stefan Bringuier"
 website_descr = "Blogging various topics using Pluto.jl"
-website_url   = ""
+website_url   = "https://stefanbringuier.github.io/PlutoNotebookBlogging"
 +++
 
 <!--

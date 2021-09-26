@@ -1,3 +1,6 @@
+@def title = "Welcome"
+@def author = "Stefan Bringuier"
+
 # Welcome!
 ~~~<span style="color:gray  ">25, Sept. 2021</span>~~~
 
