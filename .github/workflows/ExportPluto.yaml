@@ -21,7 +21,7 @@ jobs:
 
             # Needed for some notebooks      
             - name: Install TeXlive
-              run: sudo apt-get install texlive-latex-extra texlive-science texlive-lualatex texlive-pstricks latexmk
+              run: sudo apt-get install texlive-latex-extra texlive-science texlive-luatex texlive-pstricks latexmk
 
             # We set up a folder that Pluto can use to cache exported notebooks. If the notebook file did not change, then Pluto can take the exported file from cache instead of running the notebook.
             - name: Set up notebook state cache
