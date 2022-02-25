@@ -48,7 +48,7 @@ jobs:
 
                   PlutoSliderServer.github_action(;
                     Export_cache_dir="pluto_state_cache",
-                    Export_baked_notebookfile=fase,
+                    Export_baked_notebookfile=false,
                     Export_baked_state=false,
                   );'
 
