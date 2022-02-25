@@ -8,7 +8,8 @@ using InteractiveUtils
 begin
 	using ModelingToolkit
 	using DifferentialEquations
-	using Plots
+	using Plots ; plotly()
+	default(size=(650,650))
 end
 
 # ╔═╡ d4f1e3a9-d1c8-4e3e-8b88-f0a901a894f7
@@ -82,13 +83,16 @@ function chemicalreaction_ode_solution()
 	#Plotting solution with Plots.jl
 	p1 = plot(sol,vars=[A,B,C],
 		xaxis=:log,
-		legend=(0.35,0.35),lw=3,size=(1100,400),
+		legend=(0.35,0.35),lw=3,
 		title="semi-log scale")
 	p2 = plot(sol,vars=[A,B,C],
 		xaxis=:log,yaxis=(:log,[1.0e-12,:auto]),
-		legend=(0.35,0.35),lw=3,size=(1100,400),
+		legend=(0.35,0.35),lw=3,
 		title="log-log scale")
-	timep = plot(p1,p2,layout=(1,2),margin=5Plots.mm,
+	pmm = Plots.PlotMeasures.mm;
+	timep = plot(p1,p2,layout=(2,1),
+				left_margin= -20*pmm,
+			 	bottom_margin = 10pmm,
 		xlabel="time",ylabel="concentration")
 	
 	return eq,sol,timep

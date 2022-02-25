@@ -1,0 +1,1340 @@
+¥bonds€¬cell_resultsÙ$246b640d-e3aa-443c-b2e9-4e2dee651369‰¦queuedÂ¤logs§runningÂ¦output†¤body °persist_js_stateÂ¤mimeªtext/plain²last_run_timestampËAØ†UVÀ¸ú·has_pluto_hook_featuresÂ¬rootassigneeÀ§cell_idÙ$246b640d-e3aa-443c-b2e9-4e2dee651369¹depends_on_disabled_cellsÂ§runtimeÎ_édµpublished_object_keys§erroredÂÙ$00d1921e-3c43-4dcb-98c6-8249b386e993‰¦queuedÂ¤logs§runningÂ¦output†¤bodyÚí<bond def="r" unique_id="xBpm/G0fzIRk"><span style='display: contents;'><h6>Ranges</h6>
+<ul>
+<li>Years: <pl-combined-child key='rbhpvigfdc' style='display: contents;'>		<span><link 
+			href="https://cdn.jsdelivr.net/npm/nouislider@15.5.0/dist/nouislider.css" rel="stylesheet"/><style>
+		.plutoui-rangeslider .noUi-connect {
+			background: #0075ff;
+		}
+		
+		.plutoui-rangeslider.noUi-horizontal {
+			height: 10px;
+		}
+		
+		.plutoui-rangeslider.noUi-horizontal .noUi-handle {
+			width: 19px;
+			height: 19px;
+    		transform: translateX(-10px);
+		}
+		
+		.plutoui-rangeslider .noUi-handle:before,
+		.plutoui-rangeslider .noUi-handle:after {
+			content: unset;
+		}
+		.plutoui-rangeslider.noUi-horizontal .noUi-tooltip {
+			line-height: 1rem;
+		}
+		
+		</style><script>
+		const {default: noUiSlider} = await import( "https://cdn.jsdelivr.net/npm/nouislider@15.5.0/dist/nouislider.min.mjs")
+		const {default: throttle} = await import("https://cdn.jsdelivr.net/npm/lodash-es@4.17.21/throttle.js")
+
+		let show_value = true
+		const el = html`<div style='
+		    display: inline-block;
+			font-family: system-ui; 
+			font-size: .75rem; 
+			min-width: 10rem;
+			min-height: 10px;
+			margin: ${show_value ? "2.5rem" : "0.5rem"} 1rem .5rem 1rem;
+		' class='plutoui-rangeslider'></div>`
+
+		const start = 2000.0
+		const stop = 2021.0
+		const step = 1.0
+
+		let is_integer = Number.isInteger(step) && Number.isInteger(start)
+		
+		let num_decimals = Math.max(is_integer ? 0 : 1, -1 * Math.floor(Math.log10(step)))
+		const formatter = {
+		to: x => x.toLocaleString("en-US", { maximumFractionDigits: num_decimals, minimumFractionDigits: num_decimals })
+		
+		}
+		
+		const slider = noUiSlider.create(el, {
+			start: [2000.0, 2021.0],
+			connect: true,
+			range: {
+				'min': start,
+				'max': stop,
+			},
+			tooltips: true && [formatter, formatter],
+			step: step,
+		});
+		
+		// console.log(slider)
+		let root = currentScript.parentElement
+		
+		let busy = false
+		slider.on("start", () => {busy = true})
+		slider.on("end", () => {busy = false})
+		
+		let handler = (e) => {
+			// console.warn(e, root.value, 123)
+			root.dispatchEvent(new CustomEvent("input"))
+		}
+		
+		slider.on("slide", handler)
+		slider.on("drag", handler)
+		invalidation.then(() => {
+			slider.off("slide", handler)
+			slider.off("drag", handler)
+		})
+		
+		Object.defineProperty(root, 'value', {
+		get: () => slider.get(true),
+		set: (newval) => {
+			if(!busy) {
+				
+				slider.set(newval)
+			}
+		}
+		})
+		
+		
+		return el
+		</script></span></pl-combined-child></li><li>Articles [%]: <pl-combined-child key='rbhpvigfdc' style='display: contents;'>		<span><link 
+			href="https://cdn.jsdelivr.net/npm/nouislider@15.5.0/dist/nouislider.css" rel="stylesheet"/><style>
+		.plutoui-rangeslider .noUi-connect {
+			background: #0075ff;
+		}
+		
+		.plutoui-rangeslider.noUi-horizontal {
+			height: 10px;
+		}
+		
+		.plutoui-rangeslider.noUi-horizontal .noUi-handle {
+			width: 19px;
+			height: 19px;
+    		transform: translateX(-10px);
+		}
+		
+		.plutoui-rangeslider .noUi-handle:before,
+		.plutoui-rangeslider .noUi-handle:after {
+			content: unset;
+		}
+		.plutoui-rangeslider.noUi-horizontal .noUi-tooltip {
+			line-height: 1rem;
+		}
+		
+		</style><script>
+		const {default: noUiSlider} = await import( "https://cdn.jsdelivr.net/npm/nouislider@15.5.0/dist/nouislider.min.mjs")
+		const {default: throttle} = await import("https://cdn.jsdelivr.net/npm/lodash-es@4.17.21/throttle.js")
+
+		let show_value = true
+		const el = html`<div style='
+		    display: inline-block;
+			font-family: system-ui; 
+			font-size: .75rem; 
+			min-width: 10rem;
+			min-height: 10px;
+			margin: ${show_value ? "2.5rem" : "0.5rem"} 1rem .5rem 1rem;
+		' class='plutoui-rangeslider'></div>`
+
+		const start = 0.0
+		const stop = 5.937
+		const step = 0.001
+
+		let is_integer = Number.isInteger(step) && Number.isInteger(start)
+		
+		let num_decimals = Math.max(is_integer ? 0 : 1, -1 * Math.floor(Math.log10(step)))
+		const formatter = {
+		to: x => x.toLocaleString("en-US", { maximumFractionDigits: num_decimals, minimumFractionDigits: num_decimals })
+		
+		}
+		
+		const slider = noUiSlider.create(el, {
+			start: [0.0, 5.937],
+			connect: true,
+			range: {
+				'min': start,
+				'max': stop,
+			},
+			tooltips: true && [formatter, formatter],
+			step: step,
+		});
+		
+		// console.log(slider)
+		let root = currentScript.parentElement
+		
+		let busy = false
+		slider.on("start", () => {busy = true})
+		slider.on("end", () => {busy = false})
+		
+		let handler = (e) => {
+			// console.warn(e, root.value, 123)
+			root.dispatchEvent(new CustomEvent("input"))
+		}
+		
+		slider.on("slide", handler)
+		slider.on("drag", handler)
+		invalidation.then(() => {
+			slider.off("slide", handler)
+			slider.off("drag", handler)
+		})
+		
+		Object.defineProperty(root, 'value', {
+		get: () => slider.get(true),
+		set: (newval) => {
+			if(!busy) {
+				
+				slider.set(newval)
+			}
+		}
+		})
+		
+		
+		return el
+		</script></span></pl-combined-child></li>
+</ul>
+<script id='rbhpvigfdc'>
+const div = currentScript.parentElement
+let key = "rbhpvigfdc"
+const inputs = div.querySelectorAll(`pl-combined-child[key='${key}'] > *:first-child`)
+
+const values = Array(inputs.length)
+
+inputs.forEach(async (el,i) => {
+	el.oninput = (e) => {
+		e.stopPropagation()
+	}
+	const gen = Generators.input(el)
+	while(true) {
+		values[i] = await gen.next().value
+		div.dispatchEvent(new CustomEvent("input", {}))
+	}
+})
+
+
+let set_input_value = (() => {
+	let result = null
+	try {
+	result = setBoundElementValueLikePluto
+} catch (e) {
+	result = ((input, new_value) => {
+	// fallback in case https://github.com/fonsp/Pluto.jl/pull/1755 is not available
+    if (new_value == null) {
+        //@ts-ignore
+        input.value = new_value
+        return
+    }
+    if (input instanceof HTMLInputElement) {
+        switch (input.type) {
+            case "range":
+            case "number": {
+                if (input.valueAsNumber !== new_value) {
+                    input.valueAsNumber = new_value
+                }
+                return
+            }
+            case "date": {
+                if (input.valueAsDate == null || Number(input.valueAsDate) !== Number(new_value)) {
+                    input.valueAsDate = new_value
+                }
+                return
+            }
+            case "checkbox": {
+                if (input.checked !== new_value) {
+                    input.checked = new_value
+                }
+                return
+            }
+            case "file": {
+                // Can't set files :(
+                return
+            }
+        }
+    } else if (input instanceof HTMLSelectElement && input.multiple) {
+        for (let option of Array.from(input.options)) {
+            option.selected = new_value.includes(option.value)
+        }
+        return
+    }
+    //@ts-ignore
+    if (input.value !== new_value) {
+        //@ts-ignore
+        input.value = new_value
+    }
+})
+}
+return result
+})()
+
+	
+Object.defineProperty(div, 'value', {
+	get: () => values,
+	set: (newvals) => {
+		if(!newvals) {
+			return
+		}
+		inputs.forEach((el, i) => {
+			values[i] = newvals[i]
+			set_input_value(el, newvals[i])
+		})
+},
+	configurable: true,
+});
+	
+</script></span></bond>°persist_js_stateÂ¤mime©text/html²last_run_timestampËAØ†UWİpX·has_pluto_hook_featuresÂ¬rootassigneeÀ§cell_idÙ$00d1921e-3c43-4dcb-98c6-8249b386e993¹depends_on_disabled_cellsÂ§runtimeÎU:¾Bµpublished_object_keys§erroredÂÙ$e9a01445-4050-4c12-9a2f-d2e783a912c6‰¦queuedÂ¤logs§runningÂ¦output†¤bodyÚÎ<div class="markdown"><h2>Plotting the data</h2>
+<p>I think Ben Blaiszik&#39;s way of plotting the normalized ML publications for a specific domain was nice, so I&#39;ll do the same however, I&#39;m going to include engineering as well. I&#39;ll continue to exclude computer science since this is already established and will have signficant number of publications that come from the machine learning, data science, artifical intelligence communities.</p>
+</div>°persist_js_stateÂ¤mime©text/html²last_run_timestampËAØ†U=ATP·has_pluto_hook_featuresÂ¬rootassigneeÀ§cell_idÙ$e9a01445-4050-4c12-9a2f-d2e783a912c6¹depends_on_disabled_cellsÂ§runtimeÎ .Rµpublished_object_keys§erroredÂÙ$b87811d3-d4f4-42b6-ac4c-561738f35cf9‰¦queuedÂ¤logs§runningÂ¦output†¤bodyÙ0variablesliders (generic function with 1 method)°persist_js_stateÂ¤mimeªtext/plain²last_run_timestampËAØ†UWBñ·has_pluto_hook_featuresÂ¬rootassigneeÀ§cell_idÙ$b87811d3-d4f4-42b6-ac4c-561738f35cf9¹depends_on_disabled_cellsÂ§runtimeÎ'œ&éµpublished_object_keys§erroredÂÙ$7c4cbc96-3918-48cb-853f-5a71c037dcdd‰¦queuedÂ¤logs§runningÂ¦output†¤bodyÙ-plotted_data (generic function with 1 method)°persist_js_stateÂ¤mimeªtext/plain²last_run_timestampËAØ†UWêwâ·has_pluto_hook_featuresÂ¬rootassigneeÀ§cell_idÙ$7c4cbc96-3918-48cb-853f-5a71c037dcdd¹depends_on_disabled_cellsÂ§runtimeÎ -ÿ{µpublished_object_keys§erroredÂÙ$785bb400-49be-4202-92de-c67c21bbfb50‰¦queuedÂ¤logs§runningÂ¦output†¤bodyÚ/÷<script type="text/javascript" src="https://cdn.plot.ly/plotly-1.58.4.min.js"></script>
+<script>
+function create2DArray(A,n,m) {
+    // thx, https://stackoverflow.com/a/16501723/8922290
+    
+    var arr = [];
+    for (var i = 0; i < m; i++) {
+        arr[i] = [];
+        for (var j = 0; j < n; j++) {
+            arr[i][j] = A[i * n + j];
+        }
+    }
+    return arr;
+}
+
+function make_colorscale(cstops,colors)
+{
+    var colorscale=[]
+    var icol=0
+    for (var i=0;i<cstops.length;i++)
+    {
+        var color=`rgb(${colors[icol]},${colors[icol+1]},${colors[icol+2]})`;
+        colorscale.push([cstops[i],color])
+        icol+=3
+    }
+    return colorscale
+}
+
+function plutoplotlyplot(uuid,jsdict,w,h)
+{
+
+    var graphDiv = document.getElementById(uuid)
+
+//    https://www.somesolvedproblems.com/2018/10/how-to-customize-plotlys-modebar.html
+    var buttons=[["resetScale2d", "toImage","toggleHover"]]
+
+    var legendfontsize=10
+    var axisfontsize=10
+    var titlefontsize=12
+    var tickfontsize=10
+
+    var layout = {
+        autosize: false,
+        width: w,
+        height:h,
+        title: {
+            text: '',
+            font: {
+                size: titlefontsize,
+                family: 'Arial'
+            }
+        },
+        
+        modebar: {
+            orientation: 'h',
+        },
+        
+        hovermode: false,
+        
+        
+        xaxis: {
+            title: '',
+            mirror: true,
+            ticks: "outside",
+            showline: true,
+            zeroline: false,
+            exponentformat: 'e',
+            linewidth: 2,
+            gridcolor: '#bdbdbd',
+            title: {
+                font: {
+                    size: axisfontsize,
+                    family: 'Arial'
+                },
+            },
+            // titlefont: {
+            //     size: axisfontsize,
+            //     family: 'Arial'
+            // },
+            tickfont: {
+                size: tickfontsize,
+                family: 'Arial'
+            }
+        },
+        
+        yaxis: {
+            title: '',
+            mirror: true,
+            ticks: "outside",
+            showline: true,
+            zeroline: false,
+            exponentformat: 'e',
+            linewidth: 2,
+            gridcolor: '#bdbdbd',
+            title: {
+                font: {
+                    size: axisfontsize,
+                    family: 'Arial'
+                },
+            },
+            // titlefont: {
+            //     size: axisfontsize,
+            //     family: 'Arial'
+            // },
+            tickfont: {
+                size: tickfontsize,
+                family: 'Arial'
+            }
+        },
+
+        showlegend: false,
+        legend:{
+            bgcolor: 'rgba(255,255,255,0.8)',
+            font: {
+                size: legendfontsize,
+                family: 'Arial'
+            },
+
+        },
+        margin: {
+            l: 60,
+            r: 25,
+            b: 40,
+            t: 30,
+            pad: 0
+        },
+        
+    };
+            
+    var data=[]
+    
+    for (var cmd = 1 ; cmd <= jsdict.cmdcount ; cmd++)
+    {  
+
+        if (jsdict[cmd]=="plot")
+        {
+            if (graphDiv.data!=undefined && jsdict[cmd+"clear"] == 1)
+            {
+
+                while(graphDiv.data.length>0)
+                {
+                    Plotly.deleteTraces(graphDiv, [0]);
+                }
+            }
+
+            if (graphDiv.data!=undefined )
+            {
+                data=graphDiv.data
+                layout=graphDiv.layout
+            }
+            legendfontsize= jsdict[cmd+"legendfontsize"]
+            axisfontsize= jsdict[cmd+"axisfontsize"] 
+            titlefontsize= jsdict[cmd+"titlefontsize"]
+            tickfontsize= jsdict[cmd+"tickfontsize"]
+            
+
+            
+            var mode  = jsdict[cmd+"markertype"] == "none" ? "lines" : "lines+markers"
+            var color=jsdict[cmd+"color"] 
+            var rgb = color == "auto" ? ""      : `"rgb(${color[0]},${color[1]},${color[2]})"`
+            var trace = {
+                x: jsdict[cmd+"x"],
+                y: jsdict[cmd+"y"],
+                mode: mode,
+                name: jsdict[cmd+"label"],
+                showlegend: jsdict[cmd+"label"] == "" ? false : true,
+                marker: {
+                    color: rgb,
+                    symbol: jsdict[cmd+"markertype"],
+                    size: jsdict[cmd+"markersize"],
+                    maxdisplayed: jsdict[cmd+"markercount"],
+                },
+                line: {
+                    color: rgb,
+                    width: jsdict[cmd+"linewidth"],
+                    dash:  jsdict[cmd+"linestyle"],
+                }
+            };
+
+            
+            
+            var yrange=jsdict[cmd+"ylimits"]
+            if (yrange[1]>yrange[0])
+            {
+                layout.yaxis.range=[yrange[0],yrange[1]]
+                layout.yaxis.autorange=false
+            }
+            
+            var xrange=jsdict[cmd+"xlimits"]
+            if (xrange[1]>xrange[0])
+            {
+                layout.xaxis.range=[xrange[0],xrange[1]]
+                layout.xaxis.autorange=false
+            }
+
+            layout.title.text=jsdict[cmd+"title"]
+
+            layout.showlegend= layout.showlegend || (jsdict[cmd+"showlegend"] == 1 ? true : false)
+
+            var lxpos=jsdict[cmd+"legendxpos"]
+            var lypos=jsdict[cmd+"legendypos"]
+
+
+            if (lxpos=='r')
+            {
+                layout.legend.xanchor="right"
+                layout.legend.x=1
+            }
+            else if (lxpos=='c')
+            {
+              layout.legend.xanchor='center'
+              layout.legend.x=0.5
+            }
+            else if (lxpos=='l')
+            {
+              layout.legend.xanchor='left'
+              layout.legend.x=0
+            }
+
+            if (lypos=='t')
+            {
+              layout.legend.yanchor='top'
+              layout.legend.y=1
+            }
+            else if (lypos=='c')
+            {
+              layout.legend.yanchor='center'
+              layout.legend.y=0.5
+            }
+            else if (lypos=='b')
+            {
+              layout.legend.yanchor='bottom'
+              layout.legend.y=0
+            }
+
+            
+            layout.xaxis.title.text=jsdict[cmd+"xlabel"]
+            layout.yaxis.title.text=jsdict[cmd+"ylabel"]
+
+            layout.xaxis.type=jsdict[cmd+"xaxis"]
+            layout.yaxis.type=jsdict[cmd+"yaxis"]
+
+            layout.title.font.size=titlefontsize
+            layout.legend.font.size=legendfontsize
+            layout.xaxis.title.font.size=axisfontsize
+            layout.yaxis.title.font.size=axisfontsize
+
+            layout.xaxis.tickfont.size=tickfontsize
+            layout.yaxis.tickfont.size=tickfontsize
+            
+            data.push(trace)
+            
+        }
+        else if (jsdict[cmd]=="contour")
+        {
+            var x=jsdict[cmd+"x"]
+            var y=jsdict[cmd+"y"]
+            var z=create2DArray(jsdict[cmd+"z"],x.length,y.length)
+            var cstops=jsdict[cmd+"cstops"]
+            var colors=jsdict[cmd+"colors"]
+
+            var colorscale=make_colorscale(cstops,colors)
+
+            
+            var contour = {
+                type: 'contour',
+                x: x,
+                y: y,
+                z: z,
+                colorscale: colorscale,
+                contours: {
+                    coloring: 'heatmap',
+                    start: jsdict[cmd+"costart"],
+                    end: jsdict[cmd+"coend"],
+                    size: jsdict[cmd+"cosize"]
+                }
+            }
+            data.push(contour)
+        }
+        else if (jsdict[cmd]=="tricontour")
+        {
+            buttons=[["resetScale2d", "toImage","pan2d","hoverClosestCartesian"]]
+
+            var data=[]
+            // this is slower than vtk, but has hover and
+            var cstops=jsdict[cmd+"cstops"]
+            var colors=jsdict[cmd+"colors"]
+
+            var colorscale=make_colorscale(cstops,colors)
+            var f=jsdict[cmd+"f"]
+            var mesh = {
+                type: 'mesh3d',
+                x: jsdict[cmd+"x"],
+                y: jsdict[cmd+"y"],
+                z: jsdict[cmd+"z"],
+                i: jsdict[cmd+"i"],
+                j: jsdict[cmd+"j"],
+                k: jsdict[cmd+"k"],
+                intensity: f,
+                hovertemplate: "f(%{x},%{y})=%{intensity:0.3e}",
+                colorscale: colorscale,
+                colorbar: { thickness: 10,
+                            exponentformat: 'e',
+                            tickwidth: 1,
+                            tickvals: jsdict[cmd+"colorbarticks"],
+                            len: 0.8},
+                name : ''
+            }
+            layout.margin= {
+                l: 5,
+                r: 5,
+                b: 5,
+                t: 5,
+                pad: 0
+            },
+
+            
+            // shoehorn 3D scene into 2D mode
+            layout.scene={
+                dragmode : 'pan',
+                camera : {
+                    // dirty trick to get axis directions right (turntable rotation 180deg around z...)
+                    up: {x:0.0, y:0.0001, z:-2},
+                    eye: {x:-0.00000001, y:0.0, z:-2},
+                    projection: {
+                        hoverinfo: "x+y+text",
+                        type: 'orthographic'
+                    },
+                },
+                xaxis: { tickangle: 0,showspikes: false, autorange: "reversed"},
+                yaxis: { tickangle: 0,showspikes: false},
+                zaxis: { visible: false, showgrid: false,showspikes: false},
+            }
+            data.push(mesh)
+
+            var iso_x=jsdict[cmd+"iso_x"]
+            var iso_y=jsdict[cmd+"iso_y"]
+            var iso_z=jsdict[cmd+"iso_z"]
+            if (iso_x!="none")
+            {
+                var line = {
+                    type: 'scatter3d',
+                    x: iso_x,
+                    y: iso_y,
+                    z: iso_z,
+                    hoverinfo: "none",
+                    mode: 'lines',
+                    name: '',
+                    showlegend: false ,
+                    line: {
+                        color: "black"
+                        //                    width: jsdict[cmd+"linewidth"],
+                        //                    dash:  jsdict[cmd+"linestyle"],
+                    }
+                };
+                data.push(line)
+            }
+//           Plotly.newPlot(uuid, data,layout)
+        }
+        else if (jsdict[cmd]=="triplot"|| jsdict[cmd]=="triupdate")
+        { //  Experimental, slower than vtk
+
+            
+            var data = {
+                type: 'mesh3d',
+                x: jsdict[cmd+"x"],
+                y: jsdict[cmd+"y"],
+                z: jsdict[cmd+"z"],
+                i: jsdict[cmd+"i"],
+                j: jsdict[cmd+"j"],
+                k: jsdict[cmd+"k"],
+                facecolor: [0.75,0.75,0.75],
+                flatshading: false,
+                lightposition: {x: -10, y: 0, z:20},
+                lighting: {specular: 2,
+                           diffuse: 0.8,
+                           fresnel: 0.5,
+                           ambient: 0.25,
+                          },
+            }
+            
+            layout.scene={
+                aspectmode : 'cube',
+            }
+            
+            
+
+            //            if (jsdict[cmd]=="triplot")
+                Plotly.newPlot(uuid, [data],layout)
+            //            else
+            //                Plotly.react(uuid, [data],layout)
+            return
+        }
+    }
+    //,{displayModeBar: false,}
+    // after all plot commands
+    if (graphDiv.data==undefined)
+    {
+        Plotly.newPlot(uuid, data,layout, {modeBarButtons: buttons,})
+    }
+    else
+    {
+        Plotly.react(uuid, graphDiv.data,layout, {modeBarButtons: buttons,})
+    }
+
+    
+}
+
+var jsdict = /* See the documentation for PlutoRunner.publish_to_js */ getPublishedObject("694f594c-9688-11ec-0e16-5f0699171b58/785bb400-49be-4202-92de-c67c21bbfb50/3893b66b8bb35334")
+plutoplotlyplot("aa0134fe-9688-11ec-0075-ad34bcb053a2",jsdict,700.0, 350.0)        
+</script>
+<div id="aa0134fe-9688-11ec-0075-ad34bcb053a2" style= "width: 700.0px; height: 350.0px; ; display: inline-block;style="white-space:nowrap;"></div>
+°persist_js_stateÂ¤mime©text/html²last_run_timestampËAØ†UX¢z³·has_pluto_hook_featuresÂ¬rootassigneeÀ§cell_idÙ$785bb400-49be-4202-92de-c67c21bbfb50¹depends_on_disabled_cellsÂ§runtimeÎBmf"µpublished_object_keys‘ÙZ694f594c-9688-11ec-0e16-5f0699171b58/785bb400-49be-4202-92de-c67c21bbfb50/3893b66b8bb35334§erroredÂÙ$7b5e1bf4-95ad-11ec-0609-e9e5562d6103‰¦queuedÂ¤logs§runningÂ¦output†¤body °persist_js_stateÂ¤mimeªtext/plain²last_run_timestampËAØ†UOÖ"İ·has_pluto_hook_featuresÂ¬rootassigneeÀ§cell_idÙ$7b5e1bf4-95ad-11ec-0609-e9e5562d6103¹depends_on_disabled_cellsÂ§runtimeÏ   é}Ÿwµpublished_object_keys§erroredÂÙ$c0404d3d-6dd9-4209-bba2-36df46ad9e9a‰¦queuedÂ¤logs§runningÂ¦output†¤bodyÙÏ<div class="markdown"><p>Now adding some PlutoUI content and function for plotting. I&#39;ll hide the source code to keep this notebook a little bit cleaner. The plot below is what we end up with.</p>
+</div>°persist_js_stateÂ¤mime©text/html²last_run_timestampËAØ†U=Ak·has_pluto_hook_featuresÂ¬rootassigneeÀ§cell_idÙ$c0404d3d-6dd9-4209-bba2-36df46ad9e9a¹depends_on_disabled_cellsÂ§runtimeÎ )Åµpublished_object_keys§erroredÂÙ$d5d3fab5-589f-4280-9a3d-03ea555eb69a‰¦queuedÂ¤logs§runningÂ¦output†¤body °persist_js_stateÂ¤mimeªtext/plain²last_run_timestampËAØ†UV–if·has_pluto_hook_featuresÂ¬rootassigneeÀ§cell_idÙ$d5d3fab5-589f-4280-9a3d-03ea555eb69a¹depends_on_disabled_cellsÂ§runtimeÏ   £«¾Lµpublished_object_keys§erroredÂÙ$7c8a08a1-dddb-4e15-a2fa-c596296fc968‰¦queuedÂ¤logs§runningÂ¦output†¤bodyÚV<div class="markdown"><h2>Number of ML in science &amp; engineering</h2>
+<p>As mentioned, the repo by <a href="github.com/blaiszik/ml_publication_charts">Ben Blaiszik</a> has extracted this data using the Web of Science API. The keywords for his query where the following:</p>
+<pre><code>TS&#61;&#40;&quot;machine learning&quot; OR &quot;informatics&quot; OR &quot;deep learning&quot; OR &quot;cheminformatics&quot; OR &quot;chemoinformatics&quot; OR &quot;QSAR&quot; OR &quot;QSPR&quot;&#41; AND WC&#61;&quot;&#123;Domain&#125;&quot;</code></pre>
+<p>For this blog I&#39;m going to use his query <a href="https://raw.githubusercontent.com/blaiszik/ml_publication_charts/08cae74eba7aacf99c821af31c682f502b2e24ef/data/1-cat.csv">dataset</a> to plot the results.</p>
+<p>In the future I probably will create my own query but this is a good start. </p>
+</div>°persist_js_stateÂ¤mime©text/html²last_run_timestampËAØ†U=A:C·has_pluto_hook_featuresÂ¬rootassigneeÀ§cell_idÙ$7c8a08a1-dddb-4e15-a2fa-c596296fc968¹depends_on_disabled_cellsÂ§runtimeÎ ÊKµpublished_object_keys§erroredÂÙ$9eed38e2-1ecf-47f0-b458-ddc8dfb4d5ec‰¦queuedÂ¤logs§runningÂ¦output†¤bodyÚã<div class="markdown"><h2>Impact of ML in science</h2>
+<p>Clearly from the plot the last five years have seen a huge increase in number of ML related publications for all categories. Interesting, ngineering shows the biggest uptick. I assume a lot of that comes from EE and ME disciplines.</p>
+<p>I&#39;m particular interested in how materials science compares to physics, which shows about the same rate of change, with the physics community a bit ahead. </p>
+<p>Overall I think this is pretty interesting. Looking at the last 3 years for the number of publications within materials science that are related to machine learning have more than doubled. It is still less than 2&#37; of all materials science publications but I assume this trend will continue, especially if large materials data sets become available and standardization of material data representation is adopted. Maybe in 5-7 years 20&#37; of all materials science publications utilize some form of machine learning. </p>
+</div>°persist_js_stateÂ¤mime©text/html²last_run_timestampËAØ†U=Aˆ/·has_pluto_hook_featuresÂ¬rootassigneeÀ§cell_idÙ$9eed38e2-1ecf-47f0-b458-ddc8dfb4d5ec¹depends_on_disabled_cellsÂ§runtimeÎ æµpublished_object_keys§erroredÂÙ$b2ba95f2-b9b7-4f0d-9195-e5f4d2af773f‰¦queuedÂ¤logs§runningÂ¦output†¤bodyÚW<div class="markdown"><h1>Machine Learning Activity in Materials Science</h1>
+<p><strong>Author: Stefan Bringuier</strong></p>
+<p>In 2014 I started to get very interested in materials informatics and the use machine learning tools in materials science. At that time the activities were mostly driven by members and funded projects associated with the <a href="https://www.mgi.gov/">White House Materials Genome Initiatve</a> that had been recently signed into law. </p>
+<p>At that time there wasn&#39;t a great deal of ML literature specifically focused on materials science applications and tutorial/learning content was very sparse. However as time has gone on the application of ML has signficantly grown, especially with the significant expansion of various databases like the <a href="https://materialsproject.org/">Materials Project</a> and <a href="http://www.aflowlib.org/">AFLOW</a>.</p>
+<p>Now materials informatics is becoming serious component in materials science and engineering research. There are now specific <a href="https://engineering.buffalo.edu/materials-design-innovation/about-mdi.html">schools/programs</a> exist focused on this subarea of materials science and engineering. </p>
+<p>I was curious about what the trend looks like for the number of publications year-over-year for keywords &quot;machine learning&quot; and &quot;materials science&quot;. It turns out that this activity is just a repeat of <a href="github.com/blaiszik/ml_publication_charts">Ben Blaiszik&#39;s repo</a> work. However, I&#39;m just going to do it here for my reference so that I can easily come back to it. </p>
+</div>°persist_js_stateÂ¤mime©text/html²last_run_timestampËAØ†U=@é·has_pluto_hook_featuresÂ¬rootassigneeÀ§cell_idÙ$b2ba95f2-b9b7-4f0d-9195-e5f4d2af773f¹depends_on_disabled_cellsÂ§runtimeÎ Pæµpublished_object_keys§erroredÂÙ$3cf0f5a4-d1a5-4238-9d1b-f88615cc0e57‰¦queuedÂ¤logs§runningÂ¦output†¤body °persist_js_stateÂ¤mimeªtext/plain²last_run_timestampËAØ†UVÜ÷ù·has_pluto_hook_featuresÂ¬rootassigneeÀ§cell_idÙ$3cf0f5a4-d1a5-4238-9d1b-f88615cc0e57¹depends_on_disabled_cellsÂ§runtimeÎX0µpublished_object_keys§erroredÂÙ$6c91dca2-deb2-48f7-9cb8-41e950a913ed‰¦queuedÂ¤logs§runningÂ¦output†¤body °persist_js_stateÂ¤mimeªtext/plain²last_run_timestampËAØ†UPuÎ‰·has_pluto_hook_featuresÂ¬rootassigneeÀ§cell_idÙ$6c91dca2-deb2-48f7-9cb8-41e950a913ed¹depends_on_disabled_cellsÂ§runtimeÍÜPµpublished_object_keys§erroredÂÙ$7ec4b760-6b85-4ce2-af3d-c675da11f87f‰¦queuedÂ¤logs§runningÂ¦output†¤bodyÚ <script>const getParentCell = el => el.closest("pluto-cell")
+
+const getHeaders = () => {
+	const depth = Math.max(1, Math.min(6, 5)) // should be in range 1:6
+	const range = Array.from({length: depth}, (x, i) => i+1) // [1, ..., depth]
+	
+	const selector = range.map(i => `pluto-notebook pluto-cell h${i}`).join(",")
+	return Array.from(document.querySelectorAll(selector))
+}
+
+const indent = true
+const aside = true
+
+const render = (el) => html`${el.map(h => {
+	const parent_cell = getParentCell(h)
+
+	const a = html`<a 
+		class="${h.nodeName}" 
+		href="#${parent_cell.id}"
+	>${h.innerText}</a>`
+	/* a.onmouseover=()=>{
+		parent_cell.firstElementChild.classList.add(
+			'highlight-pluto-cell-shoulder'
+		)
+	}
+	a.onmouseout=() => {
+		parent_cell.firstElementChild.classList.remove(
+			'highlight-pluto-cell-shoulder'
+		)
+	} */
+	a.onclick=(e) => {
+		e.preventDefault();
+		h.scrollIntoView({
+			behavior: 'smooth', 
+			block: 'start'
+		})
+	}
+
+	return html`<div class="toc-row">${a}</div>`
+})}`
+
+const tocNode = html`<nav class="plutoui-toc">
+	<header>ğŸ“š Table of Contents</header>
+	<section></section>
+</nav>`
+tocNode.classList.toggle("aside", aside)
+tocNode.classList.toggle("indent", indent)
+
+const updateCallback = () => {
+	tocNode.querySelector("section").replaceWith(
+		html`<section>${render(getHeaders())}</section>`
+	)
+}
+updateCallback()
+
+
+const notebook = document.querySelector("pluto-notebook")
+
+
+// We have a mutationobserver for each cell:
+const observers = {
+	current: [],
+}
+
+const createCellObservers = () => {
+	observers.current.forEach((o) => o.disconnect())
+	observers.current = Array.from(notebook.querySelectorAll("pluto-cell")).map(el => {
+		const o = new MutationObserver(updateCallback)
+		o.observe(el, {attributeFilter: ["class"]})
+		return o
+	})
+}
+createCellObservers()
+
+// And one for the notebook's child list, which updates our cell observers:
+const notebookObserver = new MutationObserver(() => {
+	updateCallback()
+	createCellObservers()
+})
+notebookObserver.observe(notebook, {childList: true})
+
+// And finally, an observer for the document.body classList, to make sure that the toc also works when if is loaded during notebook initialization
+const bodyClassObserver = new MutationObserver(updateCallback)
+bodyClassObserver.observe(document.body, {attributeFilter: ["class"]})
+
+invalidation.then(() => {
+	notebookObserver.disconnect()
+	bodyClassObserver.disconnect()
+	observers.current.forEach((o) => o.disconnect())
+})
+
+return tocNode
+</script><style>@media screen and (min-width: 1081px) {
+	.plutoui-toc.aside {
+		position:fixed; 
+		right: 1rem;
+		top: 5rem; 
+		width:25%; 
+		padding: 10px;
+		border: 3px solid rgba(0, 0, 0, 0.15);
+		border-radius: 10px;
+		box-shadow: 0 0 11px 0px #00000010;
+		/* That is, viewport minus top minus Live Docs */
+		max-height: calc(100vh - 5rem - 56px);
+		overflow: auto;
+		z-index: 40;
+		background: white;
+	}
+}
+
+.plutoui-toc header {
+	display: block;
+	font-size: 1.5em;
+	margin-top: 0.67em;
+	margin-bottom: 0.67em;
+	margin-left: 0;
+	margin-right: 0;
+	font-weight: bold;
+	border-bottom: 2px solid rgba(0, 0, 0, 0.15);
+}
+
+.plutoui-toc section .toc-row {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-bottom: 2px;
+}
+
+.highlight-pluto-cell-shoulder {
+	background: rgba(0, 0, 0, 0.05);
+	background-clip: padding-box;
+}
+
+.plutoui-toc section a {
+	text-decoration: none;
+	font-weight: normal;
+	color: gray;
+}
+.plutoui-toc section a:hover {
+	color: black;
+}
+
+.plutoui-toc.indent section a.H1 {
+	font-weight: 700;
+	line-height: 1em;
+}
+
+.plutoui-toc.indent section a.H1 {
+	padding-left: 0px;
+}
+.plutoui-toc.indent section a.H2 {
+	padding-left: 10px;
+}
+.plutoui-toc.indent section a.H3 {
+	padding-left: 20px;
+}
+.plutoui-toc.indent section a.H4 {
+	padding-left: 30px;
+}
+.plutoui-toc.indent section a.H5 {
+	padding-left: 40px;
+}
+.plutoui-toc.indent section a.H6 {
+	padding-left: 50px;
+}
+</style>°persist_js_stateÂ¤mime©text/html²last_run_timestampËAØ†UX³ÆÎ·has_pluto_hook_featuresÂ¬rootassigneeÀ§cell_idÙ$7ec4b760-6b85-4ce2-af3d-c675da11f87f¹depends_on_disabled_cellsÂ§runtimeÎ xÌµpublished_object_keys§erroredÂ±cell_dependenciesÙ$246b640d-e3aa-443c-b2e9-4e2dee651369„´precedence_heuristic	§cell_idÙ$246b640d-e3aa-443c-b2e9-4e2dee651369´downstream_cells_map¸anon17425904769299908026²upstream_cells_map„§filter!¤data‘Ù$d5d3fab5-589f-4280-9a3d-03ea555eb69a¢!=¢==Ù$00d1921e-3c43-4dcb-98c6-8249b386e993„´precedence_heuristic	§cell_idÙ$00d1921e-3c43-4dcb-98c6-8249b386e993´downstream_cells_map¡r‘Ù$7c4cbc96-3918-48cb-853f-5a71c037dcdd²upstream_cells_mapŒ§minimum¤Core¡!¤data‘Ù$d5d3fab5-589f-4280-9a3d-03ea555eb69a¨Base.get¤Base«PlutoRunner·PlutoRunner.create_bond¥range¯variablesliders‘Ù$b87811d3-d4f4-42b6-ac4c-561738f35cf9¯Core.applicable§maximumÙ$e9a01445-4050-4c12-9a2f-d2e783a912c6„´precedence_heuristic	§cell_idÙ$e9a01445-4050-4c12-9a2f-d2e783a912c6´downstream_cells_map€²upstream_cells_map¨getindexÙ$b87811d3-d4f4-42b6-ac4c-561738f35cf9„´precedence_heuristic	§cell_idÙ$b87811d3-d4f4-42b6-ac4c-561738f35cf9´downstream_cells_map¯variablesliders‘Ù$00d1921e-3c43-4dcb-98c6-8249b386e993²upstream_cells_mapˆ«RangeSlider§PlutoUI‘Ù$7b5e1bf4-95ad-11ec-0609-e9e5562d6103·HypertextLiteral.Result°HypertextLiteral‘Ù$7b5e1bf4-95ad-11ec-0609-e9e5562d6103¯PlutoUI.combine·HypertextLiteral.Bypass¸HypertextLiteral.content¤@htlÙ$7c4cbc96-3918-48cb-853f-5a71c037dcdd„´precedence_heuristic	§cell_idÙ$7c4cbc96-3918-48cb-853f-5a71c037dcdd´downstream_cells_map¬plotted_data‘Ù$785bb400-49be-4202-92de-c67c21bbfb50²upstream_cells_mapˆ§extrema¦unique¡!¤plot¦filter¥plot!¡r‘Ù$00d1921e-3c43-4dcb-98c6-8249b386e993¢==Ù$785bb400-49be-4202-92de-c67c21bbfb50„´precedence_heuristic	§cell_idÙ$785bb400-49be-4202-92de-c67c21bbfb50´downstream_cells_map€²upstream_cells_map‚¬plotted_data‘Ù$7c4cbc96-3918-48cb-853f-5a71c037dcdd¤data‘Ù$d5d3fab5-589f-4280-9a3d-03ea555eb69aÙ$7b5e1bf4-95ad-11ec-0609-e9e5562d6103„´precedence_heuristic§cell_idÙ$7b5e1bf4-95ad-11ec-0609-e9e5562d6103´downstream_cells_map…£CSV‘Ù$d5d3fab5-589f-4280-9a3d-03ea555eb69a§PlutoUI‘Ù$b87811d3-d4f4-42b6-ac4c-561738f35cf9ªDataFrames°HypertextLiteral‘Ù$b87811d3-d4f4-42b6-ac4c-561738f35cf9ªPlutoVista²upstream_cells_map€Ù$c0404d3d-6dd9-4209-bba2-36df46ad9e9a„´precedence_heuristic	§cell_idÙ$c0404d3d-6dd9-4209-bba2-36df46ad9e9a´downstream_cells_map€²upstream_cells_map¨getindexÙ$d5d3fab5-589f-4280-9a3d-03ea555eb69a„´precedence_heuristic	§cell_idÙ$d5d3fab5-589f-4280-9a3d-03ea555eb69a´downstream_cells_map¤data”Ù$246b640d-e3aa-443c-b2e9-4e2dee651369Ù$3cf0f5a4-d1a5-4238-9d1b-f88615cc0e57Ù$00d1921e-3c43-4dcb-98c6-8249b386e993Ù$785bb400-49be-4202-92de-c67c21bbfb50²upstream_cells_map†£CSV‘Ù$7b5e1bf4-95ad-11ec-0609-e9e5562d6103¨CSV.File¢|>©DataFrame¨download£url‘Ù$6c91dca2-deb2-48f7-9cb8-41e950a913edÙ$7c8a08a1-dddb-4e15-a2fa-c596296fc968„´precedence_heuristic	§cell_idÙ$7c8a08a1-dddb-4e15-a2fa-c596296fc968´downstream_cells_map€²upstream_cells_map¨getindexÙ$9eed38e2-1ecf-47f0-b458-ddc8dfb4d5ec„´precedence_heuristic	§cell_idÙ$9eed38e2-1ecf-47f0-b458-ddc8dfb4d5ec´downstream_cells_map€²upstream_cells_map¨getindexÙ$b2ba95f2-b9b7-4f0d-9195-e5f4d2af773f„´precedence_heuristic	§cell_idÙ$b2ba95f2-b9b7-4f0d-9195-e5f4d2af773f´downstream_cells_map€²upstream_cells_map¨getindexÙ$3cf0f5a4-d1a5-4238-9d1b-f88615cc0e57„´precedence_heuristic	§cell_idÙ$3cf0f5a4-d1a5-4238-9d1b-f88615cc0e57´downstream_cells_map€²upstream_cells_map„¡!¡/¤data‘Ù$d5d3fab5-589f-4280-9a3d-03ea555eb69a¡*Ù$6c91dca2-deb2-48f7-9cb8-41e950a913ed„´precedence_heuristic	§cell_idÙ$6c91dca2-deb2-48f7-9cb8-41e950a913ed´downstream_cells_map£url‘Ù$d5d3fab5-589f-4280-9a3d-03ea555eb69a²upstream_cells_map€Ù$7ec4b760-6b85-4ce2-af3d-c675da11f87f„´precedence_heuristic	§cell_idÙ$7ec4b760-6b85-4ce2-af3d-c675da11f87f´downstream_cells_map€²upstream_cells_map¯TableOfContents´cell_execution_orderŸÙ$7b5e1bf4-95ad-11ec-0609-e9e5562d6103Ù$b2ba95f2-b9b7-4f0d-9195-e5f4d2af773fÙ$7c8a08a1-dddb-4e15-a2fa-c596296fc968Ù$6c91dca2-deb2-48f7-9cb8-41e950a913edÙ$d5d3fab5-589f-4280-9a3d-03ea555eb69aÙ$e9a01445-4050-4c12-9a2f-d2e783a912c6Ù$246b640d-e3aa-443c-b2e9-4e2dee651369Ù$3cf0f5a4-d1a5-4238-9d1b-f88615cc0e57Ù$c0404d3d-6dd9-4209-bba2-36df46ad9e9aÙ$b87811d3-d4f4-42b6-ac4c-561738f35cf9Ù$00d1921e-3c43-4dcb-98c6-8249b386e993Ù$7c4cbc96-3918-48cb-853f-5a71c037dcddÙ$785bb400-49be-4202-92de-c67c21bbfb50Ù$9eed38e2-1ecf-47f0-b458-ddc8dfb4d5ecÙ$7ec4b760-6b85-4ce2-af3d-c675da11f87f´last_hot_reload_timeË        ©shortpath¬ML_MatSci.jl®process_status¥ready¤pathÙT/home/runner/work/PlutoNotebookBlogging/PlutoNotebookBlogging/notebooks/ML_MatSci.jl®last_save_timeËAØ†U=5g©ªcell_orderŸÙ$b2ba95f2-b9b7-4f0d-9195-e5f4d2af773fÙ$7c8a08a1-dddb-4e15-a2fa-c596296fc968Ù$6c91dca2-deb2-48f7-9cb8-41e950a913edÙ$d5d3fab5-589f-4280-9a3d-03ea555eb69aÙ$e9a01445-4050-4c12-9a2f-d2e783a912c6Ù$246b640d-e3aa-443c-b2e9-4e2dee651369Ù$3cf0f5a4-d1a5-4238-9d1b-f88615cc0e57Ù$c0404d3d-6dd9-4209-bba2-36df46ad9e9aÙ$b87811d3-d4f4-42b6-ac4c-561738f35cf9Ù$00d1921e-3c43-4dcb-98c6-8249b386e993Ù$7c4cbc96-3918-48cb-853f-5a71c037dcddÙ$785bb400-49be-4202-92de-c67c21bbfb50Ù$9eed38e2-1ecf-47f0-b458-ddc8dfb4d5ecÙ$7b5e1bf4-95ad-11ec-0609-e9e5562d6103Ù$7ec4b760-6b85-4ce2-af3d-c675da11f87f±published_objectsÙZ694f594c-9688-11ec-0e16-5f0699171b58/785bb400-49be-4202-92de-c67c21bbfb50/3893b66b8bb35334Ş ~«3legendxpos¡l¡1¤plot§2ylabel­% ML Articles¨2ylimits×    çû½@¡2¤plot«2legendypos¡t«1markertype¦circleª4linestyle¥solid«3markersize
+«2markersize
+«1legendxpos¡l«2legendxpos¡l§3xlabel¥Years¦2color¤autoª5linestyle¥solid¨1ylimits×    çû½@®1titlefontsize«4markertype¦circle«3markertype¦circle¢2yÇ°®˜kÀ‡ÿ?Qÿåsø?M‘0Å>–ğ?ox•ÍZØç?pÒõ0©ƒá?T¾ë&1Ş?ø9.¸iŞ?9\'LûÛ?¢˜
+™8uà?ø—s6Úà?4E#¶ÃUà?]x$]$òà?	¯QYÔâ?N"i2sá?Ä‹áÄâxß?NÅ^£Ş?ÂRÕëOŞ?2Yàºf Ş?ÚÁå²‘Ú?W–·ê®Ú×?†ôÑû%;Õ?²#ÎáÒ?¦4yaxis¦linear«4legendypos¡t¢1xÜ ÍåÍäÍãÍâÍáÍàÍßÍŞÍİÍÜÍÛÍÚÍÙÍØÍ×ÍÖÍÕÍÔÍÓÍÒÍÑÍĞ¦3yaxis¦linear¦3color¤auto«5markersize
+­1tickfontsize
+¦2clear ¯3legendfontsize
+¯5legendfontsize
+ª3linewidth¢2xÜ ÍåÍäÍãÍâÍáÍàÍßÍŞÍİÍÜÍÛÍÚÍÙÍØÍ×ÍÖÍÕÍÔÍÓÍÒÍÑÍĞ¬1markercountÍĞ§4ylabel­% ML Articles¢3yÇ°aÒ¾õ$@şKd‰â“û?!dAùÊIï?-u>æÿğŞ?²¬	Ğ?]";A¢âÂ?X>Ğ`»?¸ÿQÊ°?`X‰ı­?ğ ¦?Kàª"/ª?m(¨¢?><}.}K¤?¥ìö^¡?ÚvpA, ?>WS¢+ß›?ŠƒÌ°q ?•‹Ü€ò?uKO‰ËÒ‡?×¥éS©?¯éB“qƒ?k+DòÎ,Š?«3showlegend§5ylabel­% ML Articles§2xlabel¥Years¨5ylimits×    çû½@¦5clear ¦2label©Chemistryª2linewidth¦2xaxis¦linear®3titlefontsize¡5¤plot¦5color¤auto¦3xaxis¦linearª1linewidth¦3label§Physics®4titlefontsize¨3ylimits×    çû½@­3tickfontsize
+«1markersize
+¦3title ®5titlefontsize¬3markercountÍĞ¢1yÇ°²ß…ÿù?êÏ4’Âäñ?—–––––ä?Š.ÀŠÒ?D¼ÍİÃ?CëŞñbÅµ?¾ÖZµ-¯´?+}YNYMª?ñ†½%©¢¤?¬ÄT|jš?I-¿5?Í:ñ)Và¡?ßHç¨\8ª?,¥45º Ÿ?…Ùü0¬Xœ?Ï‰¦¯¡?ıùÈÎ\˜? Ä í£?µÛ ¬c?åÖÑou?kº tb?oD…A?‡?¦4title ¬2markercountÍĞ¨5xlimits×  úD  üD¯4legendfontsize
+¦1title «4legendxpos¡l«5showlegendª2linestyle¥solid«1showlegend­1axisfontsize
+§3ylabel­% ML Articles«2showlegend¦1yaxis¦linear§1xlabel¥Years¨3xlimits×  úD  üD­2tickfontsize
+¯2legendfontsize
+¦3clear ¦2title ¦4labelÙ Biochemistry & Molecular Biologyª5linewidth¬5markercountÍĞ§5xlabel¥Years«5markertype¦circle¦1label±Materials Scienceª1linestyle¥solid¢5yÇ°h®±Rã¿@ãRç…ï@\Ğ¹üê*@4úè"áAú?ª%§ÚËì?÷9¬œËä?M)Rs,‡ß?æn’”vÚ?Ñ=õÑÖ?chfhÔ?¹‹ÔÉ,Ô? 6Ï—vvÓ?ßõº‡@Ğ?an½ÊíË?ÔÃæ˜Æ?ÊzLyË?.^Í[Ä?wşR‰®ÜÁ?­¤)9é»?à4íùÑV¸?<ŠN¢¨<¶?õÜ$ôs²?­5axisfontsize
+¦1xaxis¦linear¦1clear ­3axisfontsize
+­5tickfontsize
+¦2yaxis¦linear«4markersize
+¦5label«Engineering¨cmdcount«3legendypos¡t«2markertype¦circle¬4markercountÍĞ§4xlabel¥Years¦5xaxis¦linearª4linewidth­2axisfontsize
+¡4¤plot¢4yÇ°6¼Jô?¤•çîGğ?•>\Œº¨ë?¡û/dˆÊå?¾¿èø	ß?ÇT8qÿâÛ?€ïñG|µÚ?g‰fİÑ×?w’ŠÆyÔ?+%Qˆœİ?s¢F÷aà?§Îœ/À£Û?®ã$eQ Ü?èSƒuĞŞ?–IšsÚ?Núú/Ø?V;+Ã´Ò?!8Êºš/Ô?Go'~Ğ?ø4ØmŞîÊ?ğ6ãà¡È?*<Ú(›¾?¦5yaxis¦linear«1legendypos¡t¦4xaxis¦linear¢5xÜ ÍåÍäÍãÍâÍáÍàÍßÍŞÍİÍÜÍÛÍÚÍÙÍØÍ×ÍÖÍÕÍÔÍÓÍÒÍÑÍĞ¨1xlimits×  úD  üD¦4clear ­4tickfontsize
+¨4xlimits×  úD  üD«5legendypos¡t¨4ylimits×    çû½@«5legendxpos¡l¦4color¤auto®2titlefontsize§1ylabel­% ML Articles¢4xÜ ÍåÍäÍãÍâÍáÍàÍßÍŞÍİÍÜÍÛÍÚÍÙÍØÍ×ÍÖÍÕÍÔÍÓÍÒÍÑÍĞ¦5title ª3linestyle¥solid¦1color¤auto¨2xlimits×  úD  üD«4showlegend­4axisfontsize
+¢3xÜ ÍåÍäÍãÍâÍáÍàÍßÍŞÍİÍÜÍÛÍÚÍÙÍØÍ×ÍÖÍÕÍÔÍÓÍÒÍÑÍĞ¯1legendfontsize
+¡3¤plot¥nbpkg‡²installed_versions…£CSV¦0.10.1§PlutoUI¦0.7.30ªDataFrames¥1.3.1°HypertextLiteral¥0.9.3ªPlutoVista¦0.8.12°terminal_outputs…£CSVÚ,[32m[1m   Installed[22m[39m IOCapture â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.2.2
+[32m[1m   Installed[22m[39m PkgVersion â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.1.1
+[32m[1m   Installed[22m[39m Preferences â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.2.3
+[32m[1m   Installed[22m[39m CodecZlib â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.7.0
+[32m[1m   Installed[22m[39m StructArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.6.4
+[32m[1m   Installed[22m[39m AbstractPlutoDingetjes â”€ v1.1.4
+[32m[1m   Installed[22m[39m SentinelArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.11
+[32m[1m   Installed[22m[39m PooledArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.4.0
+[32m[1m   Installed[22m[39m Hyperscript â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.0.4
+[32m[1m   Installed[22m[39m PlutoUI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.7.30
+[32m[1m   Installed[22m[39m GridVisualize â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.4.6
+[32m[1m   Installed[22m[39m StaticArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.2
+[32m[1m   Installed[22m[39m JLLWrappers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.4.0
+[32m[1m   Installed[22m[39m DataFrames â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.1
+[32m[1m   Installed[22m[39m WeakRefStrings â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.4.1
+[32m[1m   Installed[22m[39m Observables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.4.0
+[32m[1m   Installed[22m[39m Parsers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v2.2.0
+[32m[1m   Installed[22m[39m HypertextLiteral â”€â”€â”€â”€â”€â”€â”€ v0.9.3
+[32m[1m   Installed[22m[39m ExtendableGrids â”€â”€â”€â”€â”€â”€â”€â”€ v0.8.11
+[32m[1m   Installed[22m[39m InlineStrings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.1.1
+[32m[1m   Installed[22m[39m InvertedIndices â”€â”€â”€â”€â”€â”€â”€â”€ v1.1.0
+[32m[1m   Installed[22m[39m Crayons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v4.1.0
+[32m[1m   Installed[22m[39m TranscodingStreams â”€â”€â”€â”€â”€ v0.9.6
+[32m[1m   Installed[22m[39m PlutoVista â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.8.12
+[32m[1m   Installed[22m[39m FilePathsBase â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.9.17
+[32m[1m   Installed[22m[39m CSV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.10.1
+[32m[1m   Installed[22m[39m PrettyTables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.1
+[32m[1m   Installed[22m[39m ColorSchemes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v3.16.0
+[32m[1m  No Changes[22m[39m to `/tmp/jl_Irm9Ey/Project.toml`
+[32m[1m  No Changes[22m[39m to `/tmp/jl_Irm9Ey/Manifest.toml`
+[32m[1mPrecompiling[22m[39m project...
+[32m  âœ“ [39m[90mObservables[39m
+[32m  âœ“ [39mHypertextLiteral
+[32m  âœ“ [39m[90mHyperscript[39m
+[32m  âœ“ [39m[90mPkgVersion[39m
+[32m  âœ“ [39m[90mTranscodingStreams[39m
+[32m  âœ“ [39m[90mInvertedIndices[39m
+[32m  âœ“ [39m[90mIOCapture[39m
+[32m  âœ“ [39m[90mAbstractPlutoDingetjes[39m
+[32m  âœ“ [39m[90mAdapt[39m
+[32m  âœ“ [39m[90mReexport[39m
+[32m  âœ“ [39m[90mSentinelArrays[39m
+[32m  âœ“ [39m[90mDocStringExtensions[39m
+[32m  âœ“ [39m[90mCompat[39m
+[33m  âœ“ [39m[90mPreferences[39m
+[32m  âœ“ [39m[90mIterTools[39m
+[32m  âœ“ [39m[90mCrayons[39m
+[33m  âœ“ [39m[90mParsers[39m
+[32m  âœ“ [39m[90mDataAPI[39m
+[32m  âœ“ [39m[90mCodecZlib[39m
+[32m  âœ“ [39m[90mElasticArrays[39m
+[32m  âœ“ [39m[90mDataStructures[39m
+[32m  âœ“ [39m[90mFilePathsBase[39m
+[33m  âœ“ [39m[90mJLLWrappers[39m
+[32m  âœ“ [39m[90mColors[39m
+[32m  âœ“ [39m[90mStaticArrays[39m
+[32m  âœ“ [39m[90mMissings[39m
+[33m  âœ“ [39m[90mJSON[39m
+[32m  âœ“ [39m[90mInlineStrings[39m
+[32m  âœ“ [39m[90mPooledArrays[39m
+[32m  âœ“ [39m[90mTables[39m
+[32m  âœ“ [39m[90mSortingAlgorithms[39m
+[32m  âœ“ [39m[90mEarCut_jll[39m
+[32m  âœ“ [39m[90mExtendableGrids[39m
+[32m  âœ“ [39m[90mWeakRefStrings[39m
+[32m  âœ“ [39m[90mColorSchemes[39m
+[32m  âœ“ [39m[90mStructArrays[39m
+[32m  âœ“ [39m[90mPrettyTables[39m
+[32m  âœ“ [39mPlutoUI
+[32m  âœ“ [39mCSV
+[32m  âœ“ [39m[90mGeometryBasics[39m
+[32m  âœ“ [39m[90mGridVisualize[39m
+[32m  âœ“ [39mPlutoVista
+[32m  âœ“ [39mDataFrames
+  43 dependencies successfully precompiled in 52 seconds (11 already precompiled)
+  [33m4[39m dependencies precompiled but different versions are currently loaded. Restart julia to access the new versions
+§PlutoUIÚ,[32m[1m   Installed[22m[39m IOCapture â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.2.2
+[32m[1m   Installed[22m[39m PkgVersion â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.1.1
+[32m[1m   Installed[22m[39m Preferences â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.2.3
+[32m[1m   Installed[22m[39m CodecZlib â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.7.0
+[32m[1m   Installed[22m[39m StructArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.6.4
+[32m[1m   Installed[22m[39m AbstractPlutoDingetjes â”€ v1.1.4
+[32m[1m   Installed[22m[39m SentinelArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.11
+[32m[1m   Installed[22m[39m PooledArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.4.0
+[32m[1m   Installed[22m[39m Hyperscript â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.0.4
+[32m[1m   Installed[22m[39m PlutoUI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.7.30
+[32m[1m   Installed[22m[39m GridVisualize â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.4.6
+[32m[1m   Installed[22m[39m StaticArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.2
+[32m[1m   Installed[22m[39m JLLWrappers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.4.0
+[32m[1m   Installed[22m[39m DataFrames â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.1
+[32m[1m   Installed[22m[39m WeakRefStrings â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.4.1
+[32m[1m   Installed[22m[39m Observables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.4.0
+[32m[1m   Installed[22m[39m Parsers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v2.2.0
+[32m[1m   Installed[22m[39m HypertextLiteral â”€â”€â”€â”€â”€â”€â”€ v0.9.3
+[32m[1m   Installed[22m[39m ExtendableGrids â”€â”€â”€â”€â”€â”€â”€â”€ v0.8.11
+[32m[1m   Installed[22m[39m InlineStrings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.1.1
+[32m[1m   Installed[22m[39m InvertedIndices â”€â”€â”€â”€â”€â”€â”€â”€ v1.1.0
+[32m[1m   Installed[22m[39m Crayons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v4.1.0
+[32m[1m   Installed[22m[39m TranscodingStreams â”€â”€â”€â”€â”€ v0.9.6
+[32m[1m   Installed[22m[39m PlutoVista â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.8.12
+[32m[1m   Installed[22m[39m FilePathsBase â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.9.17
+[32m[1m   Installed[22m[39m CSV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.10.1
+[32m[1m   Installed[22m[39m PrettyTables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.1
+[32m[1m   Installed[22m[39m ColorSchemes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v3.16.0
+[32m[1m  No Changes[22m[39m to `/tmp/jl_Irm9Ey/Project.toml`
+[32m[1m  No Changes[22m[39m to `/tmp/jl_Irm9Ey/Manifest.toml`
+[32m[1mPrecompiling[22m[39m project...
+[32m  âœ“ [39m[90mObservables[39m
+[32m  âœ“ [39mHypertextLiteral
+[32m  âœ“ [39m[90mHyperscript[39m
+[32m  âœ“ [39m[90mPkgVersion[39m
+[32m  âœ“ [39m[90mTranscodingStreams[39m
+[32m  âœ“ [39m[90mInvertedIndices[39m
+[32m  âœ“ [39m[90mIOCapture[39m
+[32m  âœ“ [39m[90mAbstractPlutoDingetjes[39m
+[32m  âœ“ [39m[90mAdapt[39m
+[32m  âœ“ [39m[90mReexport[39m
+[32m  âœ“ [39m[90mSentinelArrays[39m
+[32m  âœ“ [39m[90mDocStringExtensions[39m
+[32m  âœ“ [39m[90mCompat[39m
+[33m  âœ“ [39m[90mPreferences[39m
+[32m  âœ“ [39m[90mIterTools[39m
+[32m  âœ“ [39m[90mCrayons[39m
+[33m  âœ“ [39m[90mParsers[39m
+[32m  âœ“ [39m[90mDataAPI[39m
+[32m  âœ“ [39m[90mCodecZlib[39m
+[32m  âœ“ [39m[90mElasticArrays[39m
+[32m  âœ“ [39m[90mDataStructures[39m
+[32m  âœ“ [39m[90mFilePathsBase[39m
+[33m  âœ“ [39m[90mJLLWrappers[39m
+[32m  âœ“ [39m[90mColors[39m
+[32m  âœ“ [39m[90mStaticArrays[39m
+[32m  âœ“ [39m[90mMissings[39m
+[33m  âœ“ [39m[90mJSON[39m
+[32m  âœ“ [39m[90mInlineStrings[39m
+[32m  âœ“ [39m[90mPooledArrays[39m
+[32m  âœ“ [39m[90mTables[39m
+[32m  âœ“ [39m[90mSortingAlgorithms[39m
+[32m  âœ“ [39m[90mEarCut_jll[39m
+[32m  âœ“ [39m[90mExtendableGrids[39m
+[32m  âœ“ [39m[90mWeakRefStrings[39m
+[32m  âœ“ [39m[90mColorSchemes[39m
+[32m  âœ“ [39m[90mStructArrays[39m
+[32m  âœ“ [39m[90mPrettyTables[39m
+[32m  âœ“ [39mPlutoUI
+[32m  âœ“ [39mCSV
+[32m  âœ“ [39m[90mGeometryBasics[39m
+[32m  âœ“ [39m[90mGridVisualize[39m
+[32m  âœ“ [39mPlutoVista
+[32m  âœ“ [39mDataFrames
+  43 dependencies successfully precompiled in 52 seconds (11 already precompiled)
+  [33m4[39m dependencies precompiled but different versions are currently loaded. Restart julia to access the new versions
+ªDataFramesÚ,[32m[1m   Installed[22m[39m IOCapture â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.2.2
+[32m[1m   Installed[22m[39m PkgVersion â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.1.1
+[32m[1m   Installed[22m[39m Preferences â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.2.3
+[32m[1m   Installed[22m[39m CodecZlib â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.7.0
+[32m[1m   Installed[22m[39m StructArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.6.4
+[32m[1m   Installed[22m[39m AbstractPlutoDingetjes â”€ v1.1.4
+[32m[1m   Installed[22m[39m SentinelArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.11
+[32m[1m   Installed[22m[39m PooledArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.4.0
+[32m[1m   Installed[22m[39m Hyperscript â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.0.4
+[32m[1m   Installed[22m[39m PlutoUI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.7.30
+[32m[1m   Installed[22m[39m GridVisualize â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.4.6
+[32m[1m   Installed[22m[39m StaticArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.2
+[32m[1m   Installed[22m[39m JLLWrappers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.4.0
+[32m[1m   Installed[22m[39m DataFrames â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.1
+[32m[1m   Installed[22m[39m WeakRefStrings â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.4.1
+[32m[1m   Installed[22m[39m Observables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.4.0
+[32m[1m   Installed[22m[39m Parsers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v2.2.0
+[32m[1m   Installed[22m[39m HypertextLiteral â”€â”€â”€â”€â”€â”€â”€ v0.9.3
+[32m[1m   Installed[22m[39m ExtendableGrids â”€â”€â”€â”€â”€â”€â”€â”€ v0.8.11
+[32m[1m   Installed[22m[39m InlineStrings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.1.1
+[32m[1m   Installed[22m[39m InvertedIndices â”€â”€â”€â”€â”€â”€â”€â”€ v1.1.0
+[32m[1m   Installed[22m[39m Crayons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v4.1.0
+[32m[1m   Installed[22m[39m TranscodingStreams â”€â”€â”€â”€â”€ v0.9.6
+[32m[1m   Installed[22m[39m PlutoVista â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.8.12
+[32m[1m   Installed[22m[39m FilePathsBase â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.9.17
+[32m[1m   Installed[22m[39m CSV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.10.1
+[32m[1m   Installed[22m[39m PrettyTables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.1
+[32m[1m   Installed[22m[39m ColorSchemes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v3.16.0
+[32m[1m  No Changes[22m[39m to `/tmp/jl_Irm9Ey/Project.toml`
+[32m[1m  No Changes[22m[39m to `/tmp/jl_Irm9Ey/Manifest.toml`
+[32m[1mPrecompiling[22m[39m project...
+[32m  âœ“ [39m[90mObservables[39m
+[32m  âœ“ [39mHypertextLiteral
+[32m  âœ“ [39m[90mHyperscript[39m
+[32m  âœ“ [39m[90mPkgVersion[39m
+[32m  âœ“ [39m[90mTranscodingStreams[39m
+[32m  âœ“ [39m[90mInvertedIndices[39m
+[32m  âœ“ [39m[90mIOCapture[39m
+[32m  âœ“ [39m[90mAbstractPlutoDingetjes[39m
+[32m  âœ“ [39m[90mAdapt[39m
+[32m  âœ“ [39m[90mReexport[39m
+[32m  âœ“ [39m[90mSentinelArrays[39m
+[32m  âœ“ [39m[90mDocStringExtensions[39m
+[32m  âœ“ [39m[90mCompat[39m
+[33m  âœ“ [39m[90mPreferences[39m
+[32m  âœ“ [39m[90mIterTools[39m
+[32m  âœ“ [39m[90mCrayons[39m
+[33m  âœ“ [39m[90mParsers[39m
+[32m  âœ“ [39m[90mDataAPI[39m
+[32m  âœ“ [39m[90mCodecZlib[39m
+[32m  âœ“ [39m[90mElasticArrays[39m
+[32m  âœ“ [39m[90mDataStructures[39m
+[32m  âœ“ [39m[90mFilePathsBase[39m
+[33m  âœ“ [39m[90mJLLWrappers[39m
+[32m  âœ“ [39m[90mColors[39m
+[32m  âœ“ [39m[90mStaticArrays[39m
+[32m  âœ“ [39m[90mMissings[39m
+[33m  âœ“ [39m[90mJSON[39m
+[32m  âœ“ [39m[90mInlineStrings[39m
+[32m  âœ“ [39m[90mPooledArrays[39m
+[32m  âœ“ [39m[90mTables[39m
+[32m  âœ“ [39m[90mSortingAlgorithms[39m
+[32m  âœ“ [39m[90mEarCut_jll[39m
+[32m  âœ“ [39m[90mExtendableGrids[39m
+[32m  âœ“ [39m[90mWeakRefStrings[39m
+[32m  âœ“ [39m[90mColorSchemes[39m
+[32m  âœ“ [39m[90mStructArrays[39m
+[32m  âœ“ [39m[90mPrettyTables[39m
+[32m  âœ“ [39mPlutoUI
+[32m  âœ“ [39mCSV
+[32m  âœ“ [39m[90mGeometryBasics[39m
+[32m  âœ“ [39m[90mGridVisualize[39m
+[32m  âœ“ [39mPlutoVista
+[32m  âœ“ [39mDataFrames
+  43 dependencies successfully precompiled in 52 seconds (11 already precompiled)
+  [33m4[39m dependencies precompiled but different versions are currently loaded. Restart julia to access the new versions
+°HypertextLiteralÚ,[32m[1m   Installed[22m[39m IOCapture â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.2.2
+[32m[1m   Installed[22m[39m PkgVersion â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.1.1
+[32m[1m   Installed[22m[39m Preferences â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.2.3
+[32m[1m   Installed[22m[39m CodecZlib â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.7.0
+[32m[1m   Installed[22m[39m StructArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.6.4
+[32m[1m   Installed[22m[39m AbstractPlutoDingetjes â”€ v1.1.4
+[32m[1m   Installed[22m[39m SentinelArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.11
+[32m[1m   Installed[22m[39m PooledArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.4.0
+[32m[1m   Installed[22m[39m Hyperscript â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.0.4
+[32m[1m   Installed[22m[39m PlutoUI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.7.30
+[32m[1m   Installed[22m[39m GridVisualize â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.4.6
+[32m[1m   Installed[22m[39m StaticArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.2
+[32m[1m   Installed[22m[39m JLLWrappers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.4.0
+[32m[1m   Installed[22m[39m DataFrames â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.1
+[32m[1m   Installed[22m[39m WeakRefStrings â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.4.1
+[32m[1m   Installed[22m[39m Observables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.4.0
+[32m[1m   Installed[22m[39m Parsers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v2.2.0
+[32m[1m   Installed[22m[39m HypertextLiteral â”€â”€â”€â”€â”€â”€â”€ v0.9.3
+[32m[1m   Installed[22m[39m ExtendableGrids â”€â”€â”€â”€â”€â”€â”€â”€ v0.8.11
+[32m[1m   Installed[22m[39m InlineStrings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.1.1
+[32m[1m   Installed[22m[39m InvertedIndices â”€â”€â”€â”€â”€â”€â”€â”€ v1.1.0
+[32m[1m   Installed[22m[39m Crayons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v4.1.0
+[32m[1m   Installed[22m[39m TranscodingStreams â”€â”€â”€â”€â”€ v0.9.6
+[32m[1m   Installed[22m[39m PlutoVista â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.8.12
+[32m[1m   Installed[22m[39m FilePathsBase â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.9.17
+[32m[1m   Installed[22m[39m CSV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.10.1
+[32m[1m   Installed[22m[39m PrettyTables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.1
+[32m[1m   Installed[22m[39m ColorSchemes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v3.16.0
+[32m[1m  No Changes[22m[39m to `/tmp/jl_Irm9Ey/Project.toml`
+[32m[1m  No Changes[22m[39m to `/tmp/jl_Irm9Ey/Manifest.toml`
+[32m[1mPrecompiling[22m[39m project...
+[32m  âœ“ [39m[90mObservables[39m
+[32m  âœ“ [39mHypertextLiteral
+[32m  âœ“ [39m[90mHyperscript[39m
+[32m  âœ“ [39m[90mPkgVersion[39m
+[32m  âœ“ [39m[90mTranscodingStreams[39m
+[32m  âœ“ [39m[90mInvertedIndices[39m
+[32m  âœ“ [39m[90mIOCapture[39m
+[32m  âœ“ [39m[90mAbstractPlutoDingetjes[39m
+[32m  âœ“ [39m[90mAdapt[39m
+[32m  âœ“ [39m[90mReexport[39m
+[32m  âœ“ [39m[90mSentinelArrays[39m
+[32m  âœ“ [39m[90mDocStringExtensions[39m
+[32m  âœ“ [39m[90mCompat[39m
+[33m  âœ“ [39m[90mPreferences[39m
+[32m  âœ“ [39m[90mIterTools[39m
+[32m  âœ“ [39m[90mCrayons[39m
+[33m  âœ“ [39m[90mParsers[39m
+[32m  âœ“ [39m[90mDataAPI[39m
+[32m  âœ“ [39m[90mCodecZlib[39m
+[32m  âœ“ [39m[90mElasticArrays[39m
+[32m  âœ“ [39m[90mDataStructures[39m
+[32m  âœ“ [39m[90mFilePathsBase[39m
+[33m  âœ“ [39m[90mJLLWrappers[39m
+[32m  âœ“ [39m[90mColors[39m
+[32m  âœ“ [39m[90mStaticArrays[39m
+[32m  âœ“ [39m[90mMissings[39m
+[33m  âœ“ [39m[90mJSON[39m
+[32m  âœ“ [39m[90mInlineStrings[39m
+[32m  âœ“ [39m[90mPooledArrays[39m
+[32m  âœ“ [39m[90mTables[39m
+[32m  âœ“ [39m[90mSortingAlgorithms[39m
+[32m  âœ“ [39m[90mEarCut_jll[39m
+[32m  âœ“ [39m[90mExtendableGrids[39m
+[32m  âœ“ [39m[90mWeakRefStrings[39m
+[32m  âœ“ [39m[90mColorSchemes[39m
+[32m  âœ“ [39m[90mStructArrays[39m
+[32m  âœ“ [39m[90mPrettyTables[39m
+[32m  âœ“ [39mPlutoUI
+[32m  âœ“ [39mCSV
+[32m  âœ“ [39m[90mGeometryBasics[39m
+[32m  âœ“ [39m[90mGridVisualize[39m
+[32m  âœ“ [39mPlutoVista
+[32m  âœ“ [39mDataFrames
+  43 dependencies successfully precompiled in 52 seconds (11 already precompiled)
+  [33m4[39m dependencies precompiled but different versions are currently loaded. Restart julia to access the new versions
+ªPlutoVistaÚ,[32m[1m   Installed[22m[39m IOCapture â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.2.2
+[32m[1m   Installed[22m[39m PkgVersion â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.1.1
+[32m[1m   Installed[22m[39m Preferences â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.2.3
+[32m[1m   Installed[22m[39m CodecZlib â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.7.0
+[32m[1m   Installed[22m[39m StructArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.6.4
+[32m[1m   Installed[22m[39m AbstractPlutoDingetjes â”€ v1.1.4
+[32m[1m   Installed[22m[39m SentinelArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.11
+[32m[1m   Installed[22m[39m PooledArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.4.0
+[32m[1m   Installed[22m[39m Hyperscript â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.0.4
+[32m[1m   Installed[22m[39m PlutoUI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.7.30
+[32m[1m   Installed[22m[39m GridVisualize â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.4.6
+[32m[1m   Installed[22m[39m StaticArrays â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.2
+[32m[1m   Installed[22m[39m JLLWrappers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.4.0
+[32m[1m   Installed[22m[39m DataFrames â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.1
+[32m[1m   Installed[22m[39m WeakRefStrings â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.4.1
+[32m[1m   Installed[22m[39m Observables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.4.0
+[32m[1m   Installed[22m[39m Parsers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v2.2.0
+[32m[1m   Installed[22m[39m HypertextLiteral â”€â”€â”€â”€â”€â”€â”€ v0.9.3
+[32m[1m   Installed[22m[39m ExtendableGrids â”€â”€â”€â”€â”€â”€â”€â”€ v0.8.11
+[32m[1m   Installed[22m[39m InlineStrings â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.1.1
+[32m[1m   Installed[22m[39m InvertedIndices â”€â”€â”€â”€â”€â”€â”€â”€ v1.1.0
+[32m[1m   Installed[22m[39m Crayons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v4.1.0
+[32m[1m   Installed[22m[39m TranscodingStreams â”€â”€â”€â”€â”€ v0.9.6
+[32m[1m   Installed[22m[39m PlutoVista â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.8.12
+[32m[1m   Installed[22m[39m FilePathsBase â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.9.17
+[32m[1m   Installed[22m[39m CSV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v0.10.1
+[32m[1m   Installed[22m[39m PrettyTables â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v1.3.1
+[32m[1m   Installed[22m[39m ColorSchemes â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ v3.16.0
+[32m[1m  No Changes[22m[39m to `/tmp/jl_Irm9Ey/Project.toml`
+[32m[1m  No Changes[22m[39m to `/tmp/jl_Irm9Ey/Manifest.toml`
+[32m[1mPrecompiling[22m[39m project...
+[32m  âœ“ [39m[90mObservables[39m
+[32m  âœ“ [39mHypertextLiteral
+[32m  âœ“ [39m[90mHyperscript[39m
+[32m  âœ“ [39m[90mPkgVersion[39m
+[32m  âœ“ [39m[90mTranscodingStreams[39m
+[32m  âœ“ [39m[90mInvertedIndices[39m
+[32m  âœ“ [39m[90mIOCapture[39m
+[32m  âœ“ [39m[90mAbstractPlutoDingetjes[39m
+[32m  âœ“ [39m[90mAdapt[39m
+[32m  âœ“ [39m[90mReexport[39m
+[32m  âœ“ [39m[90mSentinelArrays[39m
+[32m  âœ“ [39m[90mDocStringExtensions[39m
+[32m  âœ“ [39m[90mCompat[39m
+[33m  âœ“ [39m[90mPreferences[39m
+[32m  âœ“ [39m[90mIterTools[39m
+[32m  âœ“ [39m[90mCrayons[39m
+[33m  âœ“ [39m[90mParsers[39m
+[32m  âœ“ [39m[90mDataAPI[39m
+[32m  âœ“ [39m[90mCodecZlib[39m
+[32m  âœ“ [39m[90mElasticArrays[39m
+[32m  âœ“ [39m[90mDataStructures[39m
+[32m  âœ“ [39m[90mFilePathsBase[39m
+[33m  âœ“ [39m[90mJLLWrappers[39m
+[32m  âœ“ [39m[90mColors[39m
+[32m  âœ“ [39m[90mStaticArrays[39m
+[32m  âœ“ [39m[90mMissings[39m
+[33m  âœ“ [39m[90mJSON[39m
+[32m  âœ“ [39m[90mInlineStrings[39m
+[32m  âœ“ [39m[90mPooledArrays[39m
+[32m  âœ“ [39m[90mTables[39m
+[32m  âœ“ [39m[90mSortingAlgorithms[39m
+[32m  âœ“ [39m[90mEarCut_jll[39m
+[32m  âœ“ [39m[90mExtendableGrids[39m
+[32m  âœ“ [39m[90mWeakRefStrings[39m
+[32m  âœ“ [39m[90mColorSchemes[39m
+[32m  âœ“ [39m[90mStructArrays[39m
+[32m  âœ“ [39m[90mPrettyTables[39m
+[32m  âœ“ [39mPlutoUI
+[32m  âœ“ [39mCSV
+[32m  âœ“ [39m[90mGeometryBasics[39m
+[32m  âœ“ [39m[90mGridVisualize[39m
+[32m  âœ“ [39mPlutoVista
+[32m  âœ“ [39mDataFrames
+  43 dependencies successfully precompiled in 52 seconds (11 already precompiled)
+  [33m4[39m dependencies precompiled but different versions are currently loaded. Restart julia to access the new versions
+§enabledÃ·restart_recommended_msgÀ´restart_required_msgÀ­busy_packages¬instantiatedÃ«cell_inputsÙ$246b640d-e3aa-443c-b2e9-4e2dee651369„§cell_idÙ$246b640d-e3aa-443c-b2e9-4e2dee651369°running_disabledÂ¤codeÙ8filter!(rows->rows.category != "Computer Science",data);«code_foldedÂÙ$00d1921e-3c43-4dcb-98c6-8249b386e993„§cell_idÙ$00d1921e-3c43-4dcb-98c6-8249b386e993°running_disabledÂ¤codeÙ©@bind r variablesliders([
+	("Years",range(minimum(data[!,:year]),maximum(data[!,:year]),step=1)),
+	("Articles [%]",range(0.0,maximum(data[!,:normalized]),step=0.001))
+])«code_foldedÃÙ$e9a01445-4050-4c12-9a2f-d2e783a912c6„§cell_idÙ$e9a01445-4050-4c12-9a2f-d2e783a912c6°running_disabledÂ¤codeÚŸmd"""
+## Plotting the data
+
+I think Ben Blaiszik's way of plotting the normalized ML publications for a specific domain was nice, so I'll do the same however, I'm going to include engineering as well. I'll continue to exclude computer science since this is already established and will have signficant number of publications that come from the machine learning, data science, artifical intelligence communities.
+"""«code_foldedÃÙ$b87811d3-d4f4-42b6-ac4c-561738f35cf9„§cell_idÙ$b87811d3-d4f4-42b6-ac4c-561738f35cf9°running_disabledÂ¤codeÙÑfunction variablesliders(variables)
+	PlutoUI.combine() do Child
+		@htl("""
+		<h6>Ranges</h6>
+		<ul>
+		$(
+		[@htl("<li>$(v[1]): $(Child(RangeSlider(v[2])))</li>") for v in variables]
+		)
+		</ul>
+		""")
+	end
+end«code_foldedÃÙ$7c4cbc96-3918-48cb-853f-5a71c037dcdd„§cell_idÙ$7c4cbc96-3918-48cb-853f-5a71c037dcdd°running_disabledÂ¤codeÚ¢function plotted_data(data)
+	plt = plot(resolution=(700,350),
+			   xlabel="Years",ylabel="% ML Articles",legend=:lt,
+			   xlimits=extrema(r[1]),limits=extrema(r[2]))
+	for c in unique(data[!,:category])
+		plotdata = filter(row -> row.category == c,data)
+		plot!(plt,plotdata[!,:year],plotdata[!,:normalized],
+			  markertype=:circle,
+			  markercount=extrema(r[1])[1],
+			  markersize=10,label=c)
+	end
+	return plt
+end«code_foldedÃÙ$785bb400-49be-4202-92de-c67c21bbfb50„§cell_idÙ$785bb400-49be-4202-92de-c67c21bbfb50°running_disabledÂ¤code²plotted_data(data)«code_foldedÂÙ$7b5e1bf4-95ad-11ec-0609-e9e5562d6103„§cell_idÙ$7b5e1bf4-95ad-11ec-0609-e9e5562d6103°running_disabledÂ¤codeÙQbegin
+	using PlutoUI,HypertextLiteral
+	using PlutoVista
+	using CSV,DataFrames
+end«code_foldedÂÙ$c0404d3d-6dd9-4209-bba2-36df46ad9e9a„§cell_idÙ$c0404d3d-6dd9-4209-bba2-36df46ad9e9a°running_disabledÂ¤codeÙ±md"""
+Now adding some PlutoUI content and function for plotting. I'll hide the source code to keep this notebook a little bit cleaner. The plot below is what we end up with.
+"""«code_foldedÃÙ$d5d3fab5-589f-4280-9a3d-03ea555eb69a„§cell_idÙ$d5d3fab5-589f-4280-9a3d-03ea555eb69a°running_disabledÂ¤codeÙ,data = CSV.File(download(url)) |> DataFrame;«code_foldedÂÙ$7c8a08a1-dddb-4e15-a2fa-c596296fc968„§cell_idÙ$7c8a08a1-dddb-4e15-a2fa-c596296fc968°running_disabledÂ¤codeÚ”md"""
+## Number of ML in science & engineering
+
+As mentioned, the repo by [Ben Blaiszik](github.com/blaiszik/ml_publication_charts) has extracted this data using the Web of Science API. The keywords for his query where the following:
+
+```
+TS=("machine learning" OR "informatics" OR "deep learning" OR "cheminformatics" OR "chemoinformatics" OR "QSAR" OR "QSPR") AND WC="{Domain}"
+```
+
+For this blog I'm going to use his query [dataset](https://raw.githubusercontent.com/blaiszik/ml_publication_charts/08cae74eba7aacf99c821af31c682f502b2e24ef/data/1-cat.csv) to plot the results.
+
+In the future I probably will create my own query but this is a good start. 
+"""«code_foldedÃÙ$9eed38e2-1ecf-47f0-b458-ddc8dfb4d5ec„§cell_idÙ$9eed38e2-1ecf-47f0-b458-ddc8dfb4d5ec°running_disabledÂ¤codeÚ¬md"""
+## Impact of ML in science
+
+Clearly from the plot the last five years have seen a huge increase in number of ML related publications for all categories. Interesting, ngineering shows the biggest uptick. I assume a lot of that comes from EE and ME disciplines.
+
+I'm particular interested in how materials science compares to physics, which shows about the same rate of change, with the physics community a bit ahead. 
+
+Overall I think this is pretty interesting. Looking at the last 3 years for the number of publications within materials science that are related to machine learning have more than doubled. It is still less than 2% of all materials science publications but I assume this trend will continue, especially if large materials data sets become available and standardization of material data representation is adopted. Maybe in 5-7 years 20% of all materials science publications utilize some form of machine learning. 
+"""«code_foldedÃÙ$b2ba95f2-b9b7-4f0d-9195-e5f4d2af773f„§cell_idÙ$b2ba95f2-b9b7-4f0d-9195-e5f4d2af773f°running_disabledÂ¤codeÚºmd"""
+# Machine Learning Activity in Materials Science
+**Author: Stefan Bringuier**
+
+In 2014 I started to get very interested in materials informatics and the use machine learning tools in materials science. At that time the activities were mostly driven by members and funded projects associated with the [White House Materials Genome Initiatve](https://www.mgi.gov/) that had been recently signed into law. 
+
+At that time there wasn't a great deal of ML literature specifically focused on materials science applications and tutorial/learning content was very sparse. However as time has gone on the application of ML has signficantly grown, especially with the significant expansion of various databases like the [Materials Project](https://materialsproject.org/) and [AFLOW](http://www.aflowlib.org/).
+
+Now materials informatics is becoming serious component in materials science and engineering research. There are now specific [schools/programs](https://engineering.buffalo.edu/materials-design-innovation/about-mdi.html) exist focused on this subarea of materials science and engineering. 
+
+I was curious about what the trend looks like for the number of publications year-over-year for keywords "machine learning" and "materials science". It turns out that this activity is just a repeat of [Ben Blaiszik's repo](github.com/blaiszik/ml_publication_charts) work. However, I'm just going to do it here for my reference so that I can easily come back to it. 
+"""«code_foldedÃÙ$3cf0f5a4-d1a5-4238-9d1b-f88615cc0e57„§cell_idÙ$3cf0f5a4-d1a5-4238-9d1b-f88615cc0e57°running_disabledÂ¤codeÙBdata[!,:normalized]=100.0 * data[!,:count]./data[!,:count_domain];«code_foldedÂÙ$6c91dca2-deb2-48f7-9cb8-41e950a913ed„§cell_idÙ$6c91dca2-deb2-48f7-9cb8-41e950a913ed°running_disabledÂ¤codeÙurl="https://raw.githubusercontent.com/blaiszik/ml_publication_charts/08cae74eba7aacf99c821af31c682f502b2e24ef/data/1-cat.csv";«code_foldedÂÙ$7ec4b760-6b85-4ce2-af3d-c675da11f87f„§cell_idÙ$7ec4b760-6b85-4ce2-af3d-c675da11f87f°running_disabledÂ¤codeÙBTableOfContents(title="ğŸ“š Table of Contents",depth=5,aside=true)«code_foldedÂ«notebook_idÙ$694f594c-9688-11ec-0e16-5f0699171b58«in_temp_dirÂ

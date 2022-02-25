@@ -9,7 +9,7 @@ begin
 	using Distributions
 	using GaussianProcesses
 	using Optim
-	using Plots; plotlyjs()
+	using Plots;plotly()
 	#Global plotting options
 	default(size=(675,325),foreground_color_legend = nothing)
 end
@@ -17,7 +17,7 @@ end
 # ╔═╡ 3d7989b6-74eb-4a41-8c0e-d8364b1e7ed1
 md"""
 ## Talking myself through Gaussian processes and Bayesian inference[^1]
-Stefan Bringuier[^a]
+**Author: Stefan Bringuier** [^a]
 """
 
 # ╔═╡ 6eaf1750-31e1-479e-b9d5-8532c3619f80
@@ -171,6 +171,7 @@ routine for plotting results
 	* yu:: Vector{real} : y[i]
 	* gpp:: GP model
 """ function gifplot(s,x,y,i,xu,yu,gpp)
+	gr() # use GR backend
 	p1 = plot(x,generate_data(x),label="known noise-free function",linewidth=3)
     scatter!(p1,x[i],y[i],markershape=:diamond,markersize=6, label= "initial noise-containing data")
 	scatter!(p1,xu,yu,label="gaussian process probing black-box function")
@@ -1267,7 +1268,7 @@ version = "0.9.1+5"
 # ╠═33c21ed9-098c-42d2-a192-6c633c7f6f4f
 # ╟─d0536f6c-4040-4f8f-a2b3-7740257679e1
 # ╟─2d59c3a5-bb3d-4577-bf4b-0158a7a853d7
-# ╟─44979d9e-1c78-4d0e-89a8-3cf14242aa2d
+# ╠═44979d9e-1c78-4d0e-89a8-3cf14242aa2d
 # ╠═4db2b031-f408-463f-8e2f-8dcf055c374c
 # ╟─42ba19d9-4e65-4621-b713-ffc4d1051380
 # ╟─c945f7b9-c728-473c-8597-9c26522dbdfc
