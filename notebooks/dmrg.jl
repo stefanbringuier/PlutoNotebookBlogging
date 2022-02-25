@@ -18,7 +18,7 @@ end
 begin
 	using LinearAlgebra
 	using PlutoUI
-	using Plots
+	using Plots;plotly()
 	using TikzPictures
 end
 
@@ -351,9 +351,9 @@ md"""
 Creating a model with configuration:
 
 number of states to keep
-$(@bind y Slider(1:10,show_value=true))
+$(@bind y Slider(1:10,show_value=true,default=4))
 number of total sites to add
-$(@bind z Slider(1:50,show_value=true))
+$(@bind z Slider(1:50,show_value=true,default=8))
 """
 
 # ╔═╡ 7d29cf6e-580d-481c-a8e1-0a1fa576ba1d

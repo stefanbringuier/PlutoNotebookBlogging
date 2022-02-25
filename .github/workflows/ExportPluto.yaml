@@ -42,13 +42,14 @@ jobs:
               run: julia -e 'using Pkg;
                   Pkg.activate(mktempdir());
                   Pkg.add("PlutoSliderServer");
-                  Pkg.add("PlotlyJS");
                   Pkg.add("Plots");
 
                   import PlutoSliderServer;
 
                   PlutoSliderServer.github_action(;
                     Export_cache_dir="pluto_state_cache",
+                    Export_baked_notebookfile=fase,
+                    Export_baked_state=false,
                   );'
 
             - name: Copy Pluto HTML and Franklin
