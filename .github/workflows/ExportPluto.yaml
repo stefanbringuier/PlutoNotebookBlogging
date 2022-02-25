@@ -41,9 +41,11 @@ jobs:
             - name: Run & export Pluto notebooks
               run: julia -e 'using Pkg;
                   Pkg.activate(mktempdir());
-                  Pkg.add([
-                    Pkg.PackageSpec(name="PlutoSliderServer", version="0.2.1-0.2"),
-                  ]);
+                  Pkg.add("PlutoSliderServer")
+                  Pkg.add("Conda")
+                  Pkg.add("PlotlyJS")
+                  Pkg.add("PyPlot")
+                  Pkg.add("Plots")
 
                   import PlutoSliderServer;
 
