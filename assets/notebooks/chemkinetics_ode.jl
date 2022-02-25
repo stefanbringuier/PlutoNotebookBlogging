@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.15.1
+# v0.17.4
 
 using Markdown
 using InteractiveUtils
@@ -14,6 +14,7 @@ end
 # ╔═╡ d4f1e3a9-d1c8-4e3e-8b88-f0a901a894f7
 md"""
 # Symbolic ODE Modeling 
+**Author: Stefan Bringuier**
 
 I recently stumbled upon the [DifferentialEquations.jl](https://github.com/SciML/DifferentialEquations.jl) and  [ModelingToolkit.jl](https://github.com/SciML/ModelingToolkit.jl)  which are pretty cool packages. 
 
@@ -152,13 +153,6 @@ function getequations(species::Tuple,reactions::Array{RXN})
 	return (equations,symspecies,coeffs)
 end;
 ```
-"""
-
-# ╔═╡ 4d326031-3ec0-4faa-b6d2-531add859e06
-html"""<style>
-main {
-    max-width: 1200px;
-}
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -568,9 +562,9 @@ uuid = "9fa8497b-333b-5362-9e8d-4d0656e87820"
 
 [[GLFW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pkg", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll"]
-git-tree-sha1 = "dba1e8614e98949abfa60480b13653813d8f0157"
+git-tree-sha1 = "0c603255764a1fa0b61752d2bec14cfbd18f7fe8"
 uuid = "0656b61e-2033-5cc2-a64a-77c0f6c09b89"
-version = "3.3.5+0"
+version = "3.3.5+1"
 
 [[GR]]
 deps = ["Base64", "DelimitedFiles", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Pkg", "Printf", "Random", "Serialization", "Sockets", "Test", "UUIDs"]
@@ -747,9 +741,9 @@ uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 
 [[Libffi_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "761a393aeccd6aa92ec3515e428c26bf99575b3b"
+git-tree-sha1 = "0b4a5d71f3e5200a7dff793393e09dfc2d874290"
 uuid = "e9f186c6-92d2-5b65-8a66-fee21dc1b490"
-version = "3.2.2+0"
+version = "3.2.2+1"
 
 [[Libgcrypt_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgpg_error_jll", "Pkg"]
@@ -929,9 +923,9 @@ version = "1.10.2"
 
 [[Ogg_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "7937eda4681660b4d6aeeecc2f7e1c81c8ee4e2f"
+git-tree-sha1 = "887579a3eb005446d514ab7aeac5d1d027658b8f"
 uuid = "e7412a2a-1a6e-54c0-be00-318e2571c051"
-version = "1.3.5+0"
+version = "1.3.5+1"
 
 [[OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
@@ -1582,9 +1576,9 @@ version = "1.6.38+0"
 
 [[libvorbis_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Ogg_jll", "Pkg"]
-git-tree-sha1 = "c45f4e40e7aafe9d086379e5578947ec8b95a8fb"
+git-tree-sha1 = "b910cb81ef3fe6e78bf6acee440bda86fd6ae00c"
 uuid = "f27f6e37-5d2b-51aa-960f-b287f2bc3b7a"
-version = "1.3.7+0"
+version = "1.3.7+1"
 
 [[nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
@@ -1616,7 +1610,6 @@ version = "0.9.1+5"
 # ╔═╡ Cell order:
 # ╟─d4f1e3a9-d1c8-4e3e-8b88-f0a901a894f7
 # ╟─656cae30-e450-11eb-266a-f7572588b91b
-# ╠═a6e71018-ab69-42d0-9a15-ffb477b4bd64
 # ╠═53eaf1ae-6d16-4606-b5d2-97fd61ac7da6
 # ╟─0267b2d1-f8da-48e8-991b-163497c0cd91
 # ╠═6da13129-b9f4-45c6-89fb-714200bce2d4
@@ -1625,6 +1618,6 @@ version = "0.9.1+5"
 # ╟─56ba790d-0c78-46fb-b5b7-4711c77f4b54
 # ╟─efe47a33-ea39-4f58-bc26-1517427f43f8
 # ╟─4f208f0a-7ff4-444d-b271-08f07ec31e72
-# ╟─4d326031-3ec0-4faa-b6d2-531add859e06
+# ╠═a6e71018-ab69-42d0-9a15-ffb477b4bd64
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

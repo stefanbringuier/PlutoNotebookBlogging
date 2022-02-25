@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.17.5
+# v0.17.4
 
 using Markdown
 using InteractiveUtils
@@ -20,9 +20,6 @@ begin
 	using PlutoVista
 	using CSV,DataFrames
 end
-
-# ╔═╡ 7ec4b760-6b85-4ce2-af3d-c675da11f87f
-TableOfContents()
 
 # ╔═╡ b2ba95f2-b9b7-4f0d-9195-e5f4d2af773f
 md"""
@@ -125,6 +122,9 @@ I'm particular interested in how materials science compares to physics, which sh
 
 Overall I think this is pretty interesting. Looking at the last 3 years for the number of publications within materials science that are related to machine learning have more than doubled. It is still less than 2% of all materials science publications but I assume this trend will continue, especially if large materials data sets become available and standardization of material data representation is adopted. Maybe in 5-7 years 20% of all materials science publications utilize some form of machine learning. 
 """
+
+# ╔═╡ 7ec4b760-6b85-4ce2-af3d-c675da11f87f
+TableOfContents(title="📚 Table of Contents",depth=5,aside=true)
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -588,8 +588,6 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 """
 
 # ╔═╡ Cell order:
-# ╠═7b5e1bf4-95ad-11ec-0609-e9e5562d6103
-# ╟─7ec4b760-6b85-4ce2-af3d-c675da11f87f
 # ╟─b2ba95f2-b9b7-4f0d-9195-e5f4d2af773f
 # ╟─7c8a08a1-dddb-4e15-a2fa-c596296fc968
 # ╠═6c91dca2-deb2-48f7-9cb8-41e950a913ed
@@ -603,5 +601,7 @@ uuid = "3f19e933-33d8-53b3-aaab-bd5110c3b7a0"
 # ╟─7c4cbc96-3918-48cb-853f-5a71c037dcdd
 # ╠═785bb400-49be-4202-92de-c67c21bbfb50
 # ╟─9eed38e2-1ecf-47f0-b458-ddc8dfb4d5ec
+# ╠═7b5e1bf4-95ad-11ec-0609-e9e5562d6103
+# ╠═7ec4b760-6b85-4ce2-af3d-c675da11f87f
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

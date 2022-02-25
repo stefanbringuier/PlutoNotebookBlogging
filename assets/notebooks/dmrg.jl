@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.15.1
+# v0.17.4
 
 using Markdown
 using InteractiveUtils
@@ -7,8 +7,9 @@ using InteractiveUtils
 # This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
 macro bind(def, element)
     quote
+        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
         local el = $(esc(element))
-        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : missing
+        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
         el
     end
 end
@@ -24,19 +25,10 @@ end
 # ╔═╡ 701c45a0-e449-42f2-b056-99c371320fad
 md"""
 # DMRG Example
-**Stefan Bringuier**
+**Author: Stefan Bringuier**
 
 **[stefanbringuier@gmail.com](mailto:stefanbringuier@gmail.com)**
 """
-
-# ╔═╡ fd9fa7a3-ab72-4131-89ed-11f154d3fb3c
-md"""
-!!! note "Note"
-    Julia packages required for this notebook.
-"""
-
-# ╔═╡ 13be2e26-6ba1-49d1-a3cd-770679fc7ff9
-PlutoUI.TableOfContents()
 
 # ╔═╡ 35ce17c0-d377-11eb-2c48-a5e04a48dacb
 md"""
@@ -395,6 +387,15 @@ begin
 		title=["Truncated at $(y) states" "" ""])
 end
 
+# ╔═╡ fd9fa7a3-ab72-4131-89ed-11f154d3fb3c
+md"""
+!!! note "Note"
+    Julia packages required for this notebook.
+"""
+
+# ╔═╡ 13be2e26-6ba1-49d1-a3cd-770679fc7ff9
+PlutoUI.TableOfContents()
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
@@ -562,9 +563,9 @@ version = "1.0.10+0"
 
 [[GLFW_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libglvnd_jll", "Pkg", "Xorg_libXcursor_jll", "Xorg_libXi_jll", "Xorg_libXinerama_jll", "Xorg_libXrandr_jll"]
-git-tree-sha1 = "dba1e8614e98949abfa60480b13653813d8f0157"
+git-tree-sha1 = "0c603255764a1fa0b61752d2bec14cfbd18f7fe8"
 uuid = "0656b61e-2033-5cc2-a64a-77c0f6c09b89"
-version = "3.3.5+0"
+version = "3.3.5+1"
 
 [[GR]]
 deps = ["Base64", "DelimitedFiles", "GR_jll", "HTTP", "JSON", "Libdl", "LinearAlgebra", "Pkg", "Printf", "Random", "Serialization", "Sockets", "Test", "UUIDs"]
@@ -592,9 +593,9 @@ version = "0.21.0+0"
 
 [[Glib_jll]]
 deps = ["Artifacts", "Gettext_jll", "JLLWrappers", "Libdl", "Libffi_jll", "Libiconv_jll", "Libmount_jll", "PCRE_jll", "Pkg", "Zlib_jll"]
-git-tree-sha1 = "7bf67e9a481712b3dbe9cb3dac852dc4b1162e02"
+git-tree-sha1 = "a32d672ac2c967f3deb8a81d828afc739c838a06"
 uuid = "7746bdde-850d-59dc-9ae8-88ece973131d"
-version = "2.68.3+0"
+version = "2.68.3+2"
 
 [[Grisu]]
 git-tree-sha1 = "53bb909d1151e57e2484c3d1b53e19552b887fb2"
@@ -695,9 +696,9 @@ uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 
 [[Libffi_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "761a393aeccd6aa92ec3515e428c26bf99575b3b"
+git-tree-sha1 = "0b4a5d71f3e5200a7dff793393e09dfc2d874290"
 uuid = "e9f186c6-92d2-5b65-8a66-fee21dc1b490"
-version = "3.2.2+0"
+version = "3.2.2+1"
 
 [[Libgcrypt_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libgpg_error_jll", "Pkg"]
@@ -801,9 +802,9 @@ uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
 
 [[Ogg_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "7937eda4681660b4d6aeeecc2f7e1c81c8ee4e2f"
+git-tree-sha1 = "887579a3eb005446d514ab7aeac5d1d027658b8f"
 uuid = "e7412a2a-1a6e-54c0-be00-318e2571c051"
-version = "1.3.5+0"
+version = "1.3.5+1"
 
 [[OpenJpeg_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libtiff_jll", "LittleCMS_jll", "Pkg", "libpng_jll"]
@@ -1215,9 +1216,9 @@ version = "1.6.38+0"
 
 [[libvorbis_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Ogg_jll", "Pkg"]
-git-tree-sha1 = "c45f4e40e7aafe9d086379e5578947ec8b95a8fb"
+git-tree-sha1 = "b910cb81ef3fe6e78bf6acee440bda86fd6ae00c"
 uuid = "f27f6e37-5d2b-51aa-960f-b287f2bc3b7a"
-version = "1.3.7+0"
+version = "1.3.7+1"
 
 [[nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]
@@ -1248,9 +1249,6 @@ version = "0.9.1+5"
 
 # ╔═╡ Cell order:
 # ╟─701c45a0-e449-42f2-b056-99c371320fad
-# ╟─fd9fa7a3-ab72-4131-89ed-11f154d3fb3c
-# ╠═77dbc46f-1f30-47b1-b121-5811a903b57b
-# ╠═13be2e26-6ba1-49d1-a3cd-770679fc7ff9
 # ╟─35ce17c0-d377-11eb-2c48-a5e04a48dacb
 # ╟─f694e40b-538d-490d-b891-10c7110d1913
 # ╟─957d98b0-f6fc-4cca-b21c-39c0c7d27246
@@ -1285,5 +1283,8 @@ version = "0.9.1+5"
 # ╠═6f749a1c-ac4f-4223-9526-2b1dff7705c3
 # ╟─923018cb-3a30-4131-976f-30846f4286ea
 # ╟─73966067-1c42-4d06-93ef-1405b42dca44
+# ╟─fd9fa7a3-ab72-4131-89ed-11f154d3fb3c
+# ╠═77dbc46f-1f30-47b1-b121-5811a903b57b
+# ╠═13be2e26-6ba1-49d1-a3cd-770679fc7ff9
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
