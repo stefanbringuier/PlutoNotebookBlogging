@@ -1,6 +1,7 @@
 @def title = "Pluto.jl Notebook Blogs"
 
 # Blogs
+* [Bayesian Inference](assets/notebooks/BMCP_Ch2_1.html) - An example from *Bayesian Modeling and Computation in Python* but in Julia.
 * [ML in Materials Science](assets/notebooks/ML_MatSci.html) - Plotting the publication activity of Machine Learning use in Materials Science.
 * [Graphical Intuition of Classification](assets/notebooks/Classifier_GraphicalIntuition.html) - Simple post on graphical intuition behind classification. 
 * [Guassian Processes: Part 1](assets/notebooks/gaussianprocess_part1.html) - Initial workflow showing how Gaussian processes work.
