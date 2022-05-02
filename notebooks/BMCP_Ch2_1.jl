@@ -17,7 +17,7 @@ end
 # ╔═╡ d1baa97a-abf8-11ec-3209-ff385a86b57a
 begin
 	using Distributions
-	using PlotlyBase,Plots;plotly(size=(675,350))
+	using Plots;plotly(size=(675,350))
 	using PlutoUI
 end
 
@@ -176,13 +176,11 @@ TableOfContents(title="Table of Contents",depth=5,aside=true)
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
-PlotlyBase = "a03496cd-edff-5a9b-9e67-9cda94a718b5"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
 
 [compat]
 Distributions = "~0.25.52"
-PlotlyBase = "~0.8.18"
 Plots = "~1.27.2"
 PlutoUI = "~0.7.37"
 """
@@ -721,12 +719,6 @@ git-tree-sha1 = "e8185b83b9fc56eb6456200e873ce598ebc7f262"
 uuid = "90014a1f-27ba-587c-ab20-58faa44d9150"
 version = "0.11.7"
 
-[[Parameters]]
-deps = ["OrderedCollections", "UnPack"]
-git-tree-sha1 = "34c0e9ad262e5f7fc75b10a9952ca7692cfc5fbe"
-uuid = "d96e819e-fc66-5662-9728-84c9c7592b0a"
-version = "0.12.3"
-
 [[Parsers]]
 deps = ["Dates"]
 git-tree-sha1 = "85b5da0fa43588c75bb1ff986493443f821c70b7"
@@ -754,12 +746,6 @@ deps = ["ColorSchemes", "Colors", "Dates", "Printf", "Random", "Reexport", "Stat
 git-tree-sha1 = "bb16469fd5224100e422f0b027d26c5a25de1200"
 uuid = "995b91a9-d308-5afd-9ec6-746e21dbc043"
 version = "1.2.0"
-
-[[PlotlyBase]]
-deps = ["ColorSchemes", "Dates", "DelimitedFiles", "DocStringExtensions", "JSON", "LaTeXStrings", "Logging", "Parameters", "Pkg", "REPL", "Requires", "Statistics", "UUIDs"]
-git-tree-sha1 = "180d744848ba316a3d0fdf4dbd34b77c7242963a"
-uuid = "a03496cd-edff-5a9b-9e67-9cda94a718b5"
-version = "0.8.18"
 
 [[Plots]]
 deps = ["Base64", "Contour", "Dates", "Downloads", "FFMPEG", "FixedPointNumbers", "GR", "GeometryBasics", "JSON", "Latexify", "LinearAlgebra", "Measures", "NaNMath", "Pkg", "PlotThemes", "PlotUtils", "Printf", "REPL", "Random", "RecipesBase", "RecipesPipeline", "Reexport", "Requires", "Scratch", "Showoff", "SparseArrays", "Statistics", "StatsBase", "UUIDs", "UnicodeFun", "Unzip"]
@@ -954,11 +940,6 @@ version = "1.3.0"
 [[UUIDs]]
 deps = ["Random", "SHA"]
 uuid = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
-
-[[UnPack]]
-git-tree-sha1 = "387c1f73762231e86e0c9c5443ce3b4a0a9a0c2b"
-uuid = "3a884ed6-31ef-47d7-9d2a-63182c4928ed"
-version = "1.0.2"
 
 [[Unicode]]
 uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
@@ -1186,7 +1167,7 @@ version = "0.9.1+5"
 """
 
 # ╔═╡ Cell order:
-# ╠═4d3f82f6-b774-4fbd-ad54-3c66220fca20
+# ╟─4d3f82f6-b774-4fbd-ad54-3c66220fca20
 # ╟─1525130d-d5dc-4ab2-92c6-d6043d3900dc
 # ╟─b84c33a8-c803-4139-87f4-276713832b35
 # ╠═3d712c9b-529e-4f34-8e20-400c3a0856ea
@@ -1198,7 +1179,7 @@ version = "0.9.1+5"
 # ╟─d97f5e24-fd1e-4abe-841e-157a1b499639
 # ╠═4d316487-0b8a-494e-b277-44319c3db667
 # ╠═d1af0bf2-2be4-4cf8-9c75-3279558f5955
-# ╠═44247ffb-4bca-4311-8715-7226b5bf5e3c
+# ╟─44247ffb-4bca-4311-8715-7226b5bf5e3c
 # ╠═d1baa97a-abf8-11ec-3209-ff385a86b57a
 # ╠═2d342d65-5d20-4c19-832d-62873d11bac3
 # ╟─00000000-0000-0000-0000-000000000001

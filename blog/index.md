@@ -1,6 +1,7 @@
 @def title = "Pluto.jl Notebook Blogs"
 
 # Blogs
+* [Featurization & ML Models](assets/notebooks/RemakeBestPracticesPost.html) - A guide through featurization and ML models for materials data.
 * [Bayesian Inference](assets/notebooks/BMCP_Ch2_1.html) - An example from *Bayesian Modeling and Computation in Python* but in Julia.
 * [ML in Materials Science](assets/notebooks/ML_MatSci.html) - Plotting the publication activity of Machine Learning use in Materials Science.
 * [Graphical Intuition of Classification](assets/notebooks/Classifier_GraphicalIntuition.html) - Simple post on graphical intuition behind classification. 
