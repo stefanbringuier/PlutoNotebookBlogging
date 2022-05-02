@@ -42,7 +42,11 @@ jobs:
               run: julia -e 'using Pkg;
                   Pkg.activate(mktempdir());
                   Pkg.add("PlutoSliderServer");
+                  Pkg.add("Conda");
+                  ENV["PYTHON"] = "";
+                  Pkg.add("PyCall");
                   Pkg.add("Plots");
+                  
 
                   import PlutoSliderServer;
 
