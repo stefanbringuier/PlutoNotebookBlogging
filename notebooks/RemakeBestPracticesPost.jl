@@ -21,6 +21,13 @@ begin
 	using CSV,DataFrames
 end
 
+# ╔═╡ 4c80ee35-46c9-4da9-a2e0-26abc6e2a71d
+begin
+	using Conda
+	ENV["PYTHON"]=""
+	using PyCall
+end
+
 # ╔═╡ 03dee2be-1bcf-4d1a-af39-7869aad07c6a
 begin
 	using MLDataUtils #Tools for splitting data
@@ -215,6 +222,7 @@ The goal now is to assess the performance of different machine learning models g
 "
 
 # ╔═╡ fa101b51-3975-4d57-85b8-88e0750092d1
+# ╠═╡ show_logs = false
 begin
 	@sk_import dummy: DummyRegressor
 	@sk_import linear_model: Ridge
@@ -266,7 +274,7 @@ end;
 
 # ╔═╡ d07a261b-a136-4272-a5b9-736a1632dfc1
 md"""
-### Train and evaluate models
+## Train and evaluate models
 
 The next step is to write a function that returns a model [ScikitLearn.jl](https://github.com/cstjean/ScikitLearn.jl) `PyObject` and the name of it. This is followed by a function to train and evaluate the training set and validation set and then store the results in a dictionary that will be stored in the `model_results` data frame.
 """
@@ -362,7 +370,7 @@ end
 
 # ╔═╡ a9fe41bc-3938-45e7-b2cf-289e930e6168
 md"""
-### Model performance and plots
+## Model performance and plots
 Now the performance of the models can be explored in the data frame below:
 """
 
@@ -617,6 +625,11 @@ begin
 	Random.seed!(rng_seed)
 end;
 
+# ╔═╡ 120666e9-4c51-47a8-8d8b-8788b1e961d3
+md"""
+Here we add [Conda.jl](https://github.com/JuliaPy/Conda.jl) and [PyCall.jl](https://github.com/JuliaPy/PyCall.jl) which are needed depending on system/Julia configuration.
+"""
+
 # ╔═╡ 90ecd06a-5c20-4617-bd4c-5c8122aef88b
 md"""
 Now the ML related ones:
@@ -635,11 +648,13 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 CBFV = "e079e57c-70e8-4f61-a09b-990e8be4fed3"
 CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+Conda = "8f4d0f93-b110-5947-807f-2305c1781a2d"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 LsqFit = "2fda8390-95c7-5789-9bda-21331edee243"
 MLDataUtils = "cc2ba9b6-d476-5e6d-8eaf-a92d5412d41d"
 Measures = "442fdcdd-2543-5da2-b0f3-8c86c306513e"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
 Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 ScikitLearn = "3646fa90-6ef7-5e7e-9f22-8aca16db6324"
 StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
@@ -648,11 +663,13 @@ StatsPlots = "f3b207a7-027a-5e70-b257-86293d7955fd"
 [compat]
 CBFV = "~0.1.0"
 CSV = "~0.10.4"
+Conda = "~1.7.0"
 DataFrames = "~1.3.3"
 LsqFit = "~0.12.1"
 MLDataUtils = "~0.5.4"
 Measures = "~0.3.1"
 PlutoUI = "~0.7.38"
+PyCall = "~1.93.1"
 ScikitLearn = "~0.6.4"
 StatsBase = "~0.33.16"
 StatsPlots = "~0.14.33"
@@ -2022,7 +2039,7 @@ version = "0.9.1+5"
 # ╠═a49fd7ee-2fe1-4fab-8f63-e7274376cbf6
 # ╟─60568bd3-4b4f-47ae-b7a1-9e4e012de5bd
 # ╠═4bcef4fa-9abf-43d7-97e9-0df6efb1eb4e
-# ╟─cf24479b-902e-47e6-8bb1-39ab332f7a6c
+# ╠═cf24479b-902e-47e6-8bb1-39ab332f7a6c
 # ╠═df4cbbf4-dcfa-4182-9fee-5df4813f60ef
 # ╠═d8e9841f-69dc-4bdf-9873-dbe3d299756e
 # ╠═80ab5684-4bf0-45d3-89b4-7c0a204af911
@@ -2044,6 +2061,8 @@ version = "0.9.1+5"
 # ╠═b3febd9d-3914-49c2-95af-2a9fbca91ba8
 # ╟─d2197570-cb1e-46db-9934-c8013c77e707
 # ╠═bc3949df-dbc7-446f-b4a9-299aaaba6d53
+# ╟─120666e9-4c51-47a8-8d8b-8788b1e961d3
+# ╠═4c80ee35-46c9-4da9-a2e0-26abc6e2a71d
 # ╟─90ecd06a-5c20-4617-bd4c-5c8122aef88b
 # ╠═03dee2be-1bcf-4d1a-af39-7869aad07c6a
 # ╟─4f63485d-d48a-4b2f-997d-6893442dd5d6
