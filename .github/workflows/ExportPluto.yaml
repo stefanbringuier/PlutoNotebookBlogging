@@ -59,7 +59,7 @@ jobs:
             - name: Copy Pluto HTML and Franklin
               run: julia -e '
                   cd("blog");
-                  cp("../notebooks","_assets/notebooks";force=false);
+                  cp("../notebooks","_assets/notebooks";force=true);
                   using Pkg; Pkg.activate("."); Pkg.instantiate();
                   using NodeJS; run(`$(npm_cmd()) install highlight.js`);
                   using Franklin;
