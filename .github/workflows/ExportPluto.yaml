@@ -52,14 +52,14 @@ jobs:
 
                   PlutoSliderServer.github_action(;
                     Export_cache_dir="pluto_state_cache",
-                    Export_baked_notebookfile=false,
-                    Export_baked_state=false,
+                    Export_baked_notebookfile=true,
+                    Export_baked_state=true,
                   );'
 
             - name: Copy Pluto HTML and Franklin
               run: julia -e '
                   cd("blog");
-                  cp("../notebooks","_assets/notebooks";force=true);
+                  cp("../notebooks","_assets/notebooks";force=false);
                   using Pkg; Pkg.activate("."); Pkg.instantiate();
                   using NodeJS; run(`$(npm_cmd()) install highlight.js`);
                   using Franklin;
