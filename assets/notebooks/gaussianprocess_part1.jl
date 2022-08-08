@@ -1,10 +1,17 @@
 ### A Pluto.jl notebook ###
-# v0.17.4
+# v0.19.5
+
+#> [frontmatter]
+#> title = "Gaussian Processes Blog"
+#> tags = ["Gaussian Processes", "Bayesian Methods", "Sampling"]
+#> license = "CC-BY-4.0"
+#> description = "A guided notebook on how one might use Gaussian Processes and Bayesian inference"
 
 using Markdown
 using InteractiveUtils
 
 # ╔═╡ 60a31e42-95db-47b4-a173-9874425c0570
+# ╠═╡ show_logs = false
 begin
 	using Distributions
 	using GaussianProcesses
@@ -59,7 +66,7 @@ generate_data(x::Array{T,1};σ=0.0::Real) where T<:Real = map(y -> generate_data
 begin
 	x = collect(range(0,1,step=0.01))
 	data = generate_data(x)
-	noisydata = generate_data(x,σ=0.05)
+	noisydata = generate_data(x,σ=0.033)
 	Plots.plot(x,data,label="known function",
 			   size=(675,375))
 	Plots.scatter!(x,noisydata,label="noisy data")
@@ -93,9 +100,9 @@ In this section I'll pretend that some of the data is available to us from the b
 
 # ╔═╡ 2539aefb-5655-431c-8718-37b83ea29ad4
 begin
-	xused = [ 2; 4; 12; 34; 65; 68; 92; 98];
+	xused = [ 8; 12; 34; 40;65; 68; 92];
 	yused = generate_data(x[xused[:]]);
-	scatter(x[xused[:]],yused)
+	scatter(x[xused[:]],yused,label="initial known data")
 end
 
 # ╔═╡ c64c6e64-057d-400f-a31a-9a7bc654dffe
@@ -121,6 +128,7 @@ Finally we want to obtain the optimal parameters/hyperparameters that would let 
 optimize!(gp)
 
 # ╔═╡ f487f7f2-c9be-4b7f-a1bf-e773ca28a970
+# ╠═╡ show_logs = false
 plot(gp,label=["surrogate model" "sampled points"])
 
 # ╔═╡ cdf15771-d575-445d-8e58-fbb58c209416
@@ -175,11 +183,12 @@ routine for plotting results
 	p1 = plot(x,generate_data(x),label="known noise-free function",linewidth=3)
     scatter!(p1,x[i],y[i],markershape=:diamond,markersize=6, label= "initial noise-containing data")
 	scatter!(p1,xu,yu,label="gaussian process probing black-box function")
-	p2 = plot(gpp,label=["surrogate model" "points"],annotations = (0.01, 0.85, text("Surrogate model. Step $s", :left,9,:Arial)))
+	p2 = plot(gpp,label=["surrogate model" "points"],annotations = (0.6, 0.9, text("Surrogate model. Step $s", :left,9,:Arial)))
 	return plot(p1,p2,layout=(2,1),size=(900,700),xlim=(0.0,1.0),ylim=(-0.25,1.0),legend=:topleft)
 end;
 
 # ╔═╡ 4db2b031-f408-463f-8e2f-8dcf055c374c
+# ╠═╡ show_logs = false
 let
 	xu,yu = x[xused[:]],noisydata[xused[:]]
 	lxi = length(xu)
@@ -198,7 +207,7 @@ let
 		gifplot(i,x,noisydata,xused[:],xu[lxi:end],yu[lxi:end],gpi)
 
 	end
-	gif(anim,fps=1)
+	gif(anim,fps=2)
 end
 
 # ╔═╡ 42ba19d9-4e65-4621-b713-ffc4d1051380
@@ -582,6 +591,12 @@ git-tree-sha1 = "f6250b16881adf048549549fba48b1161acdac8c"
 uuid = "c1c5ebd0-6772-5130-a774-d5fcae4a789d"
 version = "3.100.1+0"
 
+[[LERC_jll]]
+deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
+git-tree-sha1 = "bf36f528eec6634efc60d7ec062008f171071434"
+uuid = "88015f11-f218-50d7-93a8-a6af411a945d"
+version = "3.0.0+1"
+
 [[LZO_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "e5b909bcf985c5e2605737d2ce278ed791b89be6"
@@ -661,10 +676,10 @@ uuid = "4b2f31a3-9ecc-558c-b454-b3730dcb73e9"
 version = "2.35.0+0"
 
 [[Libtiff_jll]]
-deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "Libdl", "Pkg", "Zlib_jll", "Zstd_jll"]
-git-tree-sha1 = "340e257aada13f95f98ee352d316c3bed37c8ab9"
+deps = ["Artifacts", "JLLWrappers", "JpegTurbo_jll", "LERC_jll", "Libdl", "Pkg", "Zlib_jll", "Zstd_jll"]
+git-tree-sha1 = "c9551dd26e31ab17b86cbd00c2ede019c08758eb"
 uuid = "89763e89-9b03-5906-acba-b20f662cd828"
-version = "4.3.0+0"
+version = "4.3.0+1"
 
 [[Libuuid_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -679,7 +694,7 @@ uuid = "d3d80556-e9d4-5f37-9878-2ab0fcc64255"
 version = "7.1.1"
 
 [[LinearAlgebra]]
-deps = ["Libdl"]
+deps = ["Libdl", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[LogExpFunctions]]
@@ -747,6 +762,10 @@ deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "887579a3eb005446d514ab7aeac5d1d027658b8f"
 uuid = "e7412a2a-1a6e-54c0-be00-318e2571c051"
 version = "1.3.5+1"
+
+[[OpenBLAS_jll]]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
+uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
 
 [[OpenSSL_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -853,9 +872,9 @@ version = "1.7.1"
 
 [[Qt5Base_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Fontconfig_jll", "Glib_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "OpenSSL_jll", "Pkg", "Xorg_libXext_jll", "Xorg_libxcb_jll", "Xorg_xcb_util_image_jll", "Xorg_xcb_util_keysyms_jll", "Xorg_xcb_util_renderutil_jll", "Xorg_xcb_util_wm_jll", "Zlib_jll", "xkbcommon_jll"]
-git-tree-sha1 = "ad368663a5e20dbb8d6dc2fddeefe4dae0781ae8"
+git-tree-sha1 = "c6c0f690d0cc7caddb74cef7aa847b824a16b256"
 uuid = "ea2cea3b-5b76-57ae-a6ef-0a8af62496e1"
-version = "5.15.3+0"
+version = "5.15.3+1"
 
 [[QuadGK]]
 deps = ["DataStructures", "LinearAlgebra"]
@@ -868,7 +887,7 @@ deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 
 [[Random]]
-deps = ["Serialization"]
+deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[RecipesBase]]
@@ -1201,6 +1220,10 @@ deps = ["Artifacts", "Bzip2_jll", "FreeType2_jll", "FriBidi_jll", "JLLWrappers",
 git-tree-sha1 = "acc685bcf777b2202a904cdcb49ad34c2fa1880c"
 uuid = "0ac62f75-1d6f-5e53-bd7c-93b484bb37c0"
 version = "0.14.0+4"
+
+[[libblastrampoline_jll]]
+deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
+uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
 
 [[libfdk_aac_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
