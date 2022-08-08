@@ -1,5 +1,11 @@
 ### A Pluto.jl notebook ###
-# v0.19.3
+# v0.19.5
+
+#> [frontmatter]
+#> title = "Data featurization and machine learning in materials science"
+#> tags = ["Materials Informatics", "Machine Learning", "Materials Science", "Materials data"]
+#> license = "CC-BY-4.0"
+#> description = "This is a rework of the best practices blog showing how one can featurize and train ML models for materials data"
 
 using Markdown
 using InteractiveUtils

@@ -1,5 +1,11 @@
 ### A Pluto.jl notebook ###
-# v0.17.4
+# v0.19.5
+
+#> [frontmatter]
+#> title = "Machine Learning Activity in Materials Science"
+#> tags = ["Materials Informatics", "Machine Learning", "Materials Science"]
+#> license = "CC-BY-4.0"
+#> description = "A brief blog on current number of ML publications in STEM fields with a focus on materials science"
 
 using Markdown
 using InteractiveUtils
@@ -96,7 +102,7 @@ end
 
 # ╔═╡ 7c4cbc96-3918-48cb-853f-5a71c037dcdd
 function plotted_data(data)
-	plt = plot(resolution=(700,350),
+	plt = plot(resolution=(675,350),
 			   xlabel="Years",ylabel="% ML Articles",legend=:lt,
 			   xlimits=extrema(r[1]),limits=extrema(r[2]))
 	for c in unique(data[!,:category])
@@ -208,6 +214,10 @@ deps = ["Base64", "Dates", "DelimitedFiles", "Distributed", "InteractiveUtils", 
 git-tree-sha1 = "44c37b4636bc54afac5c574d2d02b625349d6582"
 uuid = "34da2185-b29b-5c13-b0c7-acf172513d20"
 version = "3.41.0"
+
+[[CompilerSupportLibraries_jll]]
+deps = ["Artifacts", "Libdl"]
+uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
 
 [[Crayons]]
 git-tree-sha1 = "b618084b49e78985ffa8422f32b9838e397b9fc2"
@@ -384,7 +394,7 @@ uuid = "29816b5a-b9ab-546f-933c-edad1886dfa8"
 uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
 
 [[LinearAlgebra]]
-deps = ["Libdl"]
+deps = ["Libdl", "libblastrampoline_jll"]
 uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 
 [[Logging]]
@@ -417,6 +427,10 @@ uuid = "ca575930-c2e3-43a9-ace4-1e988b2c1908"
 git-tree-sha1 = "fe29afdef3d0c4a8286128d4e45cc50621b1e43d"
 uuid = "510215fc-4207-5dde-b226-833fc4488ee2"
 version = "0.4.0"
+
+[[OpenBLAS_jll]]
+deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
+uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
 
 [[OrderedCollections]]
 git-tree-sha1 = "85f8e6578bf1f9ee0d11e7bb1b1456435479d47c"
@@ -478,7 +492,7 @@ deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
 uuid = "3fa0cd96-eef1-5676-8a61-b3b8758bbffb"
 
 [[Random]]
-deps = ["Serialization"]
+deps = ["SHA", "Serialization"]
 uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
 
 [[Reexport]]
@@ -577,6 +591,10 @@ version = "1.4.1"
 [[Zlib_jll]]
 deps = ["Libdl"]
 uuid = "83775a58-1f1d-513f-b197-d71354ab007a"
+
+[[libblastrampoline_jll]]
+deps = ["Artifacts", "Libdl", "OpenBLAS_jll"]
+uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
 
 [[nghttp2_jll]]
 deps = ["Artifacts", "Libdl"]

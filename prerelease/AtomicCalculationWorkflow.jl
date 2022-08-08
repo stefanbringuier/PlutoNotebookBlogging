@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.2
+# v0.19.11
 
 using Markdown
 using InteractiveUtils
@@ -57,7 +57,7 @@ end
 
 # ╔═╡ 3bffff9a-f4bd-403d-8581-0b09a1cab911
 md"""
-# Density Functional theory calculations in a Pluto.jl notebook
+# DFTK.jl in a Pluto.jl notebook
 **Author: Stefan Bringuier**
 
 As the Julia ecosystem continues to mature its becoming easier and very attractive to use the packages to do routine DFT and atomistic calculations. This notebook attempts to show how one can use [DFTK.jl](), a density functional theory toolkit which gives access to many primitives for scripting a calculation. The package has a good amount of capability for being so young. What makes this even a more attractive is that routines exist to utilize well established structure/calculation preparation libraries such as [ASE]() and [pymatgen](). This is all enabled by [PyCall.jl] and made even easier with [Conda.jl]. Finally, computation notebooks are commonly used to do data analysis and prototyping given that they have a "natural" feeling for how many computational practioniers think, [Pluto.jl]() is a native Julia approach to notebooks. It provides some nice stylistic choices that I think a better than [Jupyter]() in addition to a different approach to code execution and relation.
@@ -67,7 +67,7 @@ In this notebook I will just be demonstrating a workflow that maybe useful for e
 
 # ╔═╡ 3a662cf4-60d4-45d7-a9af-dfca1659dde8
 md"""
-# Example with pymatgen API & ASE
+# Example structures via pymatgen API & ASE
 """
 
 # ╔═╡ b4a7ab05-4819-43cf-a25f-b043a64a30b1
@@ -84,11 +84,11 @@ The first thing is to create a function that will grab a structure from the mate
 
 # ╔═╡ ee49f2bc-7467-4387-81db-178700742be7
 md"""
-I've decided to generate a list of materials project ideas based on a query for Lithium hydrogen compounds. You can select one from the box below and then we retrieve it.
+Here is a dropdown menu for two material project entries:
 """
 
-# ╔═╡ 86e64077-858c-4313-8ecd-649244f08942
-mpid = "mp-23703"
+# ╔═╡ dcbe06d0-3a18-46a9-9f53-756de21995b4
+@bind mpid Select(["mp-66" => "C-Dia 💎", "mp-2657" => "TiO2 🪨"])
 
 # ╔═╡ 8bbc2cfd-c349-4990-a516-902358bb3522
 md"""
@@ -115,9 +115,17 @@ POSCAR file of modified structure:  $(DownloadButton(read(mpid*"-mod.vasp"), mpi
 md"""
 # Running DFTK.jl
 
-So now with the structure in had we can setup our DFTK.jl calculation in a few number of lines. The first block of code is to convert the `ASE` (or `pymatgen`) structures into what DFTK likes. Then we need to specify the psuedopotential for a given functional. DFTK.jl at the moment has limited support for psuedopotentials. 
+So now with the structure in hand we can set up our DFTK.jl calculation in a few number of lines. The first block of code is to convert the `ASE` (or `pymatgen`) structures into what DFTK likes. Then we need to specify the pseudopotential for a given functional. DFTK.jl at the moment has limited support for pseudopotentials. 
+"""
 
-The calculation will take some time ...
+# ╔═╡ 09b40ec5-f624-41a4-bffc-bbb60fd36718
+md"""
+The first step is to select the appropriate pseudopotentials. Here I'm just going to select the full core and [HGH](https://journals.aps.org/prb/abstract/10.1103/PhysRevB.58.3641) family for LDA, I will take the first entry in the returned list of psp in the event that there are more than one option.
+"""
+
+# ╔═╡ 7fd111d9-8a35-4090-a607-09c7c3d8a99e
+md"""
+Now configuring the different arrays needed to input to a DFTK.jl model.
 """
 
 # ╔═╡ a689c4bc-157a-4b15-87d6-8eb50578241c
@@ -125,16 +133,20 @@ md"""
 Here I create some storage arrays. As you'll see below there is a entry box to specify what affine transformation scaling to apply. This is used to generate the equation of state for the compound.
 """
 
+# ╔═╡ 6c76f776-65b1-45bc-bdb4-be10498c9ea0
+md"""
+We can generate the equation of state by scaling the unit cell uniformly. Adjust scale cell by: $(@bind scale confirm(NumberField(0.575:0.1:1.6,default=0.8)))
+"""
+
+# ╔═╡ 79e1dda4-bcef-4705-b56b-5826b86127f7
+@bind clear Button("Reset plot")
+
 # ╔═╡ 3f387862-434c-44b8-ad9b-dbec1e7e28bd
 begin
+	clear
 	volumes,energies = [],[]
 	bandplots = []
 end;
-
-# ╔═╡ 6c76f776-65b1-45bc-bdb4-be10498c9ea0
-md"""
-We can generate the equation of state by scaling the unit cell uniformly. Adjust scale cell by: $(@bind scale confirm(NumberField(0.575:0.1:1.6,default=0.575)))
-"""
 
 # ╔═╡ 44077c63-3772-4196-bb08-1ce5f25407d0
 begin
@@ -153,8 +165,11 @@ Show bandstructure plots $(@bind showbandplot CheckBox()) $(@bind replot Button(
 # ╔═╡ a9adf571-0c6a-4290-b7d6-8c47d959e677
 if showbandplot
 	replot
-	plot(bandplots...,xlabel=false,ylabel=false,ylims=[-5,9])
+	plot(bandplots...,xlabel=false,ylabel=false,ylims=[-5,9], title = ["$(round(i,sigdigits=3)) Å³" for j in 1:1, i in volumes], titleloc = :center, titlefont = font(8))
 end
+
+# ╔═╡ 4bd6128c-5d42-4c20-879a-6f47c473868e
+reference_bandstruct = Resource("https://materialsproject.org/static/electronic_structure/$(mpid).png",MIME"image/png"(),());
 
 # ╔═╡ bda1a5a9-a8c8-48f6-bf9e-c481ed96a305
 md"""
@@ -162,17 +177,19 @@ Generally the band structure shows that at high compression the compound is pred
 
 For reference here is the ground state prediction using GGA from the materials project page:
 
-$(Resource("https://materialsproject.org/electronic_structure/bandstructure/plot/mp-23703",MIME"image/png"(),()))
+$(reference_bandstruct)
+
+*Data retrieved from the Materials Project for $(mpid) from database version v2021.11.10.*
 """
 
 # ╔═╡ 4971e8c1-670f-454d-85d3-826912124a52
 md"""
-# Adding packages
+# Packages
 """
 
 # ╔═╡ 02b9042f-ffe3-4ec4-b7af-4e362d315cb1
 md"""
-## Adding Julia packages"""
+## Julia packages"""
 
 # ╔═╡ 3626cc10-6069-488c-a121-e3e46ef42ded
 md"""
@@ -228,16 +245,23 @@ begin
 	LocalResource("$(mpid)-mod.png",:style=>"display: block; margin-left: auto; margin-right: auto;")
 end
 
+# ╔═╡ 5bd9d7f7-3494-4531-96f1-8b4d9ce03d85
+begin
+	psp_path_map = Dict();
+	species = unique([ el.symbol for el in load_atoms(modstructure)])
+	psp = map(x->list_psp(x,family="hgh",functional="lda",core=:fullcore),species)
+	for (i,s) in enumerate(species)
+		psp_path_map[s] = psp[i][1][:path] # take first psp
+	end
+end
+
 # ╔═╡ c5e39ebb-f3a2-4f76-b015-6b0524df075a
 begin
 	positions = load_positions(modstructure)
 	lattice = load_lattice(modstructure)
 	atoms = map(load_atoms(modstructure)) do el
-		if el.symbol == :Li
-			ElementPsp(:Li,psp=load_psp("hgh/lda/li-q1"))
-		elseif el.symbol == :H
-			ElementPsp(:H,psp=load_psp("hgh/lda/h-q1"))	
-		end
+		s = el.symbol
+		ElementPsp(s,psp=load_psp(psp_path_map[s]))
 	end
 end;
 
@@ -308,6 +332,21 @@ aside(md"""
 - $(DOI("10.1016/j.commatsci.2012.10.028"))
 """)
 
+# ╔═╡ e6f00dba-f9c1-432e-92eb-d8784e28b207
+aside(md"""$(DOI("10.1103/PhysRevB.58.3641"))""")
+
+# ╔═╡ c3e54a32-8d1c-4e28-a7cf-a700fe826ad8
+aside(md"""
+!!! note
+    The cutoff and k-mesh have been choosen for general convergence but are not systematic towards the selected material systems.
+""")
+
+# ╔═╡ 72517b4b-1778-44be-8321-e1c0f825d742
+aside(md"""
+!!! note
+    This calculations can take sometime so antcipate waiting a minute or two for each calculation.
+""")
+
 # ╔═╡ 9d2256ed-4faf-494e-8746-83eb8a4bdaeb
 aside(md"""
 !!! note
@@ -322,22 +361,30 @@ aside(md"""
 # ╟─d36ca560-186b-44e9-88c2-01dc6fc8e701
 # ╠═be5c12a5-5367-4c78-83c5-590f88cb81e4
 # ╟─ee49f2bc-7467-4387-81db-178700742be7
-# ╠═86e64077-858c-4313-8ecd-649244f08942
+# ╟─dcbe06d0-3a18-46a9-9f53-756de21995b4
 # ╠═bb02711c-844f-4bbb-8954-f34f1488cac6
 # ╟─8bbc2cfd-c349-4990-a516-902358bb3522
 # ╟─d09d7791-15b6-4d70-8f36-3fd9b649d5f2
 # ╟─197f95f2-5f1a-48d8-b5d0-4d466a7650a0
 # ╟─0a42c388-7ede-4e52-8dc9-ff9d34f26cb8
 # ╟─01081a84-6caf-4bd1-9263-cd0bc13b9e8b
+# ╟─09b40ec5-f624-41a4-bffc-bbb60fd36718
+# ╠═5bd9d7f7-3494-4531-96f1-8b4d9ce03d85
+# ╟─e6f00dba-f9c1-432e-92eb-d8784e28b207
+# ╟─7fd111d9-8a35-4090-a607-09c7c3d8a99e
 # ╠═c5e39ebb-f3a2-4f76-b015-6b0524df075a
 # ╟─a689c4bc-157a-4b15-87d6-8eb50578241c
 # ╠═3f387862-434c-44b8-ad9b-dbec1e7e28bd
+# ╟─c3e54a32-8d1c-4e28-a7cf-a700fe826ad8
 # ╠═83b24435-e363-4ad2-abda-2eb32df3f4da
+# ╟─72517b4b-1778-44be-8321-e1c0f825d742
 # ╟─6c76f776-65b1-45bc-bdb4-be10498c9ea0
+# ╟─79e1dda4-bcef-4705-b56b-5826b86127f7
 # ╟─44077c63-3772-4196-bb08-1ce5f25407d0
 # ╟─ef047bdb-8ace-4524-b345-32764dd2f9c1
 # ╟─a9adf571-0c6a-4290-b7d6-8c47d959e677
-# ╠═9d2256ed-4faf-494e-8746-83eb8a4bdaeb
+# ╟─9d2256ed-4faf-494e-8746-83eb8a4bdaeb
+# ╟─4bd6128c-5d42-4c20-879a-6f47c473868e
 # ╟─bda1a5a9-a8c8-48f6-bf9e-c481ed96a305
 # ╟─4971e8c1-670f-454d-85d3-826912124a52
 # ╟─02b9042f-ffe3-4ec4-b7af-4e362d315cb1
@@ -350,6 +397,6 @@ aside(md"""
 # ╠═df058d03-8578-4b22-b59e-e8b2c2e1ce44
 # ╟─16858060-1b0d-4d1f-a134-63e37ddf3a88
 # ╠═28322e9b-baba-49cc-adbd-15465787dfcb
-# ╠═dea77925-e281-4a0e-9825-685f47876ed4
+# ╟─dea77925-e281-4a0e-9825-685f47876ed4
 # ╠═f2ad5416-8ed2-4c1c-951e-41b62bd7f7b4
 # ╟─30943ccc-60ed-4688-84ee-4aa1e5bde97c

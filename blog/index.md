@@ -1,6 +1,7 @@
 @def title = "Pluto.jl Notebook Blogs"
 
 # Blogs
+* [DFT calculation in a notebook](assets/prerendered_notebooks/prerendered_notebooks/AtomicCalculationWorkflow.html) - Demo the use of PyMatgen, ASE, and DFTK.jl in a Pluto.jl notebook.
 * [Featurization & ML Models](assets/prerendered_notebooks/RemakeBestPracticesPost.html) - A guide through featurization and ML models for materials data.
 * [Bayesian Inference](assets/notebooks/BMCP_Ch2_1.html) - An example from *Bayesian Modeling and Computation in Python* but in Julia.
 * [ML in Materials Science](assets/notebooks/ML_MatSci.html) - Plotting the publication activity of Machine Learning use in Materials Science.
