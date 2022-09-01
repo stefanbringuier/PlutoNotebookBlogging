@@ -1,6 +1,7 @@
 @def title = "Pluto.jl Notebook Blogs"
 
 # Blogs
+* [Integrating a function with MC](assets/notebooks/TrivialMC.html) - Basic demo showing how Monte Carlo sampling can be used to integrate a function.
 * [DFT calculation in a notebook](assets/prerendered_notebooks/AtomicCalculationWorkflow.html) - Demo the use of PyMatgen, ASE, and DFTK.jl in a Pluto.jl notebook.
 * [Featurization & ML Models](assets/prerendered_notebooks/RemakeBestPracticesPost.html) - A guide through featurization and ML models for materials data.
 * [Bayesian Inference](assets/notebooks/BMCP_Ch2_1.html) - An example from *Bayesian Modeling and Computation in Python* but in Julia.
