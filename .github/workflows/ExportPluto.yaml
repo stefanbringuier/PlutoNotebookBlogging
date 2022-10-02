@@ -22,8 +22,8 @@ jobs:
             - name: Install Julia
               uses: julia-actions/setup-julia@v1
               with:
-                  version: 1.7.2
-
+                  version: 1.8.2
+                  
             # Needed for some notebooks      
             - name: Install TeXlive
               run: sudo apt-get install texlive-latex-extra texlive-science texlive-luatex texlive-pstricks latexmk

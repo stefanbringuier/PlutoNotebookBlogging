@@ -1,4 +1,5 @@
 @def title = "Pluto.jl Notebook Blogs"
+@def author = "Stefan Bringuier"
 
 # Blogs
 * [LAMMPS in notebook (WIP)](assets/notebooks/LAMMPS_Julia.html) - Example running LAMMPS in a notebook and accessing compute result.
