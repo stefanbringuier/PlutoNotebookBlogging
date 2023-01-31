@@ -1,7 +1,11 @@
 @def title = "Pluto.jl Notebook Blogs"
 @def author = "Stefan Bringuier"
 
+
+The blogs arerendered to html via [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl) and use [Julia version 1.6.7 (LTS)](https://julialang.org/downloads/#long_term_support_release).
+
 # Blogs
+* [Dual numbers and derivatives](assets/notebooks/DualNumbers.html) - Discussing dual numbers and the use for taking derivatives of functions.
 * [LAMMPS in notebook (WIP)](assets/notebooks/LAMMPS_Julia.html) - Example running LAMMPS in a notebook and accessing compute result.
 * [Simulating CVD growth](assets/notebooks/KMC_CVD.html) - Implementation of KMC model to simulate chemical vapor deposition.
 * [Integrating a function with MC](assets/notebooks/TrivialMC.html) - Basic demo showing how Monte Carlo sampling can be used to integrate a function.
