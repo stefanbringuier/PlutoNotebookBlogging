@@ -2,11 +2,11 @@
 @def author = "Stefan Bringuier"
 
 
-The blogs arerendered to html via [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl) and use [Julia version 1.6.7 (LTS)](https://julialang.org/downloads/#long_term_support_release).
+The blogs are endered to html via [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl) and use [Julia version 1.6.7 (LTS)](https://julialang.org/downloads/#long_term_support_release). Feel free to post an [issue](https://github.com/stefanbringuier/PlutoNotebookBlogging/issues) if there are errors or problems running notebooks.
 
 # Blogs
 * [Dual numbers and derivatives](assets/notebooks/DualNumbers.html) - Discussing dual numbers and the use for taking derivatives of functions.
-* [LAMMPS in notebook (WIP)](assets/notebooks/LAMMPS_Julia.html) - Example running LAMMPS in a notebook and accessing compute result.
+* [LAMMPS in notebook](assets/notebooks/LAMMPS_Julia.html) - Example running LAMMPS in a notebook and accessing compute result.
 * [Simulating CVD growth](assets/notebooks/KMC_CVD.html) - Implementation of KMC model to simulate chemical vapor deposition.
 * [Integrating a function with MC](assets/notebooks/TrivialMC.html) - Basic demo showing how Monte Carlo sampling can be used to integrate a function.
 * [DFT calculation in a notebook](assets/prerendered_notebooks/AtomicCalculationWorkflow.html) - Demo the use of PyMatgen, ASE, and DFTK.jl in a Pluto.jl notebook.
