@@ -2,9 +2,10 @@
 @def author = "Stefan Bringuier"
 
 
-The blogs are endered to html via [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl) and use [Julia version 1.6.7 (LTS)](https://julialang.org/downloads/#long_term_support_release). Feel free to post an [issue](https://github.com/stefanbringuier/PlutoNotebookBlogging/issues) if there are errors or problems running notebooks.
+The blogs are endered to html via [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl) and use [Julia version 1.8 ](https://julialang.org/downloads/#current_stable_release). Feel free to post an [issue](https://github.com/stefanbringuier/PlutoNotebookBlogging/issues) if there are errors or problems running notebooks.
 
 # Blogs
+* [Creating slides using julia](assets/notebooks/slidesviajulia.html) - Demonstration of creating slides using [PPTX.jl](https://github.com/ASML-Labs/PPTX.jl) package.
 * [Dual numbers and derivatives](assets/notebooks/DualNumbers.html) - Discussing dual numbers and the use for taking derivatives of functions.
 * [LAMMPS in notebook](assets/notebooks/LAMMPS_Julia.html) - Example running LAMMPS in a notebook and accessing compute result.
 * [Simulating CVD growth](assets/notebooks/KMC_CVD.html) - Implementation of KMC model to simulate chemical vapor deposition.
