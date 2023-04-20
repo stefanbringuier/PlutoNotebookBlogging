@@ -1,10 +1,10 @@
 @def title = "Pluto.jl Notebook Blogs"
 @def author = "Stefan Bringuier"
 
-
 The blogs are endered to html via [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl) and use [Julia version 1.8 ](https://julialang.org/downloads/#current_stable_release). Feel free to post an [issue](https://github.com/stefanbringuier/PlutoNotebookBlogging/issues) if there are errors or problems running notebooks.
 
 # Blogs
+* [Simple NN in Julia](assets/notebooks/FluxTutorial.html) - Reworking the [quickstart of Flux.jl](https://fluxml.ai/Flux.jl/stable/models/quickstart/).
 * [Plotting properties on a periodic table](assets/notebooks/PeriodicTableSchematic.html) - It can be useful at times to color code periodic table to display elemental properties.
 * [Creating slides using julia](assets/notebooks/slidesviajulia.html) - Demonstration of creating slides using [PPTX.jl](https://github.com/ASML-Labs/PPTX.jl) package.
 * [Dual numbers and derivatives](assets/notebooks/DualNumbers.html) - Discussing dual numbers and the use for taking derivatives of functions.
