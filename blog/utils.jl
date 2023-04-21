@@ -101,8 +101,7 @@ function hfun_get_pluto_tags()
     push!(tags, rpath => Set(parse_tags_from_html(html_file)))
   end
   Franklin.set_var!(Franklin.GLOBAL_VARS, "fd_page_tags", Franklin.DTAG(Tuple(tags)); check=false)
-
-  return nothing
+  return ""
 end
 
 

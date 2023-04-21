@@ -2,8 +2,6 @@
 @def author = "Stefan Bringuier"
 {{ get_pluto_tags }}
 
-
-
 The blogs are endered to html via [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl) and use [Julia version 1.8 ](https://julialang.org/downloads/#current_stable_release). Feel free to post an [issue](https://github.com/stefanbringuier/PlutoNotebookBlogging/issues) if there are errors or problems running notebooks.
 
 # Blogs

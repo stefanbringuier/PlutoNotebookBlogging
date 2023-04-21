@@ -193,14 +193,15 @@ table tbody tr td {
 /* Style the sidebar */
 .sidebar {
   position: fixed;
-  top: 0;
-  right: 0;
-  width: 200px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  height: 100%;
+  top: 100px;
+  left: 100px;
+  width: 325px;
+  padding: 30px;
+  background-color: #ffffff;
+  height: calc(100% - 100px) ; 
   overflow-y: auto;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /*
 }
 
 /* Style the tag list */
