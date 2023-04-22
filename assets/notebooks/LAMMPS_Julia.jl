@@ -1,5 +1,12 @@
 ### A Pluto.jl notebook ###
-# v0.19.22
+# v0.19.23
+
+#> [frontmatter]
+#> author = "Stefan Bringuier"
+#> title = "LAMMPS in a notebook"
+#> tags = ["Atomistics", "Simulations"]
+#> license = "CC-BY-4.0"
+#> description = "Performing a LAMMPS simulation in a Pluto notebook"
 
 using Markdown
 using InteractiveUtils
@@ -86,7 +93,7 @@ function run_lmp(lmp,datafile)
 	command(lmp,"fix r2 all npt temp 2450 2450 1.0 tri 0.0 0.0 10.0 drag 1.5")
 	command(lmp,"compute c1 all rdf 150")
 	command(lmp,"fix r3 all ave/time 10 1 10 c_c1[*] file tmp.rdf mode vector")
-	command(lmp,"run 50000")
+	command(lmp,"run 1000")
 
 	rdf = deepcopy(extract_compute(lmp, 
 								   "c1", 
@@ -146,7 +153,8 @@ HTML("""
 	
 	<script>
 		const div = currentScript.parentElement
-		const button = div.querySelector("button#myrestart")
+		const button = div.query
+Selector("button#myrestart")
 		console.log(button);
 		button.onclick = function() { restart_nb() };
 		console.log(div.dispatchEvent)
@@ -558,9 +566,9 @@ version = "0.2.0"
 
 [[LAMMPS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "LazyArtifacts", "Libdl", "MPICH_jll", "MPIPreferences", "MPItrampoline_jll", "MicrosoftMPI_jll", "OpenMPI_jll", "TOML"]
-git-tree-sha1 = "c845a182c828051bf429174ee7b614c643e4221f"
+git-tree-sha1 = "7f78765535d3336a40e2ef85a5cc4d54218ead1a"
 uuid = "5b3ab26d-9607-527c-88ea-8fe5ba57cafe"
-version = "2.3.2+0"
+version = "2.3.2+2"
 
 [[LERC_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -691,9 +699,9 @@ version = "0.20.8"
 
 [[MPICH_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "JLLWrappers", "LazyArtifacts", "Libdl", "MPIPreferences", "TOML"]
-git-tree-sha1 = "6494782a9930c138af5388e64b48f096d17b8edb"
+git-tree-sha1 = "d790fbd913f85e8865c55bf4725aff197c5155c8"
 uuid = "7cb0a576-ebde-5e09-9194-50597f1243b4"
-version = "4.1.1+0"
+version = "4.1.1+1"
 
 [[MPIPreferences]]
 deps = ["Libdl", "Preferences"]
@@ -740,9 +748,9 @@ version = "0.3.2"
 
 [[MicrosoftMPI_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "a16aa086d335ed7e0170c5265247db29172af2f9"
+git-tree-sha1 = "a8027af3d1743b3bfae34e54872359fdebb31422"
 uuid = "9237b28f-5490-5468-be7b-bb81f5f5e6cf"
-version = "10.1.3+2"
+version = "10.1.3+4"
 
 [[Missings]]
 deps = ["DataAPI"]
@@ -1019,7 +1027,7 @@ version = "1.0.0"
 [[Tar]]
 deps = ["ArgTools", "SHA"]
 uuid = "a4e569a6-e804-4fa4-b0f3-eef7a1d5b13e"
-version = "1.10.1"
+version = "1.10.0"
 
 [[TensorCore]]
 deps = ["LinearAlgebra"]

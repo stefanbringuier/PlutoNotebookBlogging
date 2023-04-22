@@ -1,9 +1,10 @@
 ### A Pluto.jl notebook ###
-# v0.19.22
+# v0.19.23
 
 #> [frontmatter]
+#> author = "Stefan Bringuier"
 #> title = "DMRG Example"
-#> tags = ["DMRG", "Spin Lattice"]
+#> tags = ["DMRG", "Spin Lattice", "Simulation"]
 #> license = "CC-BY-4.0"
 #> description = "An example of 1D Heisenberg Antiferromagnetic model solved using density matrix renormilzation group"
 
