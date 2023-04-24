@@ -334,3 +334,78 @@ code {
   border-radius: 0 10px 10px 0;
   border-left: 5px solid #4c9cf1;
 }
+
+
+
+/* Style the sidebar */
+.sidebar {
+  position: fixed;
+  top: 100px;
+  left: 100px;
+  width: 325px;
+  padding: 30px;
+  background-color: #ffffff;
+  height: calc(100% - 100px) ; 
+  overflow-y: auto;
+  text-align: left;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /*
+}
+
+/* Style the tag list */
+.tag-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.tag-item {
+  display: inline-block;
+  margin: 0 5px 5px 0;
+}
+
+.tag-link {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 20px;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
+  font-size: 14px;
+  z-index: 1000;
+
+}
+
+.tag-link:hover {
+  background-color: #0056b3;
+}
+
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: static;
+    width: 100%;
+    padding: 20px;
+    left: auto;
+    top: auto;
+    height: auto;
+  }
+  
+  .tag-item {
+    margin: 0 3px 3px 0;
+  }
+
+  .tag-link {
+    padding: 3px 7px;
+    font-size: 12px;
+  }
+
+  .blog-name {
+    margin-top: 20px; /* Adjust this value based on the actual height of the sidebar on mobile devices */
+  }
+
+  .franklin-content{
+    margin-top: 100px
+  }
+    
+  }
+}

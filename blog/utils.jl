@@ -126,11 +126,12 @@ function hfun_get_tags()
   # Generate the HTML for the tag list
   html_buffer = IOBuffer()
   for tag in sorted_tags
+    frmt_tag = join([titlecase(word) for word in split(tag)], " ")
     write(
       html_buffer,
       """
 <li class="tag-item">
-  <a class="tag-link" href="/tag/$(tag)/">$(tag)</a>
+  <a class="tag-link" href="/tag/$(tag)/">$(frmt_tag)</a>
 </li>
 """
     )
