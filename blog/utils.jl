@@ -96,11 +96,14 @@ function hfun_get_pluto_tags()
 
   # Grab all tag names first
   tags = []
+  rpaths = []
   for html_file in html_files
-    rpath = replace(html_file, "_assets" => "assets")
-    push!(tags, rpath => Set(parse_tags_from_html(html_file)))
+    push!(rpaths,replace(html_file, "_assets" => "assets"))
+    itag = Franklin.refstring.(parse_tags_from_html(html_file))
+    push!(tags, itag)
   end
-  Franklin.set_var!(Franklin.GLOBAL_VARS, "fd_page_tags", Franklin.DTAG(Tuple(tags)); check=false)
+  frmt_tags = Franklin.DTAG(zip(rpaths,map(Set,tags)))
+  Franklin.set_var!(Franklin.GLOBAL_VARS, "fd_page_tags", frmt_tags; check=false)
   return ""
 end
 
