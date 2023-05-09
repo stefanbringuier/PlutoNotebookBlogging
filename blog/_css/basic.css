@@ -194,12 +194,13 @@ table tbody tr td {
 .sidebar {
   position: fixed;
   top: 100px;
-  left: 100px;
+  left: 50px;
   width: 325px;
-  padding: 30px;
+  padding-left: 0px;
   background-color: #ffffff;
   height: calc(100% - 100px) ; 
   overflow-y: auto;
+  overflow-x: auto;
   text-align: left;
   /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /*
 }
@@ -220,7 +221,7 @@ table tbody tr td {
   display: inline-block;
   padding: 5px 10px;
   border-radius: 20px;
-  background-color: #007bff;
+  background-color: rgb(51, 131, 231);
   color: #fff;
   text-decoration: none;
   font-size: 14px;
