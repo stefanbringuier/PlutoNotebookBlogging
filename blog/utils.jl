@@ -64,7 +64,7 @@ function hfun_taglist_pluto()::String
   sorter(p) = begin
     pvd = pagevar(p, "date")
     if isnothing(pvd)
-      return Date(Dates.unix2datetime(stat(p * ".html").ctime))
+      return Date(Dates.unix2datetime(stat(p).ctime))
     end
     return pvd
   end
@@ -74,10 +74,14 @@ function hfun_taglist_pluto()::String
 
   for rpath in rpaths
     title = parse_title_from_html(replace(rpath, "assets" => "_assets"))
-    if isnothing(title)
-      title = join(nb(rpath),".jl")
+
+    if isempty(title)
+      title = splitext(splitpath(rpath)[end])[1]
+      # title = join(nb_name(rpath),".jl")
     end
+
     url = get_url(rpath)
+
     write(c, "<li><a href=\"/$rpath\">$title</a></li>")
   end
   write(c, "</ul>")
@@ -104,6 +108,7 @@ function hfun_get_pluto_tags()
   end
   frmt_tags = Franklin.DTAG(zip(rpaths,map(Set,tags)))
   Franklin.set_var!(Franklin.GLOBAL_VARS, "fd_page_tags", frmt_tags; check=false)
+
   return ""
 end
 
@@ -134,7 +139,7 @@ function hfun_get_tags()
       html_buffer,
       """
 <li class="tag-item">
-  <a class="tag-link" href="/tag/$(tag)/">$(frmt_tag)</a>
+  <a class="tag-link" href="/tag/$(Franklin.refstring(tag))/">$(frmt_tag)</a>
 </li>
 """
     )
