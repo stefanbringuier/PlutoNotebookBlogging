@@ -5,7 +5,7 @@
 #> author = "Stefan Bringuier"
 #> website = "https://stefanbringuier.github.io/PlutoNotebookBlogging/"
 #> title = "Kinetic Monte Carlo Simulation of CVD growth"
-#> tags = ["KMC", " simulations"]
+#> tags = ["KMC", "Simulations"]
 #> description = "Using KMC to simulate the film growth using set of chemical reactions"
 
 using Markdown

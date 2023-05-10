@@ -1,6 +1,12 @@
 ### A Pluto.jl notebook ###
 # v0.19.22
 
+#> [frontmatter]
+#> title = "Taking derivatives using dual numbers"
+#> tags = ["Numerics"]
+#> license = "CC-BY-4.0"
+#> description = "Blog post shows the use of dual numbers."
+
 using Markdown
 using InteractiveUtils
 
