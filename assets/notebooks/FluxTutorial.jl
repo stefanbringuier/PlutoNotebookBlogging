@@ -4,7 +4,7 @@
 #> [frontmatter]
 #> title = "A NN Function Approximator in Flux.jl"
 #> date = "2023-04-12"
-#> tags = ["machine learning","neural networks"]
+#> tags = ["Machine Learning","Neural Networks"]
 #> description = "Notebook tutorial on NN in Flux.jl"
 
 using Markdown

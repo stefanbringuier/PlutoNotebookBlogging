@@ -6,7 +6,7 @@
 #> website = "https://stefanbringuier.github.io/PlutoNotebookBlogging/"
 #> title = "Creating Periodic Table Schematic"
 #> date = "2023-04-07"
-#> tags = ["plotting", "chemistry", "elements", "properties"]
+#> tags = ["Plotting", "Chemistry"]
 #> description = "How to use Julia and Plots.jl to create a simple color coded periodic table for exploring elemental properties"
 #> license = "CC-BY-4.0"
 #> contact = "stefanbringuier@gmail.com"

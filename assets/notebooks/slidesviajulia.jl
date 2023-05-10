@@ -5,7 +5,7 @@
 #> author = "Stefan Bringuier"
 #> title = "Slides from a notebook"
 #> date = "2023-03-23"
-#> tags = ["PowerPoint", "Slides", "Presentations"]
+#> tags = ["Presentations"]
 #> description = "Using PPTX.jl to create powerpoint slides from a notebook"
 #> license = "CC-BY-4.0"
 #> url = "https://stefanbringuier.github.io/PlutoNotebookBlogging"

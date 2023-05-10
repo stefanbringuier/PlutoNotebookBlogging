@@ -5,7 +5,7 @@
 #> author = "Stefan Bringuier"
 #> website = "https://stefanbringuier.github.io/PlutoNotebookBlogging/"
 #> title = "Gaussian Processes Blog"
-#> tags = ["Gaussian Processes", "Bayesian Methods", "Sampling"]
+#> tags = ["Gaussian Processes", "Bayesian Methods"]
 #> license = "CC-BY-4.0"
 #> description = "A guided notebook on how one might use Gaussian Processes and Bayesian inference"
 #> contact = "stefanbringuier@gmail.com"
