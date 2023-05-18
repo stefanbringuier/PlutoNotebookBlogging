@@ -9,6 +9,7 @@ The notebooks are rendered to html via [PlutoSliderServer.jl](https://github.com
 # Blogs
 
 @@blog-list
+ @@blog-item  [Inverse determination of diffusion coefficient](assets/notebooks/BayesianInferenceDiffusion.html) - Using Bayesian inference to inversely determine diffusion coefficient. @@
  @@blog-item  [Simple NN in Julia](assets/notebooks/FluxTutorial.html) - Reworking the [quickstart of Flux.jl](https://fluxml.ai/Flux.jl/stable/models/quickstart/). @@
  @@blog-item [Plotting properties on a periodic table](assets/notebooks/PeriodicTableSchematic.html) - It can be useful at times to color code periodic table to display elemental properties. @@
  @@blog-item [Creating slides using julia](assets/notebooks/slidesviajulia.html) - Demonstration of creating slides using [PPTX.jl](https://github.com/ASML-Labs/PPTX.jl) package. @@
