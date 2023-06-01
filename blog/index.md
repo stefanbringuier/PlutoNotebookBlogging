@@ -2,13 +2,14 @@
 @def author = "Stefan Bringuier"
 
 
-The notebooks are rendered to html via [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl) and use [Julia version 1.8 ](https://julialang.org/downloads/#current_stable_release). Feel free to post an [issue](https://github.com/stefanbringuier/PlutoNotebookBlogging/issues) if there are errors or problems running notebooks.
+The notebooks are rendered to html via [PlutoSliderServer.jl](https://github.com/JuliaPluto/PlutoSliderServer.jl) and use [Julia version 1.9 ](https://julialang.org/downloads/#current_stable_release). Feel free to post an [issue](https://github.com/stefanbringuier/PlutoNotebookBlogging/issues) if there are errors or problems running notebooks.
 
 {{ get_pluto_tags }}
 
 # Blogs
 
 @@blog-list
+ @@blog-item  [Spinodal Decomposition](assets/notebooks/CahnHilliardSpinodalDecomp.html) - Solving the Cahn-Hillard equation for spinodal decomposition. @@
  @@blog-item  [Inverse determination of diffusion coefficient](assets/notebooks/BayesianInferenceDiffusion.html) - Using Bayesian inference to inversely determine diffusion coefficient. @@
  @@blog-item  [Simple NN in Julia](assets/notebooks/FluxTutorial.html) - Reworking the [quickstart of Flux.jl](https://fluxml.ai/Flux.jl/stable/models/quickstart/). @@
  @@blog-item [Plotting properties on a periodic table](assets/notebooks/PeriodicTableSchematic.html) - It can be useful at times to color code periodic table to display elemental properties. @@

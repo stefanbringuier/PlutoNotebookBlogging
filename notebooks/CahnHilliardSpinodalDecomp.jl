@@ -1,218 +1,579 @@
 ### A Pluto.jl notebook ###
 # v0.19.25
 
+#> [frontmatter]
+#> author = "Stefan Bringuier"
+#> Email = "stefanbringuier@gmail.com"
+#> title = "Cahn-Hillard Equation & Spinodal Decomposition Simulation"
+#> date = "2023-05-31"
+#> tags = ["Materials Science", "Simulation", "Simulations", "Numerics", "Differential Equations"]
+#> description = "Using the phase field approach solve the Cahn-Hillard equation for standard example"
+#> license = "CC-BY-4.0"
+
 using Markdown
 using InteractiveUtils
 
-# This Pluto notebook uses @bind for interactivity. When running this notebook outside of Pluto, the following 'mock version' of @bind gives bound variables a default value (instead of an error).
-macro bind(def, element)
-    quote
-        local iv = try Base.loaded_modules[Base.PkgId(Base.UUID("6e696c72-6542-2067-7265-42206c756150"), "AbstractPlutoDingetjes")].Bonds.initial_value catch; b -> missing; end
-        local el = $(esc(element))
-        global $(esc(def)) = Core.applicable(Base.get, el) ? Base.get(el) : iv(el)
-        el
+# ╔═╡ 8f199e33-f971-4f96-8883-779f7cc6a946
+md"""
+# Cahn-Hilliard Equation & Spinodal Decomposition Simulation
+**Author: Stefan Bringuier**
+
+!!! note 
+    This is an old Jupyter notebook I had which I converted to a pluto notebook using the utility available [here](https://observablehq.com/@amgalanb/pluto-jl-jupyter-conversion). It works pretty well. The notebook is based on my notes from serveral phase field textbooks. One particularly good one is ref. [^1].
+"""
+
+# ╔═╡ 1079052f-234f-4698-9bb8-af49b24ef80a
+md"""
+## Cahn-Hilliard - Part 1
+"""
+
+# ╔═╡ 518e6304-8f40-4ef7-925f-e16558080b60
+md"""
+The Cahn-Hillard model was developed from a phase-separation model focused on spinodal decomposition of a binary alloy. Spinodal decomposition is the process whereby chemical species will move against a compositional gradient. The process is not driven by nucleation and growth process, just diffusion.
+
+The characteristic free-energy functional for spinodial decomposition is:
+
+$$F = \int_{V} \left[ f(c) + \frac{1}{2} \kappa \left(\nabla c\right)^2 \right] dv $$
+
+where $\kappa$ is the gradient energy penalty coefficient and $f(c)$ is the chemical/bulk free energy density represented by:
+
+$$f(c) = Ac^2(1-c)^2$$
+
+This is a simple-double well potential as plotted below ($f(c)$ is intentionally bounded between $0<f(c)<1$). Here $A$ is a positive constant that controls the magnitude of the well-barrier. Other free energy potentials are:
+
+$$f(c) = \frac{1}{4}A\left(1-c^2\right)^2$$
+
+$$f(c) = 4A\left(-\frac{1}{2}c^2 + \frac{1}{4}c^4\right)$$
+"""
+
+# ╔═╡ cc84fab4-f9fe-498b-8136-9e997b8a6d09
+md"""
+### Potential-Well Examples
+"""
+
+# ╔═╡ 90c5e28c-3c05-43a3-bb4c-2f0a47f5f339
+begin
+	A=1.00e0
+	f(c)=A*(c^2)*((1-c)^2)
+	f1(c)=0.25e0*A*(1-c^2)*(1-c^2)
+	f2(c)=4.00e0*A*(-0.5e0*c^2 + 0.25e0*c^4)
+	conc = range(-0.20e0,stop=1.20e0,length=120)
+	
+	dw1 = plot(conc,map(f,conc),title="double-well")
+	dw2 = plot(conc,map(f1,conc),title=text("zero-centered well",6))
+	dw3 = plot(conc,map(f2,conc),title=text("shifted zero-centered well",6))
+	plot(dw1,dw2,dw3,linewidth=2,size = (675,225),layout=(1,3),
+	grid=false,legend=false,titlefont = font(10))
+end
+
+# ╔═╡ 4432a409-ce78-41bb-863f-dde56f1885f1
+md"""
+The Cahn-Hillard equation is given by:
+
+$$\frac{\partial c}{\partial t} = \nabla^2 M \left( \frac{\delta F_{ij}}{\delta c} \right)$$
+
+Here $M$ is the mobility and $\frac{\delta F_{ij}}{\delta c}$ is the variational derivative of the free energy functional.
+
+Let us first express the left-hand side of the equation in terms of Explicit Euler time integration:
+
+$$\frac{c_{ij}^{n+1}-c_{ij}^{n}}{\Delta t} = \nabla^2 M \left( \frac{\delta F_{ij}}{\delta c} \right)^n$$
+
+$n$ is the current time interval/step.
+
+The variational derivative of $\frac{\delta F_{ij}}{\delta c}$ is given by:
+
+$$\frac{\delta F_{ij}}{\delta c}^{n} = \mu\left(c_{ij}^n\right) - \kappa \nabla^2 c_{ij}^{n}$$
+
+where $\mu(c_{ij}^{n})$ is the variational derivative of the chemical/bulk free energy and is:
+
+$$\mu(c_{ij}^{n}) = A\left(2c_{ij}^{n}\left(1-c_{ij}^{n}\right)^{2} + 2\left(c_{ij}^{n}\right)^{2}\left(c_{ij}^{n}-1\right)\right)$$
+
+The laplacian operator in the Cahn-Hillard equation can be approximated by the finite-difference 5-point stencil:
+
+![Finite-Difference Stencil](https://github.com/stefanbringuier/PlutoNotebookBlogging/tree/gh-pages/assets/images/finite_diff_grid_fig4.1_SBiner.png)
+Finite-difference stencil adapted from [^1]
+
+The discrete energy functional is written as:
+
+$$F_{bulk} = \sum_i^{Nx} \sum_j^{Ny} f(c_{ij}) = Ac_{ij}^2(1-c_{ij})^2$$
+$$F_{grad} = \frac{\kappa}{2} \sum_i^{Nx-1} \sum_j^{Ny-1} \left( \left(c_{i+1,j} - c_{ij}\right)^2 + \left(c_{i,j+1}-c_{ij}\right)^2\right)$$
+$$F_D = F_{bulk} + F_{grad}$$
+
+Here $F_{grad}$ is calculated using the spatial forward  discrete difference.
+"""
+
+# ╔═╡ 45c4ea63-050c-44ac-aeb1-0507340f2675
+md"""
+A useful tool is to establish non-dimensional characteristic quantities.
+
+For length we can use the ratio of the gradient energy penalty(e.g. J/m$^3$) to the free energy barrier (e.g. J) and then account for the 2D simulation, thus:
+
+$$L^{\prime} = \left(\frac{\kappa}{A}\right)^{\frac{1}{2}}  \text{[Length]}$$
+
+The same can be done for other quantities:
+
+$$F^{\prime} = AL^3 \text{[Energy}-\text{Length}^3]$$
+
+$$t^{\prime} = \frac{L^{\prime 2}\left(c_p^e - c_m^e \right)}{MF^{\prime}} \text{[Time-Mass / Energy-Length]}$$
+
+here $c_p^e$ and $c_m^e$ are the equilibrium concentration of the two phases.
+
+For these simulations the nondimensional time increment was 0.01 with a Euler time integration scheme.
+
+Total number of timesteps is 20,000.
+
+"""
+
+# ╔═╡ a96a12c7-027e-43ba-a4c6-8d013f651899
+md"""
+# Cahn-Hilliard Finite-Difference Code
+
+### Data Types
+Lets first create Julia composite data types that will be useful. We will need a data type that specifies our spatial grid, ```Spatial2D```, a datatype for the concentration field, ```Conc2D```, a simulation time data type,```Time```, and a data type ```Material``` specifying the material parameters.
+
+
+!!! note
+    For Julia data types and function names I will use "CamelCaps" even though this is not a suggested julia style guide.
+"""
+
+# ╔═╡ f04ec0c5-fa5a-4467-86d2-9745ffba834a
+# Number of grid points, spacing size, and grid area
+struct Spatial2D
+    nx::Int64;
+    ny::Int64;
+    dx::Float64;
+    dy::Float64;
+    size::Int64;
+    cellarea::Float64;
+    area::Float64;
+    function Spatial2D(nx,ny,dx,dy)
+        grid = nx*ny;
+        cell = dx*dy;
+        area =(dx*nx)*(dy*ny);
+        new(nx,ny,dx,dy,grid,cell,area);
     end
 end
 
-# ╔═╡ 5eaf8865-af46-4c41-b8f9-e7bc6aeaaa81
-md"""
-# Integration by Monte Carlo sampling
-**Stefan Bringuier**
-
-## Simple function
-Quick demo of forshowing the integration of 
-
-$$\int \ln(x) dx$$ 
-
-over the domain [$(xₘᵢₙ), $(xₘₐₓ)]. The analytical value is given below.
-"""
-
-# ╔═╡ da35accc-96a5-473a-b1be-c59a46fc1a3d
-analytical = (xₘₐₓ*log(xₘₐₓ)-xₘₐₓ) - (xₘᵢₙ*log(xₘᵢₙ)-xₘᵢₙ)
-
-# ╔═╡ 7651ba7f-da0b-49bd-b63e-178d040ca389
-md"""
-Below we create some data types and methods to sample points over $x$ and $y$ random variables. The default is to use uniform distributions for $\ln(x)$ and $x$ random variables, but one could imagine that you could sample non-uniformly.
-"""
-
-# ╔═╡ daf92b9f-db53-4e68-acd1-622f4cddb4c6
-begin
-	struct Sampler{T<:Distribution,S<:Distribution}
-		x::T
-		y::S
-	end
-	Sampler() = Sampler([Uniform(),Uniform()])
-	Base.rand(s::Sampler) = begin
-		x′,y′ = rand(s.x), rand(s.y)
-		return x′,y′
-	end
-end;
-
-# ╔═╡ b32f25fa-5b6e-4d31-b5bc-639b444aee9d
-begin
-	s = Sampler(Uniform(xₘᵢₙ,xₘₐₓ),Uniform(log(xₘᵢₙ),log(xₘₐₓ)))
-end;
-
-# ╔═╡ d75464c9-181c-4e6c-9e65-602ff39a5df9
-md"""
-Now for the actual Monte Carlo integration of a function $f(x)$. To do this lets create a data type to store the parameters and results and create a function that iterates the MC process.
-"""
-
-# ╔═╡ 9070e9a1-30a6-4447-a2ae-ae7cf7ae1753
-struct MCInt
-	value::Number
-	interval::Tuple{Number,Number}
-	steps::Integer
-	history::Vector
-	points::AbstractArray
+# ╔═╡ 53045f48-b321-4c8c-8fdb-9d1369faa386
+#Material parameters
+struct Material
+    avg_c::Float64;    #average concentration
+    mobile::Float64;   #Cahn-Hillard mobility coefficient
+    grad_pen::Float64; #Gradient penality coefficent
+    pote::Float64;  #Potential well energy barrider
+    Material(i,m,g,p) = new(i,m,g,p)
 end
 
-# ╔═╡ 5cf7e54c-40b4-4587-b2fb-28f9d8d23404
-"""
-	montecarlo_integrate(f,a,b)
-
-Sample points over random variables ``y^{\\prime}`` and ``x^{\\prime}``, then
-discard points where ``y^{\\prime} \\gt f(x^{\\prime})`` otherwise tally/count
-them and calculate the integral by:
-
-```math
-\\int f(x) dx \\approx \\frac{A}{N} \\sum_i^N f(x_i)
-```
-
-where ``A`` is the domain area.
-""" 
-function montecarlo_integrate(f::Function,a,b;
-							  s::Sampler=Sampler(),
-							  N=1000, ybounds=(0.0,1.0),
-							  keep_points=false)
-	count = 0.0e0;
-	mcaccum = zeros(N)
-	points = Tuple{Float64,Float64}[]
-	h = sum(ybounds);
-	for i=1:N
-		x′,y′ = rand(s.x),rand(s.y)
-		if y′ < f(x′)
-			count += 1
-		end
-		keep_points ? push!(points,(x′,y′)) : nothing
-		mcaccum[i] = (b-a) * h * count / i
-	end
-	value  = (b-a) * h * count / N
-	return MCInt(value,(a,b),N,mcaccum,
-			     reinterpret(reshape,Float64,points)
-				)
-	end
-
-# ╔═╡ 257202b0-3ba7-4c59-8ccd-6e403c7a3643
-xₘᵢₙ,xₘₐₓ = domain;
-
-# ╔═╡ 8531c11b-6a1e-4fe0-9e17-c2d4451d5266
-mcint_log = montecarlo_integrate(log,xₘᵢₙ,xₘₐₓ;
-								 s=s,
-								 ybounds=(log(xₘᵢₙ),log(xₘₐₓ)),
- 								 N=mcsteps,
-								 keep_points=true);
-
-# ╔═╡ 21645e55-3522-4c26-b84f-07eb49cfbef5
-@bind domain PlutoUI.combine() do Child
-		
-		inputs = [
-			md""" $(name[1]): $(
-				Child(name[1], Scrubbable(name[2];default=name[3]))
-			)"""
-			
-			for name in [("xₘᵢₙ",0:0.1:4,1),("xₘₐₓ",0.1:0.1:4,4)]
-		]
-		
-		md"""
-		$(inputs)
-		"""
-	end
-
-# ╔═╡ 02dc9344-ce8b-4867-a54d-d583975c6d60
-md"""
-Monte Carlo steps:
-$(@bind mcsteps confirm(Slider((10).^(range(2,4,step=1)),show_value=true)))
-"""
-
-# ╔═╡ 41fb67b8-9947-428a-88c4-711fcaad2444
-begin
-	plot(log,xₘᵢₙ:0.1:xₘₐₓ,lw=3,lc=:blue,
-		 label="Function",xlabel="x",ylabel="log(x)")
-	z = map(x-> x ? :black : :red,log.(mcint_log.points[1,:]) .> mcint_log.points[2,:])  
-	scatter!(mcint_log.points[1,:],mcint_log.points[2,:],ms=1.5,label="Sampled points",mc=z,msc=nothing)
+# ╔═╡ 67b230cd-77e2-4ecd-83cb-47768ff457c6
+struct Field2D
+    spatial::Spatial2D #Store spatial info
+    material::Material #Store material parameters
+    field::Array;
+    grad::Array;
+    laplacian::Array;
+    function Field2D(s2D::Spatial2D,mat::Material)
+        nx,ny = s2D.nx,s2D.ny;
+        c=zeros(s2D.nx,s2D.ny);
+        g=zeros(s2D.nx,s2D.ny);
+        l=zeros(s2D.nx,s2D.ny);
+        new(s2D,mat,c,g,l);
+    end
 end
 
-# ╔═╡ ede2d927-ddd0-49da-a6af-233258e44915
-begin
-	plot(mcint_log.history,label="MC trajectory",
-		 xlabel="MC steps",ylabel="MC value")
-	plot!([analytical],st=:hline,lw=1.5,label="Analytical")
+# ╔═╡ 6a8475b7-7ba5-4310-a1f6-d3529cc01651
+#Time and screen output values
+mutable struct Time
+    ntstep::Int64;    #number of timesteps
+    prtfreq::Int64;   #print to screen every ntstep
+    timestep::Float64;#numerical time step
+    tinit::Float64;   #initial simulation time
+    Time(nt,pf,ts,ti) = new(nt,pf,ts,ti)
 end
 
-# ╔═╡ 6d3646fb-da31-4206-8f1f-d0924eecf775
+# ╔═╡ 39760bb3-05f8-4a9c-89f2-2fcd46cab544
 md"""
-## Another function
+## Simulation Setup & Energy Functions
 
-Lets try calculating the integral for:
-
-$\int_0^{\pi} sin(x) dx$
-
-Define a `SymPy` variable $(@vars x) and evaluate integral, which evaluates to $(integrate(sin(x),(x,0,π)))
-
-!!! tip
-	Using sympy to evaluate the integral to show how we could compare to more complex functions.
+Now that we have the datatypes we need to define the functions which will process and operate on our data types. The first thing we need is a function to generate a initial microstructure. We will call it ```GenMircoStruct2D``` since it will generate a two-dimensional microstructure, the function will use the average concentration field and apply some random noise then return a new concentration field which is of type ```Conc2D```.
 """
 
-# ╔═╡ 4de43fee-ea9f-4245-b36b-492cb9a97438
-mcint_sin = montecarlo_integrate(sin,0,π;
-							  N=1000,
-							  s=Sampler(Uniform(0,π),
-								        Uniform(0,1)));
+# ╔═╡ eeb623fd-558d-4c1e-9fe7-677fc704ee91
+"""function GenMicroStruc2D(spatial info, material parameters)
+        This function is used to generate a 2D concentration profile.
 
-# ╔═╡ e78c1411-e8bb-4dc3-9334-6230bf6be4e4
+        Input - spatial2D::Spatial2D datatype see defined datatypes.
+                conc2D::Conc2D datatype see defined datatypes.
+                material::Material datatype see defined datatypes.
+
+        Output - conc2D::Conc2D datatype with modified conc2D.conc values. See defined datatypes
+        
+        Used variables:
+             avg_c - average concentration
+             noise*rand() - random noise added to concentration
+"""
+function GenMicroStruc2D(spatial2D::Spatial2D,material::Material,noise::Float64)
+    conc = Field2D(spatial2D,material)
+    for i=1:conc.spatial.nx
+        for j=1:conc.spatial.ny
+            conc.field[i,j]=conc.material.avg_c + noise*(0.50e0-rand())
+        end
+    end
+    return conc
+end; #function GenMicroStruc2D
+
+# ╔═╡ c7cc130f-54c8-4c49-8072-818cc4b7d9b3
+@mdx """
+#### Simulation parameters & microstructure
+Now that we have a function to generate an initial microstructure, let us define the simulation details with the data types we created and the ```GenMicroStruct2D``` function. We will plot a contour view of the concentration field.
+"""
+
+# ╔═╡ b65e7452-9ae7-4762-8c3a-e1f0b3f2744b
 begin
-	plot(mcint_sin.history,xlabel="MC step",ylabel="MC value",label="MC")
-	plot!([integrate(sin(x),(x,0,π))],st=:hline,lw=1.5,label="Analytical")
+	#Initiate simulation parameters
+	nx,ny = 64,64;
+	dx,dy = 1.00e0,1.00e0;
+	spatial = Spatial2D(nx,ny,dx,dy);
+	steps,prnt,dt,ti = 1000,50,1.00e-2,0.00e0;
+	time = Time(steps,prnt,dt,ti);
+	c̄,M,κ,Aₒ = 0.40e0,1.00e0,0.50e0,1.00e0;
+	material = Material(c̄,M,κ,A);
+	c = GenMicroStruc2D(spatial,material,0.02e0);
+	heatmap(c.field,size=(475,400))
 end
 
-# ╔═╡ c71d03ad-06e7-434a-9fe3-bd5d60205464
+# ╔═╡ 0f84a539-dce0-4dc2-b6ff-85bf759b3c99
 md"""
-!!! note
-	A even more simple example in `python` is given on the kaggle documentation [here](https://www.kaggle.com/code/xopxesalmon/intro-to-monte-carlo-methods-integral-of-sin-x/notebook)
+#### Boundary Conditions
 
+Here we will assume periodic boundary conditions, which are simple and straightfoward to implement. To do this we will define a function which takens in the grid location $i,j$ and determine if the points lie on the boundary of the simulation cell. If they do then the index will be shifted. The function is going to be named ```PeriodBoundCond```
 """
 
-# ╔═╡ 8cc44789-b0a2-40fd-94b3-2c0a2ea5c2cf
+# ╔═╡ a36fa201-58da-4e78-8ed2-1127fa730d7a
+""" function PeriodBoundCond(index i,max i)
+         This function determines if neighbor indices need to be shifted based on periodic boundary conditions
+
+         Input - i :: Integers  index of a point on 2D grid
+                 mi :: Integers max index of the 2D grid
+
+         Output - ni:: Integers unchanged or shifted index
+""" function PeriodBoundCond(i::T,mi::T) where T<:Integer
+        iplus,iminus = i+1,i-1;
+        if iplus > mi 
+            iplus = 1;
+        elseif iminus == 0
+            iminus = mi;
+        end
+        return (iplus,iminus)
+end; # function PeriodBoundCond
+
+# ╔═╡ f8ff2918-993a-4527-8ec7-00f96b4bfe13
+md"""
+#### Free Energy functions
+"""
+
+# ╔═╡ cf37924a-cfe4-4336-a9b3-88c2c6c268f1
+md"""
+The next step is to define the total free energy of the system based on our free-energy functional. In this case we use the double-well description to define a function called ```TotalFreeEnergy```. We also need the variational derivative of the functional $\frac{\delta F}{\delta c}$, which is given by the derivative of the integrand. Here I'll define the function ```DervBulkFreeEnergy``` as the derivative at a specific site, $ij$, on the 2D spatial grid
+"""
+
+# ╔═╡ 1f7e8f70-eef4-40da-82a0-7050dec53f76
+"""function TotalFreeEnergy(concentration field, coefficient for gradient penalty)
+        This function calculates the total simulation cell free energy. Assumes standard
+        Cahn-Hillard free energy functional given by:
+        f(c) + \\frac{1}{2}\\kappa\\left(\\nabla c \\right)^2
+        uses forward-differences.
+
+        Input - field::Field2D datatype see defined datatypes.
+
+        Output - free_energy::Real
+        
+        Question: why don't we include the summation over the discrete volume?
+
+"""
+function TotalFreeEnergy(field::Field2D)
+    free_energy = 0.00e0;
+    for i=1:field.spatial.nx
+        iplus, = PeriodBoundCond(i,field.spatial.nx);
+        for j=1:field.spatial.ny
+            jplus, = PeriodBoundCond(j,field.spatial.nx);
+            #Indexing variables
+            fij = field.field[i,j];
+            fiplus = field.field[iplus,j];
+            fjplus = field.field[i,jplus];
+            #Energy summation over domain
+            enrgy_bulk = fij^2 *(1.00e0-fij)^2;
+            enrgy_grad = 0.50e0 * field.material.grad_pen * (fiplus-fij)^2 + (fjplus-fij)^2;
+            free_energy = free_energy + enrgy_bulk + enrgy_grad;
+        end
+    end
+    return free_energy
+end; #function TotalFreeEnergy
+
+# ╔═╡ e63f6699-7a70-4bd6-ac4c-46bc406cdc23
+""" δ(derivative of field at (i,j))
+        This function calculates the derivative of the bulk free energy for a double-well
+        potential given by:
+
+        \\mu(c_{ij}^{n}) = A\\left(2c_{ij}^{n}\\left(1-c_{ij}^{n}\\right)^{2} + 
+        2\\left(c_{ij}^{n}\\right)^{2}\\left(c_{ij}^{n}-1\\right)\\right)
+
+        Input - f ::Float64 value for the field at i,j.
+
+        Output - Real value for derivative of bulk free energy at i,j
+
+""" δij(f::Float64) = 2.00e0 * f * (1.00e0-f)^2 - 2.00e0 * f^2 * (1.00e0-f);
+
+# ╔═╡ 69f55915-f802-4f58-839f-60897a864c97
+md"""
+## Define Laplacian and concentration derivative functions
+
+We now need to do a few things to evolve the spatial and concentration derivatives. The first thing we need to define a function which takes the Laplacian of a field, in this case the field is the concentration. Let us call this function $\nabla^{2}$ The second thing needed is a routine to calculate the variation derivative of the free-energy with respect to concentration, this funciton will be $\delta F!$. Note that the function modifies the conc arguement and returns a free-energy derivative at every point.
+"""
+
+# ╔═╡ f3948247-6b50-4329-aef2-e524c0e781ee
+""" function δF!(field to take central difference laplacian of)
+                 Input - field :: Contains 2D Array of field to take laplacian of
+
+                 Output - dFdc :: Array of variational derivative of Free-energy on
+                                  spatial domain grid.
+""" function δF!(field::Field2D)
+        nx,ny = field.spatial.nx,field.spatial.ny;
+        dx,dy = field.spatial.dx,field.spatial.dy;
+        #Array for variational derivative dF/dc (derivative of integrand)
+        dFdf = zeros(Float64,nx,ny);
+    
+        #Solve for δF/δf
+        for i=1:nx
+        iplus,iminus = PeriodBoundCond(i,nx)
+        ii = (iminus,i,iplus);
+            for j=1:spatial.ny
+                jplus,jminus = PeriodBoundCond(j,ny)
+                jj = (jminus,j,jplus);
+        
+                #Calculate the free energy $\frac{\delta F}{\delta c_{ij}}$
+                field.laplacian[i,j] = ∇²(ii,jj,dx,dy,field.field)
+            
+                #Calculate the bulk free energy derivative in free energy expression
+                barrier = field.material.pote;
+                dfengry_dfij = barrier*δij(field.field[i,j]);
+            
+                #Store the variational free energy derivative, 
+                # e.g. dF/dcij in right-hand side of Cahn-Hillard eq.
+                dFdf[i,j] = dfengry_dfij - field.material.grad_pen * field.laplacian[i,j]          
+            end
+        end
+        return dFdf
+end;# function δF!
+
+# ╔═╡ f11e9ecb-6bbd-468d-a0b5-cdb315c6a8ed
+
+""" function Laplacian2D(indices for i, indices for j,
+                         x discrete distance, y discrete distance,
+                         field to take Laplacian of)
+                 Take central difference laplacian of a field
+
+                 Input - i,j :: Tuple of integer indice about point on 2D grid
+                         dx,dy :: discrete spatial spacing between grid points
+                         field :: 2D Array of field to take laplacian of
+
+                 Output - ∇²f::Laplacian at point i,j of field
+""" function ∇²(i::Tuple{T,T,T},j::Tuple{T,T,T},
+                dx::S,dy::S,
+                field::Array{S,2}) where {T<:Integer,S<:Real}
+               
+                #i[1] = i-1, i[2] = i, i[3]= i+1
+                ∇²f = (field[i[1],j[2]] + field[i[3],j[2]] + 
+                field[i[2],j[1]] + field[i[2],j[3]] - 
+                4.00e0 * field[i[2],j[2]]) / (dx*dy);
+                
+                return ∇²f
+end; #function ∇²
+
+# ╔═╡ 827cecdf-1345-4149-aaa0-d752c0dff201
+md"""
+## Spatial Solution to R.H.S of Cahn-Hilliard Equation
+
+Now we want to bring things together by solving for the  $\nabla M\left(\frac{\delta F}{\delta c}\right)$. In this notebook, the material mobility interface parameter is constant so the solution is simplified by taking the Laplacian of the variational term. We will define a function similar to $\delta F!$ that does this for us.
+"""
+
+# ╔═╡ c10a9d5b-c92a-452f-8302-5032a9165a06
+function ∇²δF(spatial::Spatial2D,
+                 dFdf::Array{T,2}) where T<:Real
+    
+       nx,ny = spatial.nx,spatial.ny;
+       dx,dy = spatial.dx,spatial.dy;
+       ∇²dFdf = zeros(Float64,nx,ny);
+    
+       #Solve for laplacian R.H.S. of Cahn-Hillard eq.:
+       #$\nabla^{2}\left(\frac{\delta F}{\delta c_{ij}}\right)$
+        for i=1:nx
+        iplus,iminus = PeriodBoundCond(i,nx)
+        ii = (iminus,i,iplus);
+        for j=1:ny
+           jplus,jminus = PeriodBoundCond(j,ny)
+           jj = (jminus,j,jplus);
+           ∇²dFdf[i,j] = ∇²(ii,jj,dx,dy,dFdf);
+        end
+    end
+    return ∇²dFdf
+end; #function ∇²δF            
+
+# ╔═╡ 161197f4-1076-4fb0-81de-b34c927ca4c2
+md"""
+## Time evolution function and Run Simulation
+
+With the neccessary spatial and field derivative functions defined that make up the right hand side of the Cahn-Hillard Equation, we can perform numerical integration to time evolve and find the solution of the concentration field at time, $t$, given our initial conditions (e.g., random distribution of concentration) and boundary condtions (e.g., periodic). The function to do this will be called ```TimeEvolveCH!``` and will take in the ```Time``` and ```Field2D``` datatypes.
+"""
+
+# ╔═╡ a4bffbdd-a2a1-42ce-92c9-67332738706d
+function SimInfo(istep::Integer,energy::Float64,
+                 time::Time,field::Field2D;skip=true)
+    if skip == true
+        return 0.00e0
+    else
+        #We want to confirm total energy is conserved.
+        ΔE = (ototalenergy-TotalFreeEnergy(field)) 
+        if  abs(ΔE) > tole
+            @warn "Change in total energy is $(ΔE)"
+        end
+        energy = TotalFreeEnergy(field);
+            
+        if (mod(istep,time.prtfreq) == 0) || (istep == 1)
+            @printf("%5d %14.6e\n",istep*Δt,totalenergy)
+        end
+        
+        return energy
+    end
+end                
+
+# ╔═╡ 88be3fab-f55b-4ea4-a01c-90c02b7b15a1
+""" function TimeEvolveCH(simulation time parameters,
+                          field to be evolved under C-H equation)
+
+             Input - time::Time simulation time info.
+                     field::Field2D field to evolve under C-H eq.
+
+             Output - None                    
+""" function TimeEvolveCH!(time::Time,field::Field2D;tole=1.0e-1)
+        
+        curtime = time.tinit;
+        M=field.material.mobile;
+        Δt=time.timestep;
+        energy = TotalFreeEnergy(field);
+    
+        for istep=1:time.ntstep
+            curtime += time.timestep;
+        
+            #Physics
+            δFδf = δF!(field);
+            ∇²δFδf = ∇²δF(field.spatial,δFδf);
+            field.field[:,:] += Δt * M * ∇²δFδf[:,:]; #Integrate CH eq.
+
+                    
+            #Simulation checks
+            energy = SimInfo(istep,energy,time,field);
+          
+        end
+    
+        time.tinit = curtime;
+end; #function TimeEvolveCH!
+
+# ╔═╡ d57fca19-7a1e-4189-8672-784ed69819ce
+begin
+	TimeEvolveCH!(time,c)
+	heatmap(c.field,size=(475,400))
+end
+
+# ╔═╡ b2f5f523-cea7-4b2a-8e91-44e466cfa2bb
+md"""
+## Run for longer time 
+We can see the continued effect of coarsening by running for longer simulations times.
+"""
+
+# ╔═╡ ae2293e5-66e5-4711-b351-a84225570a86
+begin
+	time.ntstep = 1000
+	TimeEvolveCH!(time,c)
+	heatmap(c.field,size=(475,400))
+end
+
+# ╔═╡ 918532ec-8353-4966-96f3-1e6126f1e916
+md"""
+Lets run for longer once again.
+"""
+
+# ╔═╡ 1a910c0f-1bcc-4755-87a1-63c2496f0551
+begin
+	time.ntstep = 8000
+	TimeEvolveCH!(time,c)
+	heatmap(c.field,size=(475,400))
+end
+
+# ╔═╡ ba7b2db6-8fd5-4050-8983-f5d58147dbd4
+@mdx """
+# Re-run
+If you want to change the simulation setup parameters go back [here](#simulation-parameters--microstructure)
+"""
+
+# ╔═╡ 0e36f365-de6b-4019-8b19-ee77c36dd344
+md"""
+## Potential Issues
+
+There is some difference in the total free energy as a function of time, this only occurs in the initial stages and then decays. The spinodal coarsening seems to be acurately captured.
+"""
+
+# ╔═╡ c4a319b9-c164-4e6d-afbe-da91b7a95846
+@mdx """
+# References
+[^1]:$(DOI("10.1007/978-3-319-41196-5"))
+"""
+
+# ╔═╡ fcc0b4f7-32bf-454d-8ec8-3a50139c984d
 md"""
 ## Packages
 """
 
-# ╔═╡ decd5762-29bd-11ed-1693-4949b058a07c
+# ╔═╡ 1c1cd3ea-0ea5-4637-83c2-63ec10d7cbdd
 # ╠═╡ show_logs = false
-begin
-	using PlutoUI
-	using Plots;plotly(size=(675,300))
-	using Distributions
-	using SymPy #If you want to explore analytical integrals of functions
-end
+md"""
+$(let
+	using Pkg
+	tb = "| Package | Version |\n| :-- | :-- |\n"
+	tb *= "| Julia   | $VERSION |\n"
+	for (name, version) in Pkg.installed()
+	    tb *= "| $name | $version |\n"
+	end
+	Markdown.parse(tb)
+end)
+"""
 
-# ╔═╡ 2cae9d5a-5928-4349-baea-52bcdc028056
+# ╔═╡ 1b8a9dc3-1cbf-4ab0-93c3-d31eb1bf0353
+begin
+	using Plots
+	plotly()
+	using Printf
+	using PlutoUI
+	using ShortCodes
+	using MarkdownLiteral: @mdx
+end;
+
+# ╔═╡ 9d5135d6-0ba1-435d-884b-a74dbc906d61
 TableOfContents()
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
-Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+MarkdownLiteral = "736d6165-7244-6769-4267-6b50796e6954"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
-SymPy = "24249f21-da20-56a4-8eb1-6a02cf4ae2e6"
+Printf = "de0858da-6303-5e67-8744-51eddeeeb8d7"
+ShortCodes = "f62ebe17-55c5-4640-972f-b59c0dd11ccf"
 
 [compat]
-Distributions = "~0.25.95"
+MarkdownLiteral = "~0.1.1"
 Plots = "~1.38.14"
 PlutoUI = "~0.7.51"
-SymPy = "~1.1.8"
+ShortCodes = "~0.3.5"
 """
 
 # ╔═╡ 00000000-0000-0000-0000-000000000002
@@ -221,7 +582,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.9.0"
 manifest_format = "2.0"
-project_hash = "e7b5d3f685f149cfc97da20be9d7902b4f652bcf"
+project_hash = "5994556fca373a40ea7c86cef4075775332d0858"
 
 [[deps.AbstractPlutoDingetjes]]
 deps = ["Pkg"]
@@ -256,12 +617,6 @@ git-tree-sha1 = "4b859a208b2397a7a623a03449e4636bdb17bcf2"
 uuid = "83423d85-b0ee-5818-9007-b63ccbeb887a"
 version = "1.16.1+1"
 
-[[deps.Calculus]]
-deps = ["LinearAlgebra"]
-git-tree-sha1 = "f641eb0a4f00c343bbc32346e1217b86f3ce9dad"
-uuid = "49dc2e85-a5d0-5ad3-a950-438e2897f1b9"
-version = "0.5.1"
-
 [[deps.CodecZlib]]
 deps = ["TranscodingStreams", "Zlib_jll"]
 git-tree-sha1 = "9c209fb7536406834aa938fb149964b985de6c83"
@@ -292,15 +647,11 @@ git-tree-sha1 = "fc08e5930ee9a4e03f84bfb5211cb54e7769758a"
 uuid = "5ae59095-9a9b-59fe-a467-6f913c188581"
 version = "0.12.10"
 
-[[deps.CommonEq]]
-git-tree-sha1 = "d1beba82ceee6dc0fce8cb6b80bf600bbde66381"
-uuid = "3709ef60-1bee-4518-9f2f-acd86f176c50"
-version = "0.2.0"
-
-[[deps.CommonSolve]]
-git-tree-sha1 = "9441451ee712d1aec22edad62db1a9af3dc8d852"
-uuid = "38540f10-b2f7-11e9-35d8-d573e4eb0ff2"
-version = "0.2.3"
+[[deps.CommonMark]]
+deps = ["Crayons", "JSON", "PrecompileTools", "URIs"]
+git-tree-sha1 = "532c4185d3c9037c0237546d817858b23cf9e071"
+uuid = "a80b9123-70ca-4bc0-993e-6e3bcb318db6"
+version = "0.8.12"
 
 [[deps.Compat]]
 deps = ["UUIDs"]
@@ -323,12 +674,6 @@ git-tree-sha1 = "96d823b94ba8d187a6d8f0826e731195a74b90e9"
 uuid = "f0e56b4a-5159-44fe-b623-3e5288b988bb"
 version = "2.2.0"
 
-[[deps.Conda]]
-deps = ["Downloads", "JSON", "VersionParsing"]
-git-tree-sha1 = "e32a90da027ca45d84678b826fffd3110bb3fc90"
-uuid = "8f4d0f93-b110-5947-807f-2305c1781a2d"
-version = "1.8.0"
-
 [[deps.ConstructionBase]]
 deps = ["LinearAlgebra"]
 git-tree-sha1 = "738fec4d684a9a6ee9598a8bfee305b26831f28c"
@@ -347,6 +692,11 @@ version = "1.5.2"
 git-tree-sha1 = "d05d9e7b7aedff4e5b51a029dced05cfb6125781"
 uuid = "d38c429a-6771-53c6-b99e-75d170b6e991"
 version = "0.6.2"
+
+[[deps.Crayons]]
+git-tree-sha1 = "249fe38abf76d48563e2f4556bebd215aa317e15"
+uuid = "a8cc5b0e-0ffa-5ad4-8c14-923d3ee1735f"
+version = "4.1.1"
 
 [[deps.DataAPI]]
 git-tree-sha1 = "8da84edb865b0b5b0100c0666a9bc9a0b71c553c"
@@ -369,20 +719,6 @@ git-tree-sha1 = "9e2f36d3c96a820c678f2f1f1782582fcf685bae"
 uuid = "8bb1440f-4735-579b-a4ab-409b98df4dab"
 version = "1.9.1"
 
-[[deps.Distributions]]
-deps = ["FillArrays", "LinearAlgebra", "PDMats", "Printf", "QuadGK", "Random", "SparseArrays", "SpecialFunctions", "Statistics", "StatsAPI", "StatsBase", "StatsFuns", "Test"]
-git-tree-sha1 = "c72970914c8a21b36bbc244e9df0ed1834a0360b"
-uuid = "31c24e10-a181-5473-b8eb-7969acd0382f"
-version = "0.25.95"
-
-    [deps.Distributions.extensions]
-    DistributionsChainRulesCoreExt = "ChainRulesCore"
-    DistributionsDensityInterfaceExt = "DensityInterface"
-
-    [deps.Distributions.weakdeps]
-    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
-    DensityInterface = "b429d917-457f-4dbc-8f4c-0cc954292b1d"
-
 [[deps.DocStringExtensions]]
 deps = ["LibGit2"]
 git-tree-sha1 = "2fb1e02f2b635d0845df5d7c167fec4dd739b00d"
@@ -393,12 +729,6 @@ version = "0.9.3"
 deps = ["ArgTools", "FileWatching", "LibCURL", "NetworkOptions"]
 uuid = "f43a241f-c20a-4ad4-852c-f6b1247861c6"
 version = "1.6.0"
-
-[[deps.DualNumbers]]
-deps = ["Calculus", "NaNMath", "SpecialFunctions"]
-git-tree-sha1 = "5837a837389fccf076445fce071c8ddaea35a566"
-uuid = "fa6b7ba4-c1ee-5f82-b5fc-ecf0adba8f74"
-version = "0.6.8"
 
 [[deps.Expat_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
@@ -420,12 +750,6 @@ version = "4.4.2+2"
 
 [[deps.FileWatching]]
 uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
-
-[[deps.FillArrays]]
-deps = ["LinearAlgebra", "Random", "SparseArrays", "Statistics"]
-git-tree-sha1 = "ed569cb9e7e3590d5ba884da7edc50216aac5811"
-uuid = "1a297f60-69ca-5386-bcde-b61e274b549b"
-version = "1.1.0"
 
 [[deps.FixedPointNumbers]]
 deps = ["Statistics"]
@@ -510,12 +834,6 @@ git-tree-sha1 = "129acf094d168394e80ee1dc4bc06ec835e510a3"
 uuid = "2e76f6c2-a576-52d4-95c1-20adfe4de566"
 version = "2.8.1+1"
 
-[[deps.HypergeometricFunctions]]
-deps = ["DualNumbers", "LinearAlgebra", "OpenLibm_jll", "SpecialFunctions"]
-git-tree-sha1 = "84204eae2dd237500835990bcade263e27674a93"
-uuid = "34004b35-14d8-5ef3-9330-4cdb6864b03a"
-version = "0.3.16"
-
 [[deps.Hyperscript]]
 deps = ["Test"]
 git-tree-sha1 = "8d511d5b81240fc8e6802386302675bdf47737b9"
@@ -561,6 +879,12 @@ git-tree-sha1 = "31e996f0a15c7b280ba9f76636b3ff9e2ae58c9a"
 uuid = "682c06a0-de6a-54ab-a142-c8b1cf79cde6"
 version = "0.21.4"
 
+[[deps.JSON3]]
+deps = ["Dates", "Mmap", "Parsers", "SnoopPrecompile", "StructTypes", "UUIDs"]
+git-tree-sha1 = "84b10656a41ef564c39d2d477d7236966d2b5683"
+uuid = "0f8b85d8-7281-11e9-16c2-39a750bddbf1"
+version = "1.12.0"
+
 [[deps.JpegTurbo_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl"]
 git-tree-sha1 = "6f2675ef130a300a112286de91973805fcc5ffbc"
@@ -592,20 +916,16 @@ version = "1.3.0"
 
 [[deps.Latexify]]
 deps = ["Formatting", "InteractiveUtils", "LaTeXStrings", "MacroTools", "Markdown", "OrderedCollections", "Printf", "Requires"]
-git-tree-sha1 = "8c57307b5d9bb3be1ff2da469063628631d4d51e"
+git-tree-sha1 = "099e356f267354f46ba65087981a77da23a279b7"
 uuid = "23fbe1c1-3f47-55db-b15f-69d7ec21a316"
-version = "0.15.21"
+version = "0.16.0"
 
     [deps.Latexify.extensions]
     DataFramesExt = "DataFrames"
-    DiffEqBiologicalExt = "DiffEqBiological"
-    ParameterizedFunctionsExt = "DiffEqBase"
     SymEngineExt = "SymEngine"
 
     [deps.Latexify.weakdeps]
     DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
-    DiffEqBase = "2b5f629d-d688-5b77-993f-72d75c75574e"
-    DiffEqBiological = "eb300fae-53e8-50a0-950c-e21f52c2b7e0"
     SymEngine = "123dc426-2d89-5057-bbad-38513e3affd8"
 
 [[deps.LibCURL]]
@@ -722,6 +1042,12 @@ version = "0.5.10"
 deps = ["Base64"]
 uuid = "d6f4376e-aef5-505a-96c1-9c027394607a"
 
+[[deps.MarkdownLiteral]]
+deps = ["CommonMark", "HypertextLiteral"]
+git-tree-sha1 = "0d3fa2dd374934b62ee16a4721fe68c418b92899"
+uuid = "736d6165-7244-6769-4267-6b50796e6954"
+version = "0.1.1"
+
 [[deps.MbedTLS]]
 deps = ["Dates", "MbedTLS_jll", "MozillaCACerts_jll", "Random", "Sockets"]
 git-tree-sha1 = "03a9b9718f5682ecb107ac9f7308991db4ce395b"
@@ -737,6 +1063,12 @@ version = "2.28.2+0"
 git-tree-sha1 = "c13304c81eec1ed3af7fc20e75fb6b26092a1102"
 uuid = "442fdcdd-2543-5da2-b0f3-8c86c306513e"
 version = "0.3.2"
+
+[[deps.Memoize]]
+deps = ["MacroTools"]
+git-tree-sha1 = "2b1dfcba103de714d31c033b5dacc2e4a12c7caa"
+uuid = "c03570c3-d221-55d1-a50c-7939bbd78826"
+version = "0.4.4"
 
 [[deps.Missings]]
 deps = ["DataAPI"]
@@ -810,12 +1142,6 @@ version = "1.6.0"
 deps = ["Artifacts", "Libdl"]
 uuid = "efcefdf7-47ab-520b-bdef-62a2eaa19f15"
 version = "10.42.0+0"
-
-[[deps.PDMats]]
-deps = ["LinearAlgebra", "SparseArrays", "SuiteSparse"]
-git-tree-sha1 = "67eae2738d63117a196f497d7db789821bce61d1"
-uuid = "90014a1f-27ba-587c-ab20-58faa44d9150"
-version = "0.11.17"
 
 [[deps.Parsers]]
 deps = ["Dates", "PrecompileTools", "UUIDs"]
@@ -893,23 +1219,11 @@ version = "1.4.0"
 deps = ["Unicode"]
 uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
 
-[[deps.PyCall]]
-deps = ["Conda", "Dates", "Libdl", "LinearAlgebra", "MacroTools", "Serialization", "VersionParsing"]
-git-tree-sha1 = "62f417f6ad727987c755549e9cd88c46578da562"
-uuid = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
-version = "1.95.1"
-
 [[deps.Qt5Base_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Fontconfig_jll", "Glib_jll", "JLLWrappers", "Libdl", "Libglvnd_jll", "OpenSSL_jll", "Pkg", "Xorg_libXext_jll", "Xorg_libxcb_jll", "Xorg_xcb_util_image_jll", "Xorg_xcb_util_keysyms_jll", "Xorg_xcb_util_renderutil_jll", "Xorg_xcb_util_wm_jll", "Zlib_jll", "xkbcommon_jll"]
 git-tree-sha1 = "0c03844e2231e12fda4d0086fd7cbe4098ee8dc5"
 uuid = "ea2cea3b-5b76-57ae-a6ef-0a8af62496e1"
 version = "5.15.3+2"
-
-[[deps.QuadGK]]
-deps = ["DataStructures", "LinearAlgebra"]
-git-tree-sha1 = "6ec7ac8412e83d57e313393220879ede1740f9ee"
-uuid = "1fd47b50-473d-5c70-9696-f719f8f3bcdc"
-version = "2.8.2"
 
 [[deps.REPL]]
 deps = ["InteractiveUtils", "Markdown", "Sockets", "Unicode"]
@@ -948,18 +1262,6 @@ git-tree-sha1 = "838a3a4188e2ded87a4f9f184b4b0d78a1e91cb7"
 uuid = "ae029012-a4dd-5104-9daa-d747884805df"
 version = "1.3.0"
 
-[[deps.Rmath]]
-deps = ["Random", "Rmath_jll"]
-git-tree-sha1 = "f65dcb5fa46aee0cf9ed6274ccbd597adc49aa7b"
-uuid = "79098fc4-a85e-5d69-aa6a-4863f24498fa"
-version = "0.7.1"
-
-[[deps.Rmath_jll]]
-deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
-git-tree-sha1 = "6ed52fdd3382cf21947b15e8870ac0ddbff736da"
-uuid = "f50d1b31-88e8-58de-be2c-1cc44531875f"
-version = "0.4.0+0"
-
 [[deps.SHA]]
 uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
 version = "0.7.0"
@@ -973,6 +1275,12 @@ version = "1.2.0"
 [[deps.Serialization]]
 uuid = "9e88b42a-f829-5b0c-bbe9-9e923198166b"
 
+[[deps.ShortCodes]]
+deps = ["Base64", "CodecZlib", "HTTP", "JSON3", "Memoize", "UUIDs"]
+git-tree-sha1 = "95479a28f0bb4ad37ec7c7ece7fdbfc400c643e0"
+uuid = "f62ebe17-55c5-4640-972f-b59c0dd11ccf"
+version = "0.3.5"
+
 [[deps.Showoff]]
 deps = ["Dates", "Grisu"]
 git-tree-sha1 = "91eddf657aca81df9ae6ceb20b959ae5653ad1de"
@@ -983,6 +1291,12 @@ version = "1.0.3"
 git-tree-sha1 = "874e8867b33a00e784c8a7e4b60afe9e037b74e1"
 uuid = "777ac1f9-54b0-4bf8-805c-2214025038e7"
 version = "1.1.0"
+
+[[deps.SnoopPrecompile]]
+deps = ["Preferences"]
+git-tree-sha1 = "e760a70afdcd461cf01a575947738d359234665c"
+uuid = "66db9d55-30c0-4569-8b51-7e840670fc0c"
+version = "1.0.3"
 
 [[deps.Sockets]]
 uuid = "6462fe0b-24de-5631-8697-dd941f90decc"
@@ -1026,34 +1340,16 @@ git-tree-sha1 = "75ebe04c5bed70b91614d684259b661c9e6274a4"
 uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 version = "0.34.0"
 
-[[deps.StatsFuns]]
-deps = ["HypergeometricFunctions", "IrrationalConstants", "LogExpFunctions", "Reexport", "Rmath", "SpecialFunctions"]
-git-tree-sha1 = "f625d686d5a88bcd2b15cd81f18f98186fdc0c9a"
-uuid = "4c63d2b9-4356-54db-8cca-17b64c39e42c"
-version = "1.3.0"
-
-    [deps.StatsFuns.extensions]
-    StatsFunsChainRulesCoreExt = "ChainRulesCore"
-    StatsFunsInverseFunctionsExt = "InverseFunctions"
-
-    [deps.StatsFuns.weakdeps]
-    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
-    InverseFunctions = "3587e190-3f89-42d0-90ee-14403ec27112"
-
-[[deps.SuiteSparse]]
-deps = ["Libdl", "LinearAlgebra", "Serialization", "SparseArrays"]
-uuid = "4607b0f0-06f3-5cda-b6b1-a6196a1729e9"
+[[deps.StructTypes]]
+deps = ["Dates", "UUIDs"]
+git-tree-sha1 = "ca4bccb03acf9faaf4137a9abc1881ed1841aa70"
+uuid = "856f2bd8-1eba-4b0a-8007-ebc267875bd4"
+version = "1.10.0"
 
 [[deps.SuiteSparse_jll]]
 deps = ["Artifacts", "Libdl", "Pkg", "libblastrampoline_jll"]
 uuid = "bea87d4a-7f5b-5778-9afe-8cc45184846c"
 version = "5.10.1+6"
-
-[[deps.SymPy]]
-deps = ["CommonEq", "CommonSolve", "Latexify", "LinearAlgebra", "Markdown", "PyCall", "RecipesBase", "SpecialFunctions"]
-git-tree-sha1 = "fcb24df16e451cfa8e1e1217edfd92054f75d49d"
-uuid = "24249f21-da20-56a4-8eb1-6a02cf4ae2e6"
-version = "1.1.8"
 
 [[deps.TOML]]
 deps = ["Dates"]
@@ -1126,11 +1422,6 @@ version = "1.6.3"
 git-tree-sha1 = "ca0969166a028236229f63514992fc073799bb78"
 uuid = "41fe7b60-77ed-43a1-b4f0-825fd5a5650d"
 version = "0.2.0"
-
-[[deps.VersionParsing]]
-git-tree-sha1 = "58d6e80b4ee071f5efd07fda82cb9fbe17200868"
-uuid = "81def892-9a0e-5fdd-b105-ffc91e053289"
-version = "1.3.0"
 
 [[deps.Wayland_jll]]
 deps = ["Artifacts", "Expat_jll", "JLLWrappers", "Libdl", "Libffi_jll", "Pkg", "XML2_jll"]
@@ -1364,26 +1655,47 @@ version = "1.4.1+0"
 """
 
 # ╔═╡ Cell order:
-# ╟─5eaf8865-af46-4c41-b8f9-e7bc6aeaaa81
-# ╠═da35accc-96a5-473a-b1be-c59a46fc1a3d
-# ╟─7651ba7f-da0b-49bd-b63e-178d040ca389
-# ╠═daf92b9f-db53-4e68-acd1-622f4cddb4c6
-# ╠═b32f25fa-5b6e-4d31-b5bc-639b444aee9d
-# ╟─d75464c9-181c-4e6c-9e65-602ff39a5df9
-# ╠═9070e9a1-30a6-4447-a2ae-ae7cf7ae1753
-# ╠═5cf7e54c-40b4-4587-b2fb-28f9d8d23404
-# ╠═257202b0-3ba7-4c59-8ccd-6e403c7a3643
-# ╠═8531c11b-6a1e-4fe0-9e17-c2d4451d5266
-# ╟─21645e55-3522-4c26-b84f-07eb49cfbef5
-# ╟─02dc9344-ce8b-4867-a54d-d583975c6d60
-# ╟─41fb67b8-9947-428a-88c4-711fcaad2444
-# ╟─ede2d927-ddd0-49da-a6af-233258e44915
-# ╟─6d3646fb-da31-4206-8f1f-d0924eecf775
-# ╠═4de43fee-ea9f-4245-b36b-492cb9a97438
-# ╟─e78c1411-e8bb-4dc3-9334-6230bf6be4e4
-# ╟─c71d03ad-06e7-434a-9fe3-bd5d60205464
-# ╟─8cc44789-b0a2-40fd-94b3-2c0a2ea5c2cf
-# ╠═decd5762-29bd-11ed-1693-4949b058a07c
-# ╠═2cae9d5a-5928-4349-baea-52bcdc028056
+# ╟─8f199e33-f971-4f96-8883-779f7cc6a946
+# ╟─1079052f-234f-4698-9bb8-af49b24ef80a
+# ╟─518e6304-8f40-4ef7-925f-e16558080b60
+# ╟─cc84fab4-f9fe-498b-8136-9e997b8a6d09
+# ╟─90c5e28c-3c05-43a3-bb4c-2f0a47f5f339
+# ╟─4432a409-ce78-41bb-863f-dde56f1885f1
+# ╟─45c4ea63-050c-44ac-aeb1-0507340f2675
+# ╟─a96a12c7-027e-43ba-a4c6-8d013f651899
+# ╠═f04ec0c5-fa5a-4467-86d2-9745ffba834a
+# ╠═53045f48-b321-4c8c-8fdb-9d1369faa386
+# ╠═67b230cd-77e2-4ecd-83cb-47768ff457c6
+# ╠═6a8475b7-7ba5-4310-a1f6-d3529cc01651
+# ╟─39760bb3-05f8-4a9c-89f2-2fcd46cab544
+# ╠═eeb623fd-558d-4c1e-9fe7-677fc704ee91
+# ╟─c7cc130f-54c8-4c49-8072-818cc4b7d9b3
+# ╠═b65e7452-9ae7-4762-8c3a-e1f0b3f2744b
+# ╟─0f84a539-dce0-4dc2-b6ff-85bf759b3c99
+# ╠═a36fa201-58da-4e78-8ed2-1127fa730d7a
+# ╟─f8ff2918-993a-4527-8ec7-00f96b4bfe13
+# ╟─cf37924a-cfe4-4336-a9b3-88c2c6c268f1
+# ╠═1f7e8f70-eef4-40da-82a0-7050dec53f76
+# ╠═e63f6699-7a70-4bd6-ac4c-46bc406cdc23
+# ╟─69f55915-f802-4f58-839f-60897a864c97
+# ╠═f3948247-6b50-4329-aef2-e524c0e781ee
+# ╠═f11e9ecb-6bbd-468d-a0b5-cdb315c6a8ed
+# ╟─827cecdf-1345-4149-aaa0-d752c0dff201
+# ╠═c10a9d5b-c92a-452f-8302-5032a9165a06
+# ╟─161197f4-1076-4fb0-81de-b34c927ca4c2
+# ╠═a4bffbdd-a2a1-42ce-92c9-67332738706d
+# ╠═88be3fab-f55b-4ea4-a01c-90c02b7b15a1
+# ╠═d57fca19-7a1e-4189-8672-784ed69819ce
+# ╟─b2f5f523-cea7-4b2a-8e91-44e466cfa2bb
+# ╠═ae2293e5-66e5-4711-b351-a84225570a86
+# ╟─918532ec-8353-4966-96f3-1e6126f1e916
+# ╠═1a910c0f-1bcc-4755-87a1-63c2496f0551
+# ╟─ba7b2db6-8fd5-4050-8983-f5d58147dbd4
+# ╟─0e36f365-de6b-4019-8b19-ee77c36dd344
+# ╟─c4a319b9-c164-4e6d-afbe-da91b7a95846
+# ╟─fcc0b4f7-32bf-454d-8ec8-3a50139c984d
+# ╟─1c1cd3ea-0ea5-4637-83c2-63ec10d7cbdd
+# ╠═1b8a9dc3-1cbf-4ab0-93c3-d31eb1bf0353
+# ╠═9d5135d6-0ba1-435d-884b-a74dbc906d61
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
