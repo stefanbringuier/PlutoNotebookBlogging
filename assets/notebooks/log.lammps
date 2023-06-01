@@ -1,4 +1,4 @@
-LAMMPS (23 Jun 2022 - Update 3)
+LAMMPS (28 Mar 2023 - Update 1)
 OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:98)
   using 1 OpenMP thread(s) per MPI task
 package omp 0
@@ -6,7 +6,7 @@ using multi-threaded neighbor list subroutines
 units metal
 atom_style charge
 boundary p p p
-read_data /tmp/lammps_GoUVU5/ZrO2_Bicrystal_SchellingPot/data.Sigma5-ZrO2
+read_data /tmp/lammps_sDE7dh/ZrO2_Bicrystal_SchellingPot/data.Sigma5-ZrO2
 Reading data file ...
   triclinic box = (-10.2 -22.807894 -22.807894) to (10.2 22.807894 22.807894) with tilt (0 0 0)
   1 by 1 by 1 MPI processor grid
@@ -44,7 +44,7 @@ PPPM initialization ...
 Generated 0 of 1 mixed pair_coeff terms from geometric mixing rule
 Last active /omp style is kspace_style pppm/omp
 Neighbor list info ...
-  update every 2 steps, delay 10 steps, check yes
+  update: every = 2 steps, delay = 10 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
   master list distance cutoff = 13
   ghost atom cutoff = 13
@@ -62,21 +62,21 @@ Per MPI rank memory allocation (min/avg/max) = 17.3 | 17.3 | 17.3 Mbytes
        500   1665.586      -141442.63      0             -140616.12      171276.07    
        750   2065.6277     -141642.15      0             -140617.12      146457.05    
       1000   2227.2468     -141731.97      0             -140626.75      177138.86    
-Loop time of 76.1158 on 1 procs for 1000 steps with 3840 atoms
+Loop time of 76.2874 on 1 procs for 1000 steps with 3840 atoms
 
-Performance: 1.135 ns/day, 21.143 hours/ns, 13.138 timesteps/s
+Performance: 1.133 ns/day, 21.191 hours/ns, 13.108 timesteps/s, 50.336 katom-step/s
 100.0% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 67.775     | 67.775     | 67.775     |   0.0 | 89.04
-Kspace  | 5.5882     | 5.5882     | 5.5882     |   0.0 |  7.34
-Neigh   | 2.5532     | 2.5532     | 2.5532     |   0.0 |  3.35
-Comm    | 0.12578    | 0.12578    | 0.12578    |   0.0 |  0.17
-Output  | 0.0001532  | 0.0001532  | 0.0001532  |   0.0 |  0.00
-Modify  | 0.063905   | 0.063905   | 0.063905   |   0.0 |  0.08
-Other   |            | 0.009636   |            |       |  0.01
+Pair    | 67.706     | 67.706     | 67.706     |   0.0 | 88.75
+Kspace  | 5.7228     | 5.7228     | 5.7228     |   0.0 |  7.50
+Neigh   | 2.6429     | 2.6429     | 2.6429     |   0.0 |  3.46
+Comm    | 0.13866    | 0.13866    | 0.13866    |   0.0 |  0.18
+Output  | 0.0001571  | 0.0001571  | 0.0001571  |   0.0 |  0.00
+Modify  | 0.066156   | 0.066156   | 0.066156   |   0.0 |  0.09
+Other   |            | 0.01056    |            |       |  0.01
 
 Nlocal:           3840 ave        3840 max        3840 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
@@ -91,7 +91,7 @@ Neighbor list builds = 46
 Dangerous builds = 0
 unfix r1
 minimize 1.0e-8 1.0e-8 1000 1000
-WARNING: Using 'neigh_modify every 1 delay 0 check yes' setting during minimization (src/min.cpp:187)
+Switching to 'neigh_modify every 1 delay 0 check yes' setting during minimization
 PPPM initialization ...
   using polynomial approximation for long-range coulomb (src/kspace.cpp:344)
   G vector (1/distance) = 0.26354923
@@ -107,7 +107,7 @@ Per MPI rank memory allocation (min/avg/max) = 19.94 | 19.94 | 19.94 Mbytes
    Step          Temp          E_pair         E_mol          TotEng         Press     
       1000   2227.2468     -141731.97      0             -140626.75      177138.86    
       1228   2227.2468     -142987.99      0             -141882.76      97169.296    
-Loop time of 40.0779 on 1 procs for 228 steps with 3840 atoms
+Loop time of 39.897 on 1 procs for 228 steps with 3840 atoms
 
 100.0% CPU use with 1 MPI tasks x 1 OpenMP threads
 
@@ -123,13 +123,13 @@ Minimization stats:
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 36.307     | 36.307     | 36.307     |   0.0 | 90.59
-Kspace  | 2.5303     | 2.5303     | 2.5303     |   0.0 |  6.31
-Neigh   | 1.1346     | 1.1346     | 1.1346     |   0.0 |  2.83
-Comm    | 0.056931   | 0.056931   | 0.056931   |   0.0 |  0.14
+Pair    | 36.029     | 36.029     | 36.029     |   0.0 | 90.30
+Kspace  | 2.584      | 2.584      | 2.584      |   0.0 |  6.48
+Neigh   | 1.1708     | 1.1708     | 1.1708     |   0.0 |  2.93
+Comm    | 0.062886   | 0.062886   | 0.062886   |   0.0 |  0.16
 Output  | 0          | 0          | 0          |   0.0 |  0.00
-Modify  | 0.0095864  | 0.0095864  | 0.0095864  |   0.0 |  0.02
-Other   |            | 0.03946    |            |       |  0.10
+Modify  | 0.010777   | 0.010777   | 0.010777   |   0.0 |  0.03
+Other   |            | 0.03955    |            |       |  0.10
 
 Nlocal:           3840 ave        3840 max        3840 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
@@ -163,7 +163,7 @@ PPPM initialization ...
 Generated 0 of 1 mixed pair_coeff terms from geometric mixing rule
 Last active /omp style is kspace_style pppm/omp
 Neighbor list info ...
-  update every 2 steps, delay 10 steps, check yes
+  update: every = 2 steps, delay = 10 steps, check = yes
   max neighbors/atom: 2000, page size: 100000
   master list distance cutoff = 13
   ghost atom cutoff = 13
@@ -183,21 +183,21 @@ Per MPI rank memory allocation (min/avg/max) = 24.43 | 24.43 | 24.43 Mbytes
    Step          Temp          Volume         Press         Density    
          0   2450           42448.321      99950.707      6.1699227    
       1000   1246.1748      44089.677      36481.964      5.9402307    
-Loop time of 82.6082 on 1 procs for 1000 steps with 3840 atoms
+Loop time of 82.9032 on 1 procs for 1000 steps with 3840 atoms
 
-Performance: 1.046 ns/day, 22.947 hours/ns, 12.105 timesteps/s
-100.0% CPU use with 1 MPI tasks x 1 OpenMP threads
+Performance: 1.042 ns/day, 23.029 hours/ns, 12.062 timesteps/s, 46.319 katom-step/s
+99.9% CPU use with 1 MPI tasks x 1 OpenMP threads
 
 MPI task timing breakdown:
 Section |  min time  |  avg time  |  max time  |%varavg| %total
 ---------------------------------------------------------------
-Pair    | 66.912     | 66.912     | 66.912     |   0.0 | 81.00
-Kspace  | 5.7485     | 5.7485     | 5.7485     |   0.0 |  6.96
-Neigh   | 3.2923     | 3.2923     | 3.2923     |   0.0 |  3.99
-Comm    | 0.12359    | 0.12359    | 0.12359    |   0.0 |  0.15
-Output  | 4.3e-05    | 4.3e-05    | 4.3e-05    |   0.0 |  0.00
-Modify  | 6.5205     | 6.5205     | 6.5205     |   0.0 |  7.89
-Other   |            | 0.01137    |            |       |  0.01
+Pair    | 66.862     | 66.862     | 66.862     |   0.0 | 80.65
+Kspace  | 5.8914     | 5.8914     | 5.8914     |   0.0 |  7.11
+Neigh   | 3.399      | 3.399      | 3.399      |   0.0 |  4.10
+Comm    | 0.14356    | 0.14356    | 0.14356    |   0.0 |  0.17
+Output  | 4.75e-05   | 4.75e-05   | 4.75e-05   |   0.0 |  0.00
+Modify  | 6.5953     | 6.5953     | 6.5953     |   0.0 |  7.96
+Other   |            | 0.01203    |            |       |  0.01
 
 Nlocal:           3840 ave        3840 max        3840 min
 Histogram: 1 0 0 0 0 0 0 0 0 0
@@ -210,4 +210,4 @@ Total # of neighbors = 1532802
 Ave neighs/atom = 399.16719
 Neighbor list builds = 58
 Dangerous builds = 0
-Total wall time: 0:03:19
+Total wall time: 0:03:20
