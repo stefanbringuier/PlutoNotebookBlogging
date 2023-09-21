@@ -1,72 +1,67 @@
 name: Export Pluto notebooks
 on:
-    push:
-        branches:
-            - main
-            - master
-    workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
 
 jobs:
-    build-and-deploy:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v2
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
 
-            # NOTE: Python is necessary for the pre-rendering (minification) step
-            - name: Install python
-              uses: actions/setup-python@v2
-              with:
-                  python-version: '3.8'
+      # NOTE: Python is necessary for the pre-rendering (minification) step
+      - name: Install python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
 
-            - name: Install Julia
-              uses: julia-actions/setup-julia@v1
-              with:
-                  version: 1.9.3
-                  
-            # Needed for some notebooks      
-            - name: Install TeXlive
-              run: sudo apt update; sudo apt install texlive-latex-extra texlive-science texlive-luatex texlive-pstricks latexmk
+      - name: Install Julia
+        uses: julia-actions/setup-julia@v1
+        with:
+          version: 1.9.3
 
-            # We set up a folder that Pluto can use to cache exported notebooks. If the notebook file did not change, then Pluto can take the exported file from cache instead of running the notebook.
-            - name: Set up notebook state cache
-              uses: actions/cache@v2
-              with:
-                  path: ~/pluto_state_cache
-                  key: ${{ runner.os }}-pluto_state_cache-v2-${{ hashFiles('**/Project.toml', '**/Manifest.toml', '.github/workflows/*' ) }}-${{ hashFiles('**/*jl') }}
-                  restore-keys: |
-                      ${{ runner.os }}-pluto_state_cache-v2-${{ hashFiles('**/Project.toml', '**/Manifest.toml', '.github/workflows/*' ) }}
+      # Needed for some notebooks
+      - name: Install TeXlive
+        run: sudo apt update; sudo apt install texlive-latex-extra texlive-science texlive-luatex texlive-pstricks latexmk
 
-            - name: Run & export Pluto notebooks
-              run: julia -e 'using Pkg;
-                  Pkg.activate(mktempdir());
-                  Pkg.add("PlutoSliderServer");
-                  #Pkg.add("Conda");
-                  #ENV["PYTHON"] = "";
-                  #Pkg.add("PyCall");
-                  #Pkg.add("Plots");
-                  
+      # We set up a folder that Pluto can use to cache exported notebooks. If the notebook file did not change, then Pluto can take the exported file from cache instead of running the notebook.
+      - name: Set up notebook state cache
+        uses: actions/cache@v2
+        with:
+          path: ~/pluto_state_cache
+          key: ${{ runner.os }}-pluto_state_cache-v2-${{ hashFiles('**/Project.toml', '**/Manifest.toml', '.github/workflows/*' ) }}-${{ hashFiles('**/*jl') }}
+          restore-keys: |
+            ${{ runner.os }}-pluto_state_cache-v2-${{ hashFiles('**/Project.toml', '**/Manifest.toml', '.github/workflows/*' ) }}
 
-                  import PlutoSliderServer;
+      - name: Run & export Pluto notebooks
+        run: julia -e 'using Pkg;
+          Pkg.activate(mktempdir());
+          Pkg.add("PlutoSliderServer");
+          
+          import PlutoSliderServer;
 
-                  PlutoSliderServer.github_action(;
-                    Export_cache_dir="~/pluto_state_cache",
-                    Export_baked_notebookfile=true,
-                    Export_baked_state=true,
-                  );'
+          PlutoSliderServer.github_action(;
+          Export_cache_dir="~/pluto_state_cache",
+          Export_baked_notebookfile=true,
+          Export_baked_state=true,
+          );'
 
-            - name: Copy Pluto HTML and Franklin
-              run: julia -e '
-                  cd("blog");
-                  cp("../notebooks","_assets/notebooks";force=true);
-                  using Pkg; Pkg.activate("."); Pkg.instantiate();
-                  using NodeJS; run(`$(npm_cmd()) install highlight.js`);
-                  using Franklin;
-                  optimize()'
-            
-            - name: Deploy to gh-pages
-              uses: JamesIves/github-pages-deploy-action@releases/v3
-              with:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  BRANCH: gh-pages
-                  FOLDER: blog/__site
+      - name: Copy Pluto HTML and Franklin
+        run: julia -e '
+          cd("blog");
+          cp("../notebooks","_assets/notebooks";force=true);
+          using Pkg; Pkg.activate("."); Pkg.instantiate();
+          using NodeJS; run(`$(npm_cmd()) install highlight.js`);
+          using Franklin;
+          optimize()'
+
+      - name: Deploy to gh-pages
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: gh-pages
+          FOLDER: blog/__site
