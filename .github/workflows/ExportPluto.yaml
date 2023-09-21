@@ -22,7 +22,7 @@ jobs:
             - name: Install Julia
               uses: julia-actions/setup-julia@v1
               with:
-                  version: 1.9
+                  version: 1.9.3
                   
             # Needed for some notebooks      
             - name: Install TeXlive
@@ -41,10 +41,10 @@ jobs:
               run: julia -e 'using Pkg;
                   Pkg.activate(mktempdir());
                   Pkg.add("PlutoSliderServer");
-                  Pkg.add("Conda");
-                  ENV["PYTHON"] = "";
-                  Pkg.add("PyCall");
-                  Pkg.add("Plots");
+                  #Pkg.add("Conda");
+                  #ENV["PYTHON"] = "";
+                  #Pkg.add("PyCall");
+                  #Pkg.add("Plots");
                   
 
                   import PlutoSliderServer;
