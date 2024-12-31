@@ -9,6 +9,7 @@ The notebooks are rendered to html via [PlutoSliderServer.jl](https://github.com
 # Blogs
 
 @@blog-list
+ @@blog-item  [Crystal Graph CNN](assets/prerendered_notebooks/CGCNN.html) - Reproducing the original & impact full paper. @@
  @@blog-item  [Ridge line plot](assets/prerendered_notebooks/RidgeLinePlot.html) - An alternative to violin plots? @@
  @@blog-item  [Spinodal Decomposition](assets/notebooks/CahnHilliardSpinodalDecomp.html) - Solving the Cahn-Hillard equation for spinodal decomposition. @@
  @@blog-item  [Inverse determination of diffusion coefficient](assets/notebooks/BayesianInferenceDiffusion.html) - Using Bayesian inference to inversely determine diffusion coefficient. @@
